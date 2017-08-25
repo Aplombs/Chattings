@@ -1,0 +1,128 @@
+package com.chat.im.helper;
+
+import android.content.Context;
+import android.content.res.Resources;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+/**
+ * 工具类
+ */
+
+public class UtilsHelper {
+
+    private static UtilsHelper utilsHelper;
+    /**
+     * 手机号正则表达式
+     */
+    private final String MOBILE_PHONE_PATTERN = "^((13[0-9])|(15[0-9])|(18[0-9])|(14[7])|(17[0|3|6|7|8]))\\d{8}$";
+
+    private UtilsHelper() {
+    }
+
+    public static UtilsHelper getInstance() {
+        if (null == utilsHelper) {
+            synchronized (UtilsHelper.class) {
+                if (null == utilsHelper) {
+                    utilsHelper = new UtilsHelper();
+                }
+            }
+        }
+        return utilsHelper;
+    }
+
+    public static void clearCache() {
+        utilsHelper = null;
+    }
+
+    /**
+     * @param resources 资源对象
+     * @return 获取系统statusBar的高度
+     */
+    public int getStatusBarHeight(Resources resources) {
+        int result = 0;
+        int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = resources.getDimensionPixelSize(resourceId);
+        }
+        return result;
+    }
+
+    public boolean isMobile(String phone) {
+        Pattern p = Pattern.compile(MOBILE_PHONE_PATTERN);
+        Matcher m = p.matcher(phone);
+        return m.matches();
+    }
+
+    /**
+     * @return 判断网络是否可用
+     */
+    public boolean isNetworkConnected() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) ContextHelper.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo ni = connectivityManager.getActiveNetworkInfo();
+        return ni != null && ni.isConnectedOrConnecting();
+    }
+
+    /**
+     * 所需的4的header
+     * App-Key
+     * Nonce     -- 随机数
+     * Timestamp -- 时间戳
+     * Signature -- 数据签名(计算方法:将系统分配的AppSecret Nonce Timestamp三个字符串按先后顺序拼接成一个字符串并进行SHA1哈希计算)
+     * <p>
+     * App Key     3argexb63dide
+     * App Secret  XzftSkOS0qR
+     *
+     * @return 获取拿token的4个header参数
+     */
+    public String[] getToken4Headers() {
+        String appKey = "3argexb63dide";
+        String appSecret = "XzftSkOS0qR";
+        String nonce = String.valueOf(new Random().nextLong());
+        String timestamp = String.valueOf(System.currentTimeMillis());
+        String signature = sha1(appSecret + nonce + timestamp);
+        return new String[]{appKey, nonce, timestamp, signature};
+    }
+
+    /**
+     * MD5与SHA1都是Hash算法,MD5输出是128位的,SHA1输出是160位的,HA256输出是256位;MD5比SHA1快,SHA1比MD5强度高
+     *
+     * @param str 要加密的字符串
+     * @return 哈希算法之后的值
+     */
+    private String sha1(String str) {
+        try {
+            byte[] strBytes = str.getBytes();
+            MessageDigest messageDigest = MessageDigest.getInstance("SHA-1");// 将此换成SHA-1、SHA-512、SHA-384等参数
+            messageDigest.update(strBytes);
+            return bytes2Hex(messageDigest.digest()); //toHexString
+        } catch (NoSuchAlgorithmException e) {
+            return "";
+        }
+    }
+
+    /**
+     * byte数组转换为16进制字符串
+     *
+     * @param bts 数据源
+     * @return 16进制字符串
+     */
+    private String bytes2Hex(byte[] bts) {
+        String des = "";
+        String tmp;
+        for (int i = 0; i < bts.length; i++) {
+            tmp = (Integer.toHexString(bts[i] & 0xFF));
+            if (tmp.length() == 1) {
+                des += "0";
+            }
+            des += tmp;
+        }
+        return des;
+    }
+}
