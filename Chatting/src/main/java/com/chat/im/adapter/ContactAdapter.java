@@ -1,6 +1,7 @@
 package com.chat.im.adapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -33,7 +34,8 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
 
     @Override
     public ContactViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = View.inflate(ContextHelper.getContext(), R.layout.itemview_tab_contact, null);
+        View itemView = //View.inflate(ContextHelper.getContext(), R.layout.itemview_tab_contact, null);
+                LayoutInflater.from(ContextHelper.getContext()).inflate(R.layout.itemview_tab_contact, parent, false);
         return new ContactViewHolder(itemView);
     }
 
