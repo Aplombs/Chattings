@@ -152,8 +152,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 mImage_tabMe.setImageResource(R.drawable.tab_me_0);
 
                 mText_tabMessage.setTextColor(getResources().getColor(R.color.colorPrimary));
-                mText_tabContact.setTextColor(getResources().getColor(R.color.textColor));
-                mText_tabMe.setTextColor(getResources().getColor(R.color.textColor));
+                mText_tabContact.setTextColor(getResources().getColor(R.color.shallow_black));
+                mText_tabMe.setTextColor(getResources().getColor(R.color.shallow_black));
 
                 mViewPager.setCurrentItem(0);
                 break;
@@ -166,9 +166,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 mImage_tabContact.setImageResource(R.drawable.tab_contact_1);
                 mImage_tabMe.setImageResource(R.drawable.tab_me_0);
 
-                mText_tabMessage.setTextColor(getResources().getColor(R.color.textColor));
+                mText_tabMessage.setTextColor(getResources().getColor(R.color.shallow_black));
                 mText_tabContact.setTextColor(getResources().getColor(R.color.colorPrimary));
-                mText_tabMe.setTextColor(getResources().getColor(R.color.textColor));
+                mText_tabMe.setTextColor(getResources().getColor(R.color.shallow_black));
 
                 mViewPager.setCurrentItem(1);
                 break;
@@ -181,8 +181,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 mImage_tabContact.setImageResource(R.drawable.tab_contact_0);
                 mImage_tabMe.setImageResource(R.drawable.tab_me_1);
 
-                mText_tabMessage.setTextColor(getResources().getColor(R.color.textColor));
-                mText_tabContact.setTextColor(getResources().getColor(R.color.textColor));
+                mText_tabMessage.setTextColor(getResources().getColor(R.color.shallow_black));
+                mText_tabContact.setTextColor(getResources().getColor(R.color.shallow_black));
                 mText_tabMe.setTextColor(getResources().getColor(R.color.colorPrimary));
 
                 mViewPager.setCurrentItem(2);

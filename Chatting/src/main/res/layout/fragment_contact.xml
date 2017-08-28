@@ -28,7 +28,6 @@
 
     <!--新朋友 群聊 公众号-->
     <LinearLayout
-        android:visibility="gone"
         android:id="@+id/private_newFriend_groupChat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -167,7 +166,6 @@
 
     <!--多少位联系人-->
     <LinearLayout
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/recyclerView_tabContact"
