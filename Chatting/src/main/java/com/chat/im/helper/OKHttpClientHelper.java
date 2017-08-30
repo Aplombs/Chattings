@@ -258,7 +258,8 @@ public class OKHttpClientHelper {
                 //由于没有自己的后台,所以只能借助登录到融云官方demo的后台,然后客户端自己调用getToken接口获取token,然后
                 //调用RongIMClient.connect()方法,再持续后面的操作
                 if (200 == loginResponseCode) {
-                    getToken(loginResponse.getResult().getId(), "");
+                    String portraitUri = SpHelper.getInstance().get(Constants.SP_LOGIN_HEAD_URI, "");
+                    getToken(loginResponse.getResult().getId(), portraitUri);
                 } else {
                     if (100 == loginResponseCode || 1000 == loginResponseCode) {//手机号错误或者密码错误
                         mResponseListener.onFailure(Constants.FAILURE_LOGIN, Constants.FAILURE_TYPE_LOGIN_PHONE_OR_PASSWORD_WRONG);
