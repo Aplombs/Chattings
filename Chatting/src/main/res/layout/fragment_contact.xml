@@ -11,8 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:gravity="center"
-        android:orientation="vertical"
-        android:visibility="gone">
+        android:orientation="vertical">
 
         <ProgressBar
             android:layout_width="30dp"
@@ -26,159 +25,168 @@
 
     </LinearLayout>
 
-    <!--新朋友 群聊 公众号-->
     <LinearLayout
-        android:id="@+id/private_newFriend_groupChat"
+        android:id="@+id/data"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:orientation="vertical">
-
-        <!--新朋友-->
+        android:orientation="vertical"
+        android:visibility="gone">
+        <!--新朋友 群聊 公众号-->
         <LinearLayout
-            android:id="@+id/newFriend_Contact"
+            android:id="@+id/private_newFriend_groupChat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:gravity="center_vertical"
+            android:background="@color/white"
             android:orientation="vertical">
 
+            <!--新朋友-->
             <LinearLayout
+                android:id="@+id/newFriend_Contact"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
-                    android:src="@drawable/ic_launcher" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:text="新朋友"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/not_read_tab_contact"
-                    android:layout_width="19dp"
-                    android:layout_height="19dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="8dp"
-                    android:background="@drawable/circle_text"
-                    android:gravity="center"
-                    android:text="1"
-                    android:textColor="@color/white"
-                    android:textSize="10sp"
-                    android:visibility="visible" />
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
+                android:layout_marginStart="5dp"
                 android:layout_marginTop="5dp"
-                android:background="@color/line_bg" />
-
-        </LinearLayout>
-
-        <!--群聊-->
-        <LinearLayout
-            android:id="@+id/groupChat_Contact"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:gravity="center_vertical"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
-                <ImageView
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
-                    android:src="@drawable/ic_launcher" />
-
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:text="群聊"
-                    android:textSize="16sp" />
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:src="@drawable/ic_launcher" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:text="新朋友"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/not_read_tab_contact"
+                        android:layout_width="19dp"
+                        android:layout_height="19dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/circle_text"
+                        android:gravity="center"
+                        android:text="1"
+                        android:textColor="@color/white"
+                        android:textSize="10sp"
+                        android:visibility="visible" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/line_bg" />
 
             </LinearLayout>
 
-            <View
+            <!--群聊-->
+            <LinearLayout
+                android:id="@+id/groupChat_Contact"
                 android:layout_width="match_parent"
-                android:layout_height="0.5dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
                 android:layout_marginTop="5dp"
-                android:background="@color/line_bg" />
+                android:gravity="center_vertical"
+                android:orientation="vertical">
 
-        </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-        <!--公众号-->
-        <LinearLayout
-            android:id="@+id/publicChat_Contact"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:gravity="center_vertical"
-            android:orientation="vertical">
+                    <ImageView
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:src="@drawable/ic_launcher" />
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:text="群聊"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/line_bg" />
+
+            </LinearLayout>
+
+            <!--公众号-->
             <LinearLayout
+                android:id="@+id/publicChat_Contact"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
-                <ImageView
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
-                    android:src="@drawable/ic_launcher" />
-
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:text="公众号"
-                    android:textSize="16sp" />
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:src="@drawable/ic_launcher" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:text="公众号"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
         </LinearLayout>
 
-    </LinearLayout>
-
-    <!--联系人列表-->
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView_tabContact"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/private_newFriend_groupChat" />
-
-    <!--多少位联系人-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/recyclerView_tabContact"
-        android:background="@color/line_bg"
-        android:gravity="center">
-
-        <TextView
-            android:id="@+id/contactNum_Contact"
-            android:layout_width="wrap_content"
+        <!--联系人列表-->
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView_tabContact"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="3位联系人"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:layout_below="@id/private_newFriend_groupChat" />
+
+        <!--多少位联系人-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/recyclerView_tabContact"
+            android:background="@color/line_bg"
+            android:gravity="center"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/contactNum_Contact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3位联系人"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

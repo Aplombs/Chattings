@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.text.TextUtils;
+
+import net.sourceforge.pinyin4j.PinyinHelper;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -67,6 +70,58 @@ public class UtilsHelper {
         ConnectivityManager connectivityManager = (ConnectivityManager) ContextHelper.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo ni = connectivityManager.getActiveNetworkInfo();
         return ni != null && ni.isConnectedOrConnecting();
+    }
+
+    public String getFirstLetter(String name) {
+        String firstLetter = "#";
+        if (TextUtils.isEmpty(name)) {
+            return firstLetter;
+        }
+        String firstStr = name.substring(0, 1);
+        if (isNickNameOrRemarkName(firstStr)) {
+            String spelling = getSpelling(firstStr);
+            if (TextUtils.isEmpty(spelling)) {
+                firstLetter = "#";
+            } else {
+                firstLetter = spelling;
+            }
+        }
+
+        return firstLetter;
+    }
+
+    /**
+     * @param str 要判断的名称
+     * @return 判断昵称或者备注是否可以排序, 判断的条件就是字符串的第一个字符是否是英文或者中文, 只要不符合就是不能排序
+     */
+    private boolean isNickNameOrRemarkName(String str) {
+        if (TextUtils.isEmpty(str)) {
+            return false;
+        }
+        //中文
+        Pattern patternChinese = Pattern.compile("[\u4e00-\u9fa5]");
+        //英文
+        Pattern patternEnglish = Pattern.compile("[a-zA-Z]");
+
+        Matcher matcherChinese = patternChinese.matcher(str);
+        Matcher matcherEnglish = patternEnglish.matcher(str);
+        //只要名称的首个字符是中文或者英文都可以排序
+        return matcherChinese.matches() || matcherEnglish.matches();
+    }
+
+    /**
+     * 获取汉字字符串的第一个字母,默认转大写(唐利涛-T)
+     */
+    private String getSpelling(String str) {
+        StringBuilder sb = new StringBuilder();
+        char c = str.charAt(0);
+        String[] pinyinArray = PinyinHelper.toHanyuPinyinStringArray(c);
+        if (pinyinArray != null) {
+            sb.append(pinyinArray[0].charAt(0));
+        } else {
+            sb.append(c);
+        }
+        return sb.toString().toUpperCase();
     }
 
     /**

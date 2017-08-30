@@ -1,6 +1,7 @@
 package com.chat.im.adapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
             this.mList.clear();
         }
         this.mList = contactInfoList;
+        this.notifyDataSetChanged();
     }
 
     @Override
@@ -42,7 +44,13 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
     @Override
     public void onBindViewHolder(ContactViewHolder holder, int position) {
         ContactInfo contactInfo = mList.get(position);
-        holder.userName.setText(contactInfo.getUserNickName());
+        if (TextUtils.isEmpty(contactInfo.getRemarkName())) {
+            holder.userName.setText(contactInfo.getNickName());
+            holder.firstLetter.setText(contactInfo.getNickNameSpelling());
+        } else {
+            holder.userName.setText(contactInfo.getRemarkName());
+            holder.firstLetter.setText(contactInfo.getRemarkNameSpelling());
+        }
     }
 
     @Override

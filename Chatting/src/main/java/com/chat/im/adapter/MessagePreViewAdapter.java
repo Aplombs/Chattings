@@ -11,6 +11,7 @@ import com.chat.im.db.bean.MessagePreView;
 import com.chat.im.helper.ContextHelper;
 
 import java.util.List;
+import java.util.Random;
 
 /**
  * 消息页签--预览消息RecyclerView的Adapter
@@ -47,6 +48,7 @@ public class MessagePreViewAdapter extends RecyclerView.Adapter<MessagePreViewAd
         }
         holder.userName.setText(messagePreView.getUserNickName());
         holder.contentPreView.setText(messagePreView.getContentPreView());
+        holder.not_read_message.setText(String.valueOf(new Random().nextInt(10)));
     }
 
     @Override
@@ -57,13 +59,14 @@ public class MessagePreViewAdapter extends RecyclerView.Adapter<MessagePreViewAd
     public class MessagePreViewHolder extends RecyclerView.ViewHolder {
 
         public ImageView userHead;
-        public TextView userName, contentPreView;
+        public TextView userName, contentPreView, not_read_message;
 
         public MessagePreViewHolder(View itemView) {
             super(itemView);
             userHead = (ImageView) itemView.findViewById(R.id.userHead_MessagePreView);
             userName = (TextView) itemView.findViewById(R.id.userNickName_MessagePreView);
             contentPreView = (TextView) itemView.findViewById(R.id.contentPreview_MessagePreView);
+            not_read_message = (TextView) itemView.findViewById(R.id.not_read_message_MessagePreView);
         }
     }
 }

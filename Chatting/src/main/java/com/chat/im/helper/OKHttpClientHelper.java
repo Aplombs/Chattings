@@ -5,8 +5,11 @@ import android.text.TextUtils;
 
 import com.chat.im.constant.Constants;
 import com.chat.im.cookie.PersistentCookieStore;
+import com.chat.im.db.bean.ContactInfo;
+import com.chat.im.db.dao.ContactInfoDao;
 import com.chat.im.jsonbean.CheckPhoneRequest;
 import com.chat.im.jsonbean.CheckPhoneResponse;
+import com.chat.im.jsonbean.GetAllContactResponse;
 import com.chat.im.jsonbean.GetTokenRequest;
 import com.chat.im.jsonbean.GetTokenResponse;
 import com.chat.im.jsonbean.GetUserInfoByIdResponse;
@@ -24,7 +27,9 @@ import org.apache.http.impl.cookie.BasicClientCookie;
 
 import java.io.IOException;
 import java.security.cert.X509Certificate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
@@ -74,6 +79,7 @@ public class OKHttpClientHelper {
                                 .hostnameVerifier(getHostnameVerifier())
                                 .sslSocketFactory(getSSLSocketFactory())
                                 .addInterceptor(getInterceptor())
+                                .readTimeout(1, TimeUnit.MINUTES)
                                 .build();
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -272,6 +278,65 @@ public class OKHttpClientHelper {
     }
 
     /**
+     * 获取所有联系人
+     */
+    public void getAllContact() throws Exception {
+        String url = RequestURLHelper.getInstance().getAllContactUrl();
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+
+        Response response = mOkHttpClient.newCall(request).execute();
+
+        if (response != null) {
+            ResponseBody responseBody = response.body();
+            if (responseBody != null) {
+                String result = responseBody.string();
+                if (!TextUtils.isEmpty(result)) {
+                    LogHelper.e(TAG + "getAllContact onResponse()--->>" + result);
+                    GetAllContactResponse allContactResponse = JsonHelper.jsonToBean(result, GetAllContactResponse.class);
+                    if (allContactResponse != null && allContactResponse.getCode() == 200) {
+                        List<GetAllContactResponse.ResultEntity> list = allContactResponse.getResult();
+                        if (list != null && list.size() > 0) {
+                            List<ContactInfo> contactInfoList = new ArrayList<>();
+                            for (GetAllContactResponse.ResultEntity resultEntity : list) {
+                                //if (resultEntity.getStatus() == 20) {
+                                GetAllContactResponse.ResultEntity.UserEntity userEntity = resultEntity.getUser();
+                                String userId = userEntity.getId();
+                                String nickname = userEntity.getNickname();
+                                String remarkName = resultEntity.getDisplayName();
+                                String userHeadUri = userEntity.getPortraitUri();
+                                String region = userEntity.getRegion();
+                                String phone = userEntity.getPhone();
+                                String nickNameSpelling = UtilsHelper.getInstance().getFirstLetter(nickname);
+                                String remarkNameSpelling = UtilsHelper.getInstance().getFirstLetter(remarkName);
+
+                                ContactInfo contactInfo = new ContactInfo(userId, region, phone, userHeadUri, nickname, remarkName, nickNameSpelling, remarkNameSpelling);
+                                contactInfoList.add(contactInfo);
+                                //}
+                            }
+                            //将自己加入联系人列表
+                            String userId = SpHelper.getInstance().get(Constants.SP_LOGIN_USERID, "");
+                            String region = SpHelper.getInstance().get(Constants.SP_LOGIN_PHONE_REGION, "");
+                            String phone = SpHelper.getInstance().get(Constants.SP_LOGIN_PHONE, "");
+                            String userHeadUri = SpHelper.getInstance().get(Constants.SP_LOGIN_HEAD_URI, "");
+                            String nickname = SpHelper.getInstance().get(Constants.SP_LOGIN_NICKNAME, "");
+                            String nickNameSpelling = UtilsHelper.getInstance().getFirstLetter(nickname);
+                            ContactInfo contactInfo = new ContactInfo(userId, region, phone, userHeadUri, nickname, "", nickNameSpelling, "");
+                            contactInfoList.add(contactInfo);
+
+                            ContactInfoDao contactInfoDao = DBHelper.getInstance().getDaoSession().getContactInfoDao();
+                            //清空之前的数据,将服务器最新数据插入数据库
+                            contactInfoDao.deleteAll();
+                            contactInfoDao.insertOrReplaceInTx(contactInfoList);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /**
      * 查询用户信息
      *
      * @param userID 要查询的用户ID
@@ -391,6 +456,8 @@ public class OKHttpClientHelper {
                 GetUserInfoByIdResponse userInfoByIdResponse = JsonHelper.jsonToBean(result, GetUserInfoByIdResponse.class);
                 int getUserInfoResponseCode = userInfoByIdResponse.getCode();
                 if (200 == getUserInfoResponseCode) {
+                    //保存当前登录用户头像uri
+                    SpHelper.getInstance().put(Constants.SP_LOGIN_HEAD_URI, userInfoByIdResponse.getResult().getPortraitUri());
                     String url = RequestURLHelper.getInstance().getTokenUrl();
                     final String nickname = userInfoByIdResponse.getResult().getNickname();
                     String json = new GetTokenRequest(userId, nickname, portraitUri).toString();

@@ -64,6 +64,13 @@ public class RequestURLHelper {
     }
 
     /**
+     * @return 获取登录的URL
+     */
+    public String getAllContactUrl() {
+        return getURL(Constants.URL_GET_ALL_CONTACT);
+    }
+
+    /**
      * @return 获取token的URL
      */
     public String getTokenUrl() {

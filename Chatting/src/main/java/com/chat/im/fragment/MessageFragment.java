@@ -12,11 +12,9 @@ import android.view.ViewGroup;
 import com.chat.im.R;
 import com.chat.im.adapter.MessagePreViewAdapter;
 import com.chat.im.db.bean.MessagePreView;
-import com.chat.im.db.dao.DaoMaster;
-import com.chat.im.db.dao.DaoSession;
-import com.chat.im.db.dao.MessagePreViewDao;
 import com.chat.im.helper.ContextHelper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,21 +25,12 @@ public class MessageFragment extends Fragment {
 
     private View mView;
     private RecyclerView mRecyclerView;
-    private List<MessagePreView> mMessagePreViewList;
+    private List<MessagePreView> mMessagePreViewList = new ArrayList<>();
     private MessagePreViewAdapter mAdapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        DaoMaster.DevOpenHelper devOpenHelper = new DaoMaster.DevOpenHelper(ContextHelper.getContext(), "message_preview.db");
-        DaoMaster daoMaster = new DaoMaster(devOpenHelper.getWritableDb());
-        DaoSession daoSession = daoMaster.newSession();
-        MessagePreViewDao messagePreViewDao = daoSession.getMessagePreViewDao();
-        MessagePreView messagePreView = new MessagePreView();
-        messagePreView.setUserNickName("习大大");
-        messagePreView.setContentPreView("[语音]");
-        messagePreViewDao.insert(messagePreView);
-        mMessagePreViewList = messagePreViewDao.queryBuilder().list();
     }
 
     @Nullable

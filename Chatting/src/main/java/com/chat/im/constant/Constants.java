@@ -12,16 +12,6 @@ public class Constants {
     public static final String DOMAIN = "http://api.sealtalk.im/";
 
     /**
-     * content-type
-     */
-    public static final String CONTENT_TYPE = "application/json";
-
-    /**
-     * 编码格式
-     */
-    public static final String ENCODING = "utf-8";
-
-    /**
      * 地域号:默认86,中国
      */
     public static final String REGION = "86";
@@ -34,6 +24,7 @@ public class Constants {
     public static final String URL_VERIFY_CODE = "user/verify_code";//验证用户输入验证码是否正确
     public static final String URL_REGISTER = "user/register";//注册
     public static final String URL_LOGIN = "user/login";//登录
+    public static final String URL_GET_ALL_CONTACT = "friendship/all";//获取所有联系人
     public static final String URL_GET_USER_INFO = "user/";//获取用户信息
 
     /**
@@ -48,8 +39,10 @@ public class Constants {
      * 登录成功,保存用户手机号,用户密码,用户ID
      */
     public static final String SP_LOGIN_USERID = "login_userID";
+    public static final String SP_LOGIN_HEAD_URI = "login_head_uri";
     public static final String SP_LOGIN_TOKEN = "login_token";
     public static final String SP_LOGIN_PHONE = "login_phone";
+    public static final String SP_LOGIN_PHONE_REGION = "login_phone_region";
     public static final String SP_LOGIN_PASSWORD = "login_password";
     public static final String SP_LOGIN_NICKNAME = "login_nickname";
 
@@ -73,6 +66,7 @@ public class Constants {
     public static final int FAILURE_LOGIN = 2;//失败--登录
     public static final int FAILURE_REGISTER = 3;//失败--注册
     public static final int FAILURE_GET_USER_INFO = 4;//失败--通过ID获取个人信息
+
     /**
      * 失败原因状态码---比如:是登录密码错误还是用户名错误...
      */
@@ -81,4 +75,9 @@ public class Constants {
     public static final int FAILURE_TYPE_VERIFY_CODE_WRONG = 2;//失败原因--验证码错误
     public static final int FAILURE_TYPE_VERIFY_CODE_OVERDUE = 3;//失败原因--验证码过去
     public static final int FAILURE_TYPE_LOGIN_PHONE_OR_PASSWORD_WRONG = 4;//失败原因--手机号或者密码错误
+
+    /**
+     * 数据库名称
+     */
+    public static final String DB_NAME = "chatting";
 }

@@ -103,8 +103,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         switch (v.getId()) {
             case R.id.tv_login://登录
                 if (isLogin) return;
-                gotoMain();
-                //signIn();
+                signIn();
                 break;
             case R.id.tv_new_user_login://新用户
                 newUser();
@@ -155,6 +154,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 map.put(Constants.SP_LOGIN_USERID, loginUserID);
                 map.put(Constants.SP_LOGIN_TOKEN, loginToken);
                 map.put(Constants.SP_LOGIN_PHONE, phone);
+                map.put(Constants.SP_LOGIN_PHONE_REGION, Constants.REGION);
                 map.put(Constants.SP_LOGIN_PASSWORD, password);
                 map.put(Constants.SP_LOGIN_NICKNAME, nickName);
                 SpHelper.getInstance().put(map);
