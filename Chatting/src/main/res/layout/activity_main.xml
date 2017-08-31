@@ -4,9 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include
-        android:id="@+id/title_bar_main_private"
-        layout="@layout/title_bar" />
+    <include layout="@layout/title_bar" />
 
     <View
         android:id="@+id/line_main_private"
@@ -171,6 +169,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/line_main_private"
-        android:layout_below="@id/title_bar_main_private" />
+        android:layout_below="@id/title_bar" />
 
 </RelativeLayout>
