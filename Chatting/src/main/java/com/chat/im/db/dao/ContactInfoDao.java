@@ -30,8 +30,8 @@ public class ContactInfoDao extends AbstractDao<ContactInfo, String> {
         public final static Property HeadUri = new Property(3, String.class, "headUri", false, "HEAD_URI");
         public final static Property NickName = new Property(4, String.class, "nickName", false, "NICK_NAME");
         public final static Property RemarkName = new Property(5, String.class, "remarkName", false, "REMARK_NAME");
-        public final static Property NickNameSpelling = new Property(6, String.class, "nickNameSpelling", false, "NICK_NAME_SPELLING");
-        public final static Property RemarkNameSpelling = new Property(7, String.class, "remarkNameSpelling", false, "REMARK_NAME_SPELLING");
+        public final static Property ShowName = new Property(6, String.class, "showName", false, "SHOW_NAME");
+        public final static Property ShowNameLetter = new Property(7, String.class, "showNameLetter", false, "SHOW_NAME_LETTER");
     }
 
 
@@ -53,8 +53,8 @@ public class ContactInfoDao extends AbstractDao<ContactInfo, String> {
                 "\"HEAD_URI\" TEXT," + // 3: headUri
                 "\"NICK_NAME\" TEXT," + // 4: nickName
                 "\"REMARK_NAME\" TEXT," + // 5: remarkName
-                "\"NICK_NAME_SPELLING\" TEXT," + // 6: nickNameSpelling
-                "\"REMARK_NAME_SPELLING\" TEXT);"); // 7: remarkNameSpelling
+                "\"SHOW_NAME\" TEXT," + // 6: showName
+                "\"SHOW_NAME_LETTER\" TEXT);"); // 7: showNameLetter
     }
 
     /** Drops the underlying database table. */
@@ -97,14 +97,14 @@ public class ContactInfoDao extends AbstractDao<ContactInfo, String> {
             stmt.bindString(6, remarkName);
         }
  
-        String nickNameSpelling = entity.getNickNameSpelling();
-        if (nickNameSpelling != null) {
-            stmt.bindString(7, nickNameSpelling);
+        String showName = entity.getShowName();
+        if (showName != null) {
+            stmt.bindString(7, showName);
         }
  
-        String remarkNameSpelling = entity.getRemarkNameSpelling();
-        if (remarkNameSpelling != null) {
-            stmt.bindString(8, remarkNameSpelling);
+        String showNameLetter = entity.getShowNameLetter();
+        if (showNameLetter != null) {
+            stmt.bindString(8, showNameLetter);
         }
     }
 
@@ -142,14 +142,14 @@ public class ContactInfoDao extends AbstractDao<ContactInfo, String> {
             stmt.bindString(6, remarkName);
         }
  
-        String nickNameSpelling = entity.getNickNameSpelling();
-        if (nickNameSpelling != null) {
-            stmt.bindString(7, nickNameSpelling);
+        String showName = entity.getShowName();
+        if (showName != null) {
+            stmt.bindString(7, showName);
         }
  
-        String remarkNameSpelling = entity.getRemarkNameSpelling();
-        if (remarkNameSpelling != null) {
-            stmt.bindString(8, remarkNameSpelling);
+        String showNameLetter = entity.getShowNameLetter();
+        if (showNameLetter != null) {
+            stmt.bindString(8, showNameLetter);
         }
     }
 
@@ -167,8 +167,8 @@ public class ContactInfoDao extends AbstractDao<ContactInfo, String> {
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // headUri
             cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // nickName
             cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // remarkName
-            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // nickNameSpelling
-            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7) // remarkNameSpelling
+            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // showName
+            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7) // showNameLetter
         );
         return entity;
     }
@@ -181,8 +181,8 @@ public class ContactInfoDao extends AbstractDao<ContactInfo, String> {
         entity.setHeadUri(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setNickName(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
         entity.setRemarkName(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
-        entity.setNickNameSpelling(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
-        entity.setRemarkNameSpelling(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
+        entity.setShowName(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
+        entity.setShowNameLetter(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
      }
     
     @Override

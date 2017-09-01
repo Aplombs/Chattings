@@ -160,7 +160,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 SpHelper.getInstance().put(map);
 
                 isLogin = false;
-                recoverLoginView();
                 UIHelper.getInstance().toast("登录成功");
                 gotoMain();
                 break;

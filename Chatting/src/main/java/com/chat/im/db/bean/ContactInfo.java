@@ -17,25 +17,25 @@ public class ContactInfo {
     private String headUri;
     private String nickName;
     private String remarkName;
-    private String nickNameSpelling;
-    private String remarkNameSpelling;
+    private String showName;
+    private String showNameLetter;
 
-    @Generated(hash = 2019856331)
-    public ContactInfo() {
-    }
-
-    @Generated(hash = 1570272228)
+    @Generated(hash = 1596942737)
     public ContactInfo(String userId, String region, String phone, String headUri,
-                       String nickName, String remarkName, String nickNameSpelling,
-                       String remarkNameSpelling) {
+                       String nickName, String remarkName, String showName,
+                       String showNameLetter) {
         this.userId = userId;
         this.region = region;
         this.phone = phone;
         this.headUri = headUri;
         this.nickName = nickName;
         this.remarkName = remarkName;
-        this.nickNameSpelling = nickNameSpelling;
-        this.remarkNameSpelling = remarkNameSpelling;
+        this.showName = showName;
+        this.showNameLetter = showNameLetter;
+    }
+
+    @Generated(hash = 2019856331)
+    public ContactInfo() {
     }
 
     public String getUserId() {
@@ -86,19 +86,19 @@ public class ContactInfo {
         this.remarkName = remarkName;
     }
 
-    public String getNickNameSpelling() {
-        return this.nickNameSpelling;
+    public String getShowName() {
+        return this.showName;
     }
 
-    public void setNickNameSpelling(String nickNameSpelling) {
-        this.nickNameSpelling = nickNameSpelling;
+    public void setShowName(String showName) {
+        this.showName = showName;
     }
 
-    public String getRemarkNameSpelling() {
-        return this.remarkNameSpelling;
+    public String getShowNameLetter() {
+        return this.showNameLetter;
     }
 
-    public void setRemarkNameSpelling(String remarkNameSpelling) {
-        this.remarkNameSpelling = remarkNameSpelling;
+    public void setShowNameLetter(String showNameLetter) {
+        this.showNameLetter = showNameLetter;
     }
 }

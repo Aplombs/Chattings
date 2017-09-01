@@ -301,7 +301,6 @@ public class OKHttpClientHelper {
                         if (list != null && list.size() > 0) {
                             List<ContactInfo> contactInfoList = new ArrayList<>();
                             for (GetAllContactResponse.ResultEntity resultEntity : list) {
-                                //if (resultEntity.getStatus() == 20) {
                                 GetAllContactResponse.ResultEntity.UserEntity userEntity = resultEntity.getUser();
                                 String userId = userEntity.getId();
                                 String nickname = userEntity.getNickname();
@@ -309,12 +308,18 @@ public class OKHttpClientHelper {
                                 String userHeadUri = userEntity.getPortraitUri();
                                 String region = userEntity.getRegion();
                                 String phone = userEntity.getPhone();
-                                String nickNameSpelling = UtilsHelper.getInstance().getFirstLetter(nickname);
-                                String remarkNameSpelling = UtilsHelper.getInstance().getFirstLetter(remarkName);
+                                String showName;
+                                String showNameLetter;
+                                if (TextUtils.isEmpty(remarkName)) {//备注为空取昵称的首字母
+                                    showName = nickname;
+                                    showNameLetter = UtilsHelper.getInstance().getFirstLetter(nickname);
+                                } else {
+                                    showName = remarkName;
+                                    showNameLetter = UtilsHelper.getInstance().getFirstLetter(remarkName);
+                                }
 
-                                ContactInfo contactInfo = new ContactInfo(userId, region, phone, userHeadUri, nickname, remarkName, nickNameSpelling, remarkNameSpelling);
+                                ContactInfo contactInfo = new ContactInfo(userId, region, phone, userHeadUri, nickname, remarkName, showName, showNameLetter);
                                 contactInfoList.add(contactInfo);
-                                //}
                             }
                             //将自己加入联系人列表
                             String userId = SpHelper.getInstance().get(Constants.SP_LOGIN_USERID, "");
@@ -322,8 +327,8 @@ public class OKHttpClientHelper {
                             String phone = SpHelper.getInstance().get(Constants.SP_LOGIN_PHONE, "");
                             String userHeadUri = SpHelper.getInstance().get(Constants.SP_LOGIN_HEAD_URI, "");
                             String nickname = SpHelper.getInstance().get(Constants.SP_LOGIN_NICKNAME, "");
-                            String nickNameSpelling = UtilsHelper.getInstance().getFirstLetter(nickname);
-                            ContactInfo contactInfo = new ContactInfo(userId, region, phone, userHeadUri, nickname, "", nickNameSpelling, "");
+                            String showNameLetter = UtilsHelper.getInstance().getFirstLetter(nickname);
+                            ContactInfo contactInfo = new ContactInfo(userId, region, phone, userHeadUri, nickname, "", nickname, showNameLetter);
                             contactInfoList.add(contactInfo);
 
                             ContactInfoDao contactInfoDao = DBHelper.getInstance().getDaoSession().getContactInfoDao();

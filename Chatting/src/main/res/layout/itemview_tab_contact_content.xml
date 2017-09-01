@@ -5,24 +5,6 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <!--联系人首字母-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/line_bg"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/firstLetter_itemContact"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:text="T"
-            android:textColor="@color/shallow_black"
-            android:textSize="16sp" />
-
-    </LinearLayout>
-
     <!--联系人头像 备注-->
     <LinearLayout
         android:layout_width="match_parent"
@@ -47,5 +29,11 @@
             android:textSize="16sp" />
 
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/line_bg" />
 
 </LinearLayout>
