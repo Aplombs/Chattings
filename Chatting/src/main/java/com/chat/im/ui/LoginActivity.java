@@ -11,6 +11,7 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.EditText;
 
 import com.chat.im.R;
+import com.chat.im.application.IMApp;
 import com.chat.im.constant.Constants;
 import com.chat.im.helper.OKHttpClientHelper;
 import com.chat.im.helper.SpHelper;
@@ -158,7 +159,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 map.put(Constants.SP_LOGIN_PASSWORD, password);
                 map.put(Constants.SP_LOGIN_NICKNAME, nickName);
                 SpHelper.getInstance().put(map);
-
+                //登录成功为全局变量赋值
+                IMApp.getInstance().mLoginID = loginUserID;
                 isLogin = false;
                 UIHelper.getInstance().toast("登录成功");
                 gotoMain();
