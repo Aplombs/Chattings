@@ -136,8 +136,8 @@
                     android:layout_alignParentTop="true"
                     android:layout_marginTop="5dp"
                     android:layout_toEndOf="@+id/image_tab_me"
-                    android:src="@drawable/red_dot_tip"
-                    android:visibility="gone" />
+                    android:src="@drawable/red_dot"
+                    android:visibility="visible" />
 
                 <ImageView
                     android:id="@+id/image_tab_me"

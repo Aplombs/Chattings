@@ -180,4 +180,15 @@ public class UtilsHelper {
         }
         return des;
     }
+
+    public String formatPhone(String phone) {
+        String str = phone;
+        if (phone.length() == 11) {
+            String substring1 = phone.substring(0, 3);//187
+            String substring2 = phone.substring(3, 7);//3103
+            String substring3 = phone.substring(7, 11);//3105
+            str = substring1 + "-" + substring2 + "-" + substring3;
+        }
+        return str;
+    }
 }
