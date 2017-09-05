@@ -1,5 +1,6 @@
 package com.chat.im.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,14 +12,22 @@ import android.widget.TextView;
 
 import com.chat.im.R;
 import com.chat.im.constant.Constants;
+import com.chat.im.helper.ContextHelper;
 import com.chat.im.helper.SpHelper;
+import com.chat.im.helper.UIHelper;
 import com.chat.im.helper.UtilsHelper;
+import com.chat.im.ui.MeActivity;
 
 /**
  * 我页签
  */
 
 public class MeFragment extends Fragment implements View.OnClickListener {
+
+    /**
+     * 查看个人信息请求码
+     */
+    public static int USER_INFO_ME_FRAGMENT_REQUEST_CODE = 0;
 
     private View mView, newTip;
     private ImageView mUserHead;
@@ -57,6 +66,43 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        Intent intent = new Intent(ContextHelper.getContext(), MeActivity.class);
+        String tag = "";
+        switch (v.getId()) {
+            case R.id.head_nickname_qrCode_me_tab://个人信息
+                tag = Constants.TAG_USER_INFO_ME_TAB;
+                intent.putExtra("tag", tag);
+                startActivityForResult(intent, USER_INFO_ME_FRAGMENT_REQUEST_CODE);
+                return;
+            //break;
+            case R.id.qrCode_me_tab://个人二维码
+                UIHelper.getInstance().toast("个人二维码");
+                return;
+            case R.id.wallet_me_tab://钱包
+                tag = Constants.TAG_WALLET_ME_TAB;
+                break;
+            case R.id.friend_me_tab://朋友圈
+                tag = Constants.TAG_FRIEND_INFO_ME_TAB;
+                break;
+            case R.id.collection_me_tab://收藏
+                tag = Constants.TAG_COLLECTION_ME_TAB;
+                break;
+            case R.id.expression_me_tab://表情
+                tag = Constants.TAG_EXPRESSION_ME_TAB;
+                break;
+            case R.id.setting_me_tab://设置
+                tag = Constants.TAG_SETTING_ME_TAB;
+                break;
+        }
+        intent.putExtra("tag", tag);
+        startActivity(intent);
+    }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == USER_INFO_ME_FRAGMENT_REQUEST_CODE) {
+            //刷新个人信息UI,昵称
+        }
     }
 }

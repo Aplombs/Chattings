@@ -42,6 +42,8 @@
             android:name=".ui.MainActivity"
             android:screenOrientation="portrait" />
 
+        <activity android:name=".ui.MeActivity" />
+
         <!-- imlib config begin -->
         <meta-data
             android:name="RONG_CLOUD_APP_KEY"

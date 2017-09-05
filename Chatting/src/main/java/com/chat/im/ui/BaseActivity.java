@@ -20,23 +20,27 @@ import com.chat.im.helper.UtilsHelper;
  * Activity基类
  * 注意
  * 1 子类布局res需<include layout="@layout/title_bar" />
+ * 2 init()添加以下代码
+ * mTitleName.setText("title");
+ * mBt_Add.setVisibility(View.GONE);
+ * mReturnView.setVisibility(View.VISIBLE);
  */
 
 public abstract class BaseActivity extends FragmentActivity {
 
     //右上角+
-    private ImageView mBt_Add;
+    protected ImageView mBt_Add;
     //顶部标题
-    private TextView mTitleName;
+    protected TextView mTitleName;
     //左上角返回按钮
-    private View mReturnView;
+    protected View mReturnView;
     //点击返回键时间判断
     private long exitTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(setCurrentLayoutRes());
+        setContentView(setLayoutRes());
 
         //沉浸式状态栏
         setTranslucentStatusBar();
@@ -44,10 +48,6 @@ public abstract class BaseActivity extends FragmentActivity {
         mTitleName = (TextView) findViewById(R.id.title_bar_title);
         mBt_Add = (ImageView) findViewById(R.id.title_bar_add);
         mReturnView = findViewById(R.id.ll_return_top);
-
-        mTitleName.setText(setCurrentTitle());
-        mBt_Add.setVisibility(setRightButtonVisibility());
-        mReturnView.setVisibility(setLeftReturnButtonVisibility());
 
         mReturnView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,28 +104,7 @@ public abstract class BaseActivity extends FragmentActivity {
      *
      * @return 当前布局的resID
      */
-    protected abstract int setCurrentLayoutRes();
-
-    /**
-     * View.GONE;
-     * View.VISIBLE;
-     *
-     * @return 返回按钮是否可见
-     */
-    protected abstract int setLeftReturnButtonVisibility();
-
-    /**
-     * View.GONE;
-     * View.VISIBLE;
-     *
-     * @return 右上角+是否可见
-     */
-    protected abstract int setRightButtonVisibility();
-
-    /**
-     * @return 当前界面标题
-     */
-    protected abstract CharSequence setCurrentTitle();
+    protected abstract int setLayoutRes();
 
     /**
      * @return 是否需要按两次返回(子类处理)

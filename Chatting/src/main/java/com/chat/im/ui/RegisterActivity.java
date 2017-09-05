@@ -38,12 +38,16 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private AnimatorSet mAnimatorSet;
 
     @Override
-    protected int setCurrentLayoutRes() {
+    protected int setLayoutRes() {
         return R.layout.activity_register;
     }
 
     @Override
     protected void init() {
+        mTitleName.setText("注册");
+        mBt_Add.setVisibility(View.GONE);
+        mReturnView.setVisibility(View.VISIBLE);
+
         et_nickname = (EditText) findViewById(R.id.et_nickname_register);
         et_phone = (EditText) findViewById(R.id.et_phone_register);
         et_code = (EditText) findViewById(R.id.et_code_register);
@@ -105,21 +109,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         });
 
         OKHttpClientHelper.getInstance().setResponseListener(this);
-    }
-
-    @Override
-    protected int setLeftReturnButtonVisibility() {
-        return View.VISIBLE;
-    }
-
-    @Override
-    protected int setRightButtonVisibility() {
-        return View.GONE;
-    }
-
-    @Override
-    protected CharSequence setCurrentTitle() {
-        return "注册";
     }
 
     @Override

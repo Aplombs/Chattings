@@ -32,23 +32,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private View tv_login, ll_login_progress, tv_new_user, tv_forget_password;
 
     @Override
-    protected int setCurrentLayoutRes() {
+    protected int setLayoutRes() {
         return R.layout.activity_login;
-    }
-
-    @Override
-    protected int setLeftReturnButtonVisibility() {
-        return View.GONE;
-    }
-
-    @Override
-    protected int setRightButtonVisibility() {
-        return View.GONE;
-    }
-
-    @Override
-    protected CharSequence setCurrentTitle() {
-        return "登录";
     }
 
     @Override
@@ -58,6 +43,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
     @Override
     protected void init() {
+        mTitleName.setText("登录");
+        mBt_Add.setVisibility(View.GONE);
+        mReturnView.setVisibility(View.GONE);
+
         et_phone = (EditText) findViewById(R.id.et_phone_login);
         et_password = (EditText) findViewById(R.id.et_password_login);
         tv_login = findViewById(R.id.tv_login);

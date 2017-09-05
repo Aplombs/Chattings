@@ -23,15 +23,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private ViewPager mViewPager;
     private ImageView mImage_tabMessage, mImage_tabContact, mImage_tabMe;
-    private View mAdd, mLoading, mTip_me, mTabMessage, mTabContact, mTabMe;
-    private TextView mTitle, mText_tabMessage, mText_tabContact, mText_tabMe, mNotRead_tabMessage, mNotRead_tabContact;
+    private View mLoading, mTip_me, mTabMessage, mTabContact, mTabMe;
+    private TextView mText_tabMessage, mText_tabContact, mText_tabMe, mNotRead_tabMessage, mNotRead_tabContact;
 
     @Override
     protected void init() {
-        mAdd = findViewById(R.id.title_bar_add);
+        mBt_Add.setVisibility(View.VISIBLE);
+        mReturnView.setVisibility(View.GONE);
+
         mLoading = findViewById(R.id.title_bar_loading);
-        mAdd = findViewById(R.id.title_bar_add);
-        mTitle = (TextView) findViewById(R.id.title_bar_title);
 
         mTabMessage = findViewById(R.id.tab_message_main);
         mTabContact = findViewById(R.id.tab_contact_main);
@@ -100,23 +100,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     @Override
-    protected int setCurrentLayoutRes() {
+    protected int setLayoutRes() {
         return R.layout.activity_main;
-    }
-
-    @Override
-    protected int setLeftReturnButtonVisibility() {
-        return View.GONE;
-    }
-
-    @Override
-    protected int setRightButtonVisibility() {
-        return View.VISIBLE;
-    }
-
-    @Override
-    protected CharSequence setCurrentTitle() {
-        return "主页";
     }
 
     @Override
@@ -143,8 +128,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         switch (position) {
             case 0:
                 //根据收取消息状态改变title
-                mTitle.setText("消息");
-                mAdd.setVisibility(View.VISIBLE);
+                mTitleName.setText("消息");
+                mBt_Add.setVisibility(View.VISIBLE);
                 mLoading.setVisibility(View.GONE);
 
                 mImage_tabMessage.setImageResource(R.drawable.tab_message_1);
@@ -158,9 +143,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 mViewPager.setCurrentItem(0);
                 break;
             case 1:
-                mTitle.setText("联系人");
+                mTitleName.setText("联系人");
                 mLoading.setVisibility(View.GONE);
-                mAdd.setVisibility(View.VISIBLE);
+                mBt_Add.setVisibility(View.VISIBLE);
 
                 mImage_tabMessage.setImageResource(R.drawable.tab_message_0);
                 mImage_tabContact.setImageResource(R.drawable.tab_contact_1);
@@ -174,8 +159,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case 2:
                 mLoading.setVisibility(View.GONE);
-                mAdd.setVisibility(View.GONE);
-                mTitle.setText("我");
+                mBt_Add.setVisibility(View.GONE);
+                mTitleName.setText("我");
 
                 mImage_tabMessage.setImageResource(R.drawable.tab_message_0);
                 mImage_tabContact.setImageResource(R.drawable.tab_contact_0);
