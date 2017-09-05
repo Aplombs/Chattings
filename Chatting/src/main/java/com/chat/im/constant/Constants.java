@@ -34,6 +34,12 @@ public class Constants {
     public static final String ACTIVITY_RETURN_PASSWORD = "password";
     public static final String ACTIVITY_RETURN_NICKNAME = "nickname";
     public static final String ACTIVITY_RETURN_USERID = "userID";
+    public static final String TAG_USER_INFO_ME_TAB = "个人信息";
+    public static final String TAG_WALLET_ME_TAB = "钱包";
+    public static final String TAG_FRIEND_INFO_ME_TAB = "朋友圈";
+    public static final String TAG_COLLECTION_ME_TAB = "收藏";
+    public static final String TAG_EXPRESSION_ME_TAB = "表情";
+    public static final String TAG_SETTING_ME_TAB = "设置";
 
     /**
      * 登录成功,保存用户手机号,用户密码,用户ID
