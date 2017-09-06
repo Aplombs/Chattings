@@ -1,8 +1,8 @@
 package com.chat.im.application;
 
 import android.app.ActivityManager;
-import android.app.Application;
 import android.content.Context;
+import android.support.multidex.MultiDexApplication;
 
 import com.chat.im.helper.ContextHelper;
 import com.chat.im.helper.CrashReporterHelper;
@@ -18,7 +18,7 @@ import com.chat.im.helper.UtilsHelper;
 import io.rong.imlib.RongIMClient;
 
 
-public class ChattingApplication extends Application {
+public class ChattingApplication extends MultiDexApplication {
 
     private Context applicationContext;
 
