@@ -23,7 +23,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.LoginActivity"
+            android:name=".ui.LauncherActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,18 +31,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen"-->
+
         <activity
-            android:name=".ui.LauncherActivity"
+            android:name=".ui.LoginActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.RegisterActivity"
-            android:screenOrientation="portrait" />
+
         <activity
             android:name=".ui.MainActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".ui.MeActivity" />
+        <activity
+            android:name=".ui.RegisterActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.MeActivity"
+            android:screenOrientation="portrait" />
 
         <!-- imlib config begin -->
         <meta-data
@@ -87,6 +91,7 @@
             android:exported="true"
             android:process="com.chat.im.push">  <!-- push进程，可以改名 -->
         </service>
+
         <service
             android:name=".service.TestService"
             android:process="com.chat.im.push" />
@@ -115,7 +120,6 @@
         </receiver>
         <!--必选： SDK 核心功能-->
         <!-- end -->
-
     </application>
 
 </manifest>

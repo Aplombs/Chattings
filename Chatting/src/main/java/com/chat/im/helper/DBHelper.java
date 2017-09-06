@@ -33,4 +33,8 @@ public class DBHelper {
         DaoMaster daoMaster = new DaoMaster(devOpenHelper.getWritableDb());
         return daoMaster.newSession();
     }
+
+    public void closeDB() {
+        getDaoSession().getDatabase().close();
+    }
 }

@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.chat.im.R;
 import com.chat.im.constant.Constants;
@@ -24,13 +26,17 @@ public class LauncherActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //取消标题栏
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //取消状态栏
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_launcher);
 
         String loginToken = SpHelper.getInstance().get(Constants.SP_LOGIN_TOKEN, "");
         Handler handler = new Handler();
 
         if (TextUtils.isEmpty(loginToken)) {//未登录
-            goToLogin();
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -71,6 +77,7 @@ public class LauncherActivity extends Activity {
         this.finish();
     }
 
+    //打开登录界面
     private void goToLogin() {
         startActivity(new Intent(this, LoginActivity.class));
         finish();

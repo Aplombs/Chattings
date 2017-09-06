@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.chat.im.R;
 import com.chat.im.adapter.ContactAdapter;
 import com.chat.im.db.bean.ContactInfo;
-import com.chat.im.db.dao.ContactInfoDao;
 import com.chat.im.helper.DBHelper;
 import com.chat.im.helper.LogHelper;
 import com.chat.im.helper.OKHttpClientHelper;
@@ -51,7 +50,7 @@ public class ContactFragment extends Fragment implements View.OnClickListener {
                 if (UtilsHelper.getInstance().isNetworkConnected()) {
                     OKHttpClientHelper.getInstance().getAllContact();
                 }
-                //initTestData();
+
                 List<ContactInfo> mContactInfoList = DBHelper.getInstance().getDaoSession().
                         getContactInfoDao().queryBuilder().list();
                 observableEmitter.onNext(mContactInfoList);
@@ -116,18 +115,6 @@ public class ContactFragment extends Fragment implements View.OnClickListener {
                 });
             }
         });
-    }
-
-    //添加测试数据
-    private void initTestData() {
-        ContactInfoDao contactInfoDao = DBHelper.getInstance().getDaoSession().getContactInfoDao();
-        String[] list = getResources().getStringArray(R.array.provinces);
-        for (int i = 0; i < list.length; i++) {
-            String name = list[i];
-            String showNameLetter = UtilsHelper.getInstance().getFirstLetter(name);
-            ContactInfo contactInfo = new ContactInfo(String.valueOf(i), "", "", "", name, "", name, showNameLetter);
-            contactInfoDao.insertOrReplaceInTx(contactInfo);
-        }
     }
 
     @Nullable
