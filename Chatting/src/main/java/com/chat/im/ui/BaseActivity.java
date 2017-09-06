@@ -13,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chat.im.R;
-import com.chat.im.helper.UIHelper;
 import com.chat.im.helper.UtilsHelper;
 
 /**
@@ -34,8 +33,6 @@ public abstract class BaseActivity extends FragmentActivity {
     protected TextView mTitleName;
     //左上角返回按钮
     protected View mReturnView;
-    //点击返回键时间判断
-    private long exitTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,28 +102,4 @@ public abstract class BaseActivity extends FragmentActivity {
      * @return 当前布局的resID
      */
     protected abstract int setLayoutRes();
-
-    /**
-     * @return 是否需要按两次返回(子类处理)
-     */
-    protected abstract boolean isNeedTwiceToReturn();
-
-    @Override
-    public void onBackPressed() {
-        if (isNeedTwiceToReturn()) {
-            if ((System.currentTimeMillis() - exitTime) > 2000) {
-                UIHelper.getInstance().toast("再按一次退出程序");
-                exitTime = System.currentTimeMillis();
-            } else {
-                finish();
-            }
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
 }

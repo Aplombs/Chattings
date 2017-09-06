@@ -3,6 +3,7 @@ package com.chat.im.ui;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -105,11 +106,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     @Override
-    protected boolean isNeedTwiceToReturn() {
-        return false;
-    }
-
-    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tab_message_main:
@@ -173,5 +169,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 mViewPager.setCurrentItem(2);
                 break;
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            moveTaskToBack(false);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

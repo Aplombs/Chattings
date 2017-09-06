@@ -24,11 +24,6 @@ public class MeActivity extends BaseActivity {
     }
 
     @Override
-    protected boolean isNeedTwiceToReturn() {
-        return false;
-    }
-
-    @Override
     protected void init() {
         mBt_Add.setVisibility(View.GONE);
         mReturnView.setVisibility(View.VISIBLE);

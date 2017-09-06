@@ -112,11 +112,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     }
 
     @Override
-    protected boolean isNeedTwiceToReturn() {
-        return false;
-    }
-
-    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_sendCode_register://发送验证码

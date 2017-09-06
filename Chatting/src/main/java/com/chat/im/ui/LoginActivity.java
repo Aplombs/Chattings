@@ -37,11 +37,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     }
 
     @Override
-    protected boolean isNeedTwiceToReturn() {
-        return true;
-    }
-
-    @Override
     protected void init() {
         mTitleName.setText("登录");
         mBt_Add.setVisibility(View.GONE);
