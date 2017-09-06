@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.EditText;
@@ -102,6 +103,15 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     protected void onResume() {
         super.onResume();
         OKHttpClientHelper.getInstance().setResponseListener(this);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            moveTaskToBack(false);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override
