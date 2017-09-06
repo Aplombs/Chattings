@@ -10,6 +10,8 @@ import net.sourceforge.pinyin4j.PinyinHelper;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -42,6 +44,16 @@ public class UtilsHelper {
 
     public static void clearCache() {
         utilsHelper = null;
+    }
+
+    /**
+     * @param times 要进行格式化的时间
+     * @return 格式化时间 2016-12-12 12:12
+     */
+    public String formatTime(long times) {
+        String formatString = "yyyy_MM_dd_HH_mm";
+        SimpleDateFormat dateFormat = new SimpleDateFormat(formatString);
+        return dateFormat.format(new Date(times));
     }
 
     /**
