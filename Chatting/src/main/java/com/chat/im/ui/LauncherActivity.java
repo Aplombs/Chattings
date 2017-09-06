@@ -23,6 +23,7 @@ public class LauncherActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //由于theme中设置了windowBackground故不设置ContentView
         //setContentView(R.layout.activity_launcher);
 
         String loginToken = SpHelper.getInstance().get(Constants.SP_LOGIN_TOKEN, "");
