@@ -45,10 +45,14 @@ public class ContactFragment extends Fragment implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         Observable.create(new ObservableOnSubscribe<List<ContactInfo>>() {
             @Override
-            public void subscribe(ObservableEmitter<List<ContactInfo>> observableEmitter) throws Exception {
+            public void subscribe(ObservableEmitter<List<ContactInfo>> observableEmitter) {
                 //获取全部好友信息
                 if (UtilsHelper.getInstance().isNetworkConnected()) {
-                    OKHttpClientHelper.getInstance().getAllContact();
+                    try {
+                        OKHttpClientHelper.getInstance().getAllContact();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
 
                 List<ContactInfo> mContactInfoList = DBHelper.getInstance().getDaoSession().
