@@ -98,7 +98,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="5dp"
                     android:text="联系人"
-                    android:textColor="@color/shallow_black"
+                    android:textColor="@color/gray"
                     android:textSize="12sp" />
 
                 <TextView
@@ -155,7 +155,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="5dp"
                     android:text="我"
-                    android:textColor="@color/shallow_black"
+                    android:textColor="@color/gray"
                     android:textSize="12sp" />
 
             </RelativeLayout>
