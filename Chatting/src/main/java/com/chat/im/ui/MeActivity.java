@@ -53,6 +53,6 @@ public class MeActivity extends BaseActivity {
                 break;
         }
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.me_content, fragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.me_activity_content, fragment).commit();
     }
 }

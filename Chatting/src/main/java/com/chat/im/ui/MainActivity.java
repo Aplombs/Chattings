@@ -1,5 +1,6 @@
 package com.chat.im.ui;
 
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -13,6 +14,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.chat.im.R;
+import com.chat.im.constant.Constants;
 import com.chat.im.fragment.ContactFragment;
 import com.chat.im.fragment.MeFragment;
 import com.chat.im.fragment.MessageFragment;
@@ -57,6 +59,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mTip_me = findViewById(R.id.tip_tab_me);
 
         mViewPager = (ViewPager) findViewById(R.id.viewpager_main);
+
+        mPopupView.findViewById(R.id.popup_group_chat).setOnClickListener(this);
+        mPopupView.findViewById(R.id.popup_add_friend).setOnClickListener(this);
+        mPopupView.findViewById(R.id.popup_scanner).setOnClickListener(this);
+        mPopupView.findViewById(R.id.popup_collect_payment).setOnClickListener(this);
 
         mBt_Add.setOnClickListener(this);
         mTabMessage.setOnClickListener(this);
@@ -129,7 +136,27 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             case R.id.tab_me_main:
                 selectTab(2);
                 break;
+            case R.id.popup_group_chat://发起群聊
+                goToPopupWindow(Constants.TAG_INITIATE_GROUP_CHAT_POPUP_WINDOW);
+                break;
+            case R.id.popup_add_friend://添加好友
+                goToPopupWindow(Constants.TAG_ADD_FRIEND_POPUP_WINDOW);
+                break;
+            case R.id.popup_scanner://扫一扫
+                goToPopupWindow(Constants.TAG_SCANNER_POPUP_WINDOW);
+                break;
+            case R.id.popup_collect_payment://收付款
+                goToPopupWindow(Constants.TAG_COLLECT_PAYMENT_POPUP_WINDOW);
+                break;
         }
+    }
+
+    //点击popup条目,打开对应界面
+    private void goToPopupWindow(String tag) {
+        mPopupWindow.dismiss();
+        Intent intent = new Intent(this, PopupWindowActivity.class);
+        intent.putExtra("tag", tag);
+        startActivity(intent);
     }
 
     private void selectTab(int position) {

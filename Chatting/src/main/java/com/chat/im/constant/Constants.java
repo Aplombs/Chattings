@@ -34,6 +34,10 @@ public class Constants {
     public static final String ACTIVITY_RETURN_PASSWORD = "password";
     public static final String ACTIVITY_RETURN_NICKNAME = "nickname";
     public static final String ACTIVITY_RETURN_USERID = "userID";
+    public static final String TAG_INITIATE_GROUP_CHAT_POPUP_WINDOW = "发起群聊";
+    public static final String TAG_ADD_FRIEND_POPUP_WINDOW = "添加好友";
+    public static final String TAG_SCANNER_POPUP_WINDOW = "扫一扫";
+    public static final String TAG_COLLECT_PAYMENT_POPUP_WINDOW = "收付款";
     public static final String TAG_USER_INFO_ME_TAB = "个人信息";
     public static final String TAG_WALLET_ME_TAB = "钱包";
     public static final String TAG_FRIEND_INFO_ME_TAB = "朋友圈";

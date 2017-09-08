@@ -3,13 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@color/popup_bg"
+    android:background="@color/gray"
     android:orientation="vertical">
 
     <!--发起群聊-->
     <LinearLayout
+        android:id="@+id/popup_group_chat"
         android:layout_width="130dp"
-        android:layout_height="42dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/btn_click"
         android:gravity="center_vertical"
         android:orientation="vertical">
@@ -17,6 +18,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <ImageView
@@ -35,19 +37,19 @@
 
         </LinearLayout>
 
-    </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/black" />
 
-    <View
-        android:layout_width="120dp"
-        android:layout_height="0.5dp"
-        android:layout_marginStart="5dp"
-        android:background="@color/popupWindowDivide" />
+    </LinearLayout>
 
     <!--添加好友-->
     <LinearLayout
+        android:id="@+id/popup_add_friend"
         android:layout_width="130dp"
-        android:layout_height="42dp"
-        android:layout_marginTop="3dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/btn_click"
         android:gravity="center_vertical"
         android:orientation="vertical">
@@ -55,6 +57,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <ImageView
@@ -73,19 +76,19 @@
 
         </LinearLayout>
 
-    </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/black" />
 
-    <View
-        android:layout_width="120dp"
-        android:layout_height="0.5dp"
-        android:layout_marginStart="5dp"
-        android:background="@color/popupWindowDivide" />
+    </LinearLayout>
 
     <!--扫一扫-->
     <LinearLayout
+        android:id="@+id/popup_scanner"
         android:layout_width="130dp"
-        android:layout_height="42dp"
-        android:layout_marginTop="3dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/btn_click"
         android:gravity="center_vertical"
         android:orientation="vertical">
@@ -93,6 +96,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <ImageView
@@ -111,19 +115,19 @@
 
         </LinearLayout>
 
-    </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/black" />
 
-    <View
-        android:layout_width="120dp"
-        android:layout_height="0.5dp"
-        android:layout_marginStart="5dp"
-        android:background="@color/popupWindowDivide" />
+    </LinearLayout>
 
     <!--收付款-->
     <LinearLayout
+        android:id="@+id/popup_collect_payment"
         android:layout_width="130dp"
-        android:layout_height="42dp"
-        android:layout_marginTop="3dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/btn_click"
         android:gravity="center_vertical"
         android:orientation="vertical">
@@ -131,6 +135,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <ImageView
@@ -148,6 +153,12 @@
                 tools:ignore="HardcodedText" />
 
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/black" />
 
     </LinearLayout>
 
