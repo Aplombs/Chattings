@@ -1,11 +1,15 @@
 package com.chat.im.ui;
 
+import android.graphics.drawable.ColorDrawable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.chat.im.R;
@@ -22,9 +26,10 @@ import java.util.List;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
+    protected PopupWindow mPopupWindow;
     private ViewPager mViewPager;
     private ImageView mImage_tabMessage, mImage_tabContact, mImage_tabMe;
-    private View mLoading, mTip_me, mTabMessage, mTabContact, mTabMe;
+    private View mLoading, mTip_me, mTabMessage, mTabContact, mTabMe, mPopupView, mPopupWindowLocationView;
     private TextView mText_tabMessage, mText_tabContact, mText_tabMe, mNotRead_tabMessage, mNotRead_tabContact;
 
     @Override
@@ -33,6 +38,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mReturnView.setVisibility(View.GONE);
 
         mLoading = findViewById(R.id.title_bar_loading);
+
+        mPopupWindowLocationView = findViewById(R.id.popup_add_location);
+        mPopupView = LayoutInflater.from(this).inflate(R.layout.popup_window_layout_add, null);
 
         mTabMessage = findViewById(R.id.tab_message_main);
         mTabContact = findViewById(R.id.tab_contact_main);
@@ -50,6 +58,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         mViewPager = (ViewPager) findViewById(R.id.viewpager_main);
 
+        mBt_Add.setOnClickListener(this);
         mTabMessage.setOnClickListener(this);
         mTabContact.setOnClickListener(this);
         mTabMe.setOnClickListener(this);
@@ -108,6 +117,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.title_bar_add:
+                showPopupWindow();
+                break;
             case R.id.tab_message_main:
                 selectTab(0);
                 break;
@@ -171,12 +183,33 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
     }
 
+    private void showPopupWindow() {
+        if (mPopupWindow == null) {
+            mPopupWindow = new PopupWindow(mPopupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            mPopupWindow.setFocusable(true);
+            mPopupWindow.setOutsideTouchable(true);
+            //如果不设置BackgroundDrawable的话setOutsideTouchable(true)方法无效,调用setOutsideTouchable(true)就必须调用setFocusable(true)
+            mPopupWindow.setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        }
+
+        if (mPopupWindow.isShowing()) {
+            mPopupWindow.dismiss();
+        } else {
+            mPopupWindow.showAsDropDown(mPopupWindowLocationView);
+        }
+    }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            moveTaskToBack(false);
+        if (mPopupWindow != null && mPopupWindow.isShowing()) {
+            mPopupWindow.dismiss();
             return true;
+        } else {
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                moveTaskToBack(false);
+                return true;
+            }
+            return super.onKeyDown(keyCode, event);
         }
-        return super.onKeyDown(keyCode, event);
     }
 }

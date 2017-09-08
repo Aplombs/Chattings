@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/popup_bg"
+    android:orientation="vertical">
+
+    <!--发起群聊-->
+    <LinearLayout
+        android:layout_width="130dp"
+        android:layout_height="42dp"
+        android:background="@drawable/btn_click"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="15dp"
+                android:src="@drawable/popup_group_chat" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:text="发起群聊"
+                android:textColor="@color/white"
+                tools:ignore="HardcodedText" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="120dp"
+        android:layout_height="0.5dp"
+        android:layout_marginStart="5dp"
+        android:background="@color/popupWindowDivide" />
+
+    <!--添加好友-->
+    <LinearLayout
+        android:layout_width="130dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="3dp"
+        android:background="@drawable/btn_click"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="15dp"
+                android:src="@drawable/popup_add_contacts" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:text="添加好友"
+                android:textColor="@color/white"
+                tools:ignore="HardcodedText" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="120dp"
+        android:layout_height="0.5dp"
+        android:layout_marginStart="5dp"
+        android:background="@color/popupWindowDivide" />
+
+    <!--扫一扫-->
+    <LinearLayout
+        android:layout_width="130dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="3dp"
+        android:background="@drawable/btn_click"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="15dp"
+                android:src="@drawable/popup_scanner" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:text="扫一扫"
+                android:textColor="@color/white"
+                tools:ignore="HardcodedText" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="120dp"
+        android:layout_height="0.5dp"
+        android:layout_marginStart="5dp"
+        android:background="@color/popupWindowDivide" />
+
+    <!--收付款-->
+    <LinearLayout
+        android:layout_width="130dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="3dp"
+        android:background="@drawable/btn_click"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:src="@drawable/popup_collect_payment" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="14dp"
+                android:text="收付款"
+                android:textColor="@color/white"
+                tools:ignore="HardcodedText" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

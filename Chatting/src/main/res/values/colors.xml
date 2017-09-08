@@ -5,6 +5,7 @@
     <color name="black">#000000</color>
     <color name="colorPrimary">#36CAB6</color>
     <color name="transparent">#00000000</color>
+    <color name="popupWindowDivide">#585757</color>
     <!--浅灰色-->
     <color name="shallow_black">#66333333</color>
     <color name="yellow">#ff7d00</color>
@@ -12,5 +13,6 @@
     <color name="line_bg">#22484848</color>
     <color name="common_bg">#00484848</color>
     <color name="network_state_bg">#FEDCDE</color>
+    <color name="popup_bg">#333333</color>
 
 </resources>

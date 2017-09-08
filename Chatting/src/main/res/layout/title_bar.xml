@@ -52,11 +52,20 @@
 
     <ImageView
         android:id="@+id/title_bar_add"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:layout_marginEnd="10dp"
+        android:layout_marginEnd="25dp"
         android:src="@drawable/title_bar_add" />
+
+    <!--为了让popupWindow展示此位置-->
+    <View
+        android:id="@+id/popup_add_location"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="150dp" />
 
 </RelativeLayout>
