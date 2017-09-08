@@ -5,10 +5,10 @@ import android.view.View;
 
 import com.chat.im.R;
 import com.chat.im.constant.Constants;
-import com.chat.im.fragment.AddFriendFragment;
-import com.chat.im.fragment.CollectPaymentFragment;
-import com.chat.im.fragment.InitiateGroupChatFragment;
-import com.chat.im.fragment.ScannerFragment;
+import com.chat.im.fragment.PopupWindow_AddFriendFragment;
+import com.chat.im.fragment.PopupWindow_CollectPaymentFragment;
+import com.chat.im.fragment.PopupWindow_InitiateGroupChatFragment;
+import com.chat.im.fragment.PopupWindow_ScannerFragment;
 
 /**
  * popupWindow界面
@@ -32,16 +32,16 @@ public class PopupWindowActivity extends BaseActivity {
         Fragment fragment = null;
         switch (tag) {
             case Constants.TAG_INITIATE_GROUP_CHAT_POPUP_WINDOW://发起群聊
-                fragment = new InitiateGroupChatFragment();
+                fragment = new PopupWindow_InitiateGroupChatFragment();
                 break;
             case Constants.TAG_ADD_FRIEND_POPUP_WINDOW://添加好友
-                fragment = new AddFriendFragment();
+                fragment = new PopupWindow_AddFriendFragment();
                 break;
             case Constants.TAG_SCANNER_POPUP_WINDOW://扫一扫
-                fragment = new ScannerFragment();
+                fragment = new PopupWindow_ScannerFragment();
                 break;
             case Constants.TAG_COLLECT_PAYMENT_POPUP_WINDOW://收付款
-                fragment = new CollectPaymentFragment();
+                fragment = new PopupWindow_CollectPaymentFragment();
                 break;
         }
 

@@ -10,10 +10,10 @@ import android.view.ViewGroup;
 import com.chat.im.R;
 
 /**
- * 表情
+ * popupWindow-扫一扫
  */
 
-public class ExpressionFragment extends Fragment {
+public class PopupWindow_ScannerFragment extends Fragment {
 
     private View mView;
 
@@ -25,6 +25,6 @@ public class ExpressionFragment extends Fragment {
     }
 
     private void initView(LayoutInflater inflater) {
-        mView = inflater.inflate(R.layout.fragment_expression, null);
+        mView = inflater.inflate(R.layout.fragment_popup_scanner, null);
     }
 }

@@ -21,7 +21,7 @@ import java.util.List;
  * 消息页签
  */
 
-public class MessageFragment extends Fragment {
+public class MainTab_MessageFragment extends Fragment {
 
     private View mView;
     private RecyclerView mRecyclerView;
@@ -36,7 +36,7 @@ public class MessageFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_message, null);
+        mView = inflater.inflate(R.layout.fragment_tab_message, null);
         initView();
         return mView;
     }

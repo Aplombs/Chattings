@@ -34,7 +34,7 @@ import io.reactivex.schedulers.Schedulers;
  * 联系人页签
  */
 
-public class ContactFragment extends Fragment implements View.OnClickListener {
+public class MainTab_ContactFragment extends Fragment implements View.OnClickListener {
 
     private View mView, mLoading;
     private TextView mContactNum;
@@ -134,7 +134,7 @@ public class ContactFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initView(LayoutInflater inflater) {
-        mView = inflater.inflate(R.layout.fragment_contact, null);
+        mView = inflater.inflate(R.layout.fragment_tab_contact, null);
 
         mLoading = mView.findViewById(R.id.loading_Contact);
         mExpandableListView = (ExpandableListView) mView.findViewById(R.id.expandableListView_tabContact);
@@ -142,9 +142,9 @@ public class ContactFragment extends Fragment implements View.OnClickListener {
         View headerView = inflater.inflate(R.layout.listview_header_view_contact, null);
         View footerView = inflater.inflate(R.layout.listview_footer_view_contact, null);
 
-        headerView.findViewById(R.id.newFriend_Contact).setOnClickListener(ContactFragment.this);
-        headerView.findViewById(R.id.groupChat_Contact).setOnClickListener(ContactFragment.this);
-        headerView.findViewById(R.id.publicChat_Contact).setOnClickListener(ContactFragment.this);
+        headerView.findViewById(R.id.newFriend_Contact).setOnClickListener(MainTab_ContactFragment.this);
+        headerView.findViewById(R.id.groupChat_Contact).setOnClickListener(MainTab_ContactFragment.this);
+        headerView.findViewById(R.id.publicChat_Contact).setOnClickListener(MainTab_ContactFragment.this);
 
         mContactNum = (TextView) footerView.findViewById(R.id.contactNum_Contact);
 

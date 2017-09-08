@@ -10,10 +10,10 @@ import android.view.ViewGroup;
 import com.chat.im.R;
 
 /**
- * 朋友圈
+ * popupWindow-发起群聊
  */
 
-public class FriendFragment extends Fragment {
+public class PopupWindow_InitiateGroupChatFragment extends Fragment {
 
     private View mView;
 
@@ -25,6 +25,6 @@ public class FriendFragment extends Fragment {
     }
 
     private void initView(LayoutInflater inflater) {
-        mView = inflater.inflate(R.layout.fragment_friend, null);
+        mView = inflater.inflate(R.layout.fragment_popup_initiate_group_chat, null);
     }
 }

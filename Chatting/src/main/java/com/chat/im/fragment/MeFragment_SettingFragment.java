@@ -26,7 +26,7 @@ import io.rong.imlib.RongIMClient;
  * 设置
  */
 
-public class SettingFragment extends Fragment implements View.OnClickListener {
+public class MeFragment_SettingFragment extends Fragment implements View.OnClickListener {
 
     private View mView;
 
@@ -43,7 +43,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initView(LayoutInflater inflater) {
-        mView = inflater.inflate(R.layout.fragment_setting, null);
+        mView = inflater.inflate(R.layout.fragment_me_setting, null);
         mView.findViewById(R.id.exit_login).setOnClickListener(this);
     }
 

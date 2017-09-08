@@ -10,10 +10,10 @@ import android.view.ViewGroup;
 import com.chat.im.R;
 
 /**
- * popupWindow-收付款
+ * 表情
  */
 
-public class CollectPaymentFragment extends Fragment {
+public class MeFragment_ExpressionFragment extends Fragment {
 
     private View mView;
 
@@ -25,6 +25,6 @@ public class CollectPaymentFragment extends Fragment {
     }
 
     private void initView(LayoutInflater inflater) {
-        mView = inflater.inflate(R.layout.fragment_collect_payment, null);
+        mView = inflater.inflate(R.layout.fragment_me_expression, null);
     }
 }

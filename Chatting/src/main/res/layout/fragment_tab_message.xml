@@ -12,6 +12,6 @@
         android:id="@+id/recyclerView_tabMessage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/ll_network_hint" />
+        android:layout_below="@id/ll_network_hint" />
 
 </RelativeLayout>

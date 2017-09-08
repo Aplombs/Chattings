@@ -15,9 +15,9 @@ import android.widget.TextView;
 
 import com.chat.im.R;
 import com.chat.im.constant.Constants;
-import com.chat.im.fragment.ContactFragment;
-import com.chat.im.fragment.MeFragment;
-import com.chat.im.fragment.MessageFragment;
+import com.chat.im.fragment.MainTab_ContactFragment;
+import com.chat.im.fragment.MainTab_MeFragment;
+import com.chat.im.fragment.MainTab_MessageFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,9 +77,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void initViewPager() {
-        MessageFragment messageFragment = new MessageFragment();
-        ContactFragment contactFragment = new ContactFragment();
-        MeFragment meFragment = new MeFragment();
+        MainTab_MessageFragment messageFragment = new MainTab_MessageFragment();
+        MainTab_ContactFragment contactFragment = new MainTab_ContactFragment();
+        MainTab_MeFragment meFragment = new MainTab_MeFragment();
 
         final List<Fragment> fragmentList = new ArrayList<>();
         fragmentList.add(messageFragment);

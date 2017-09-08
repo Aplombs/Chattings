@@ -22,7 +22,7 @@ import com.chat.im.ui.MeActivity;
  * 我页签
  */
 
-public class MeFragment extends Fragment implements View.OnClickListener {
+public class MainTab_MeFragment extends Fragment implements View.OnClickListener {
 
     /**
      * 查看个人信息请求码
@@ -41,7 +41,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initView(LayoutInflater inflater) {
-        mView = inflater.inflate(R.layout.fragment_me, null);
+        mView = inflater.inflate(R.layout.fragment_tab_me, null);
         mUserHead = (ImageView) mView.findViewById(R.id.userHead_me_tab);
         mUserNickName = (TextView) mView.findViewById(R.id.userNickName_me_tab);
         mUserPhone = (TextView) mView.findViewById(R.id.userPhone_me_tab);

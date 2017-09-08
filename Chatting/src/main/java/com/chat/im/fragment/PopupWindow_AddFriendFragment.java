@@ -13,7 +13,7 @@ import com.chat.im.R;
  * popupWindow-添加好友
  */
 
-public class AddFriendFragment extends Fragment {
+public class PopupWindow_AddFriendFragment extends Fragment {
 
     private View mView;
 
@@ -25,6 +25,6 @@ public class AddFriendFragment extends Fragment {
     }
 
     private void initView(LayoutInflater inflater) {
-        mView = inflater.inflate(R.layout.fragment_add_friend, null);
+        mView = inflater.inflate(R.layout.fragment_popup_add_friend, null);
     }
 }

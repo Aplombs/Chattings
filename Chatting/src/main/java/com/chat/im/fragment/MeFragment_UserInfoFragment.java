@@ -10,10 +10,10 @@ import android.view.ViewGroup;
 import com.chat.im.R;
 
 /**
- * popupWindow-发起群聊
+ * 个人信息
  */
 
-public class InitiateGroupChatFragment extends Fragment {
+public class MeFragment_UserInfoFragment extends Fragment {
 
     private View mView;
 
@@ -25,6 +25,6 @@ public class InitiateGroupChatFragment extends Fragment {
     }
 
     private void initView(LayoutInflater inflater) {
-        mView = inflater.inflate(R.layout.fragment_initiate_group_chat, null);
+        mView = inflater.inflate(R.layout.fragment_me_user_info, null);
     }
 }

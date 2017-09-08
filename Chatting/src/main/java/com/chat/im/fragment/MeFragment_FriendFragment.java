@@ -10,10 +10,10 @@ import android.view.ViewGroup;
 import com.chat.im.R;
 
 /**
- * 钱包
+ * 朋友圈
  */
 
-public class WalletFragment extends Fragment {
+public class MeFragment_FriendFragment extends Fragment {
 
     private View mView;
 
@@ -25,6 +25,6 @@ public class WalletFragment extends Fragment {
     }
 
     private void initView(LayoutInflater inflater) {
-        mView = inflater.inflate(R.layout.fragment_wallet, null);
+        mView = inflater.inflate(R.layout.fragment_me_friend, null);
     }
 }
