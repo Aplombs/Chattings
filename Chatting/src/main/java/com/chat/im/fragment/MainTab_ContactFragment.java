@@ -11,10 +11,13 @@ import android.widget.TextView;
 
 import com.chat.im.R;
 import com.chat.im.adapter.ContactAdapter;
+import com.chat.im.constant.Constants;
 import com.chat.im.db.bean.ContactInfo;
+import com.chat.im.db.dao.ContactInfoDao;
 import com.chat.im.helper.DBHelper;
 import com.chat.im.helper.LogHelper;
 import com.chat.im.helper.OKHttpClientHelper;
+import com.chat.im.helper.SpHelper;
 import com.chat.im.helper.UtilsHelper;
 
 import java.util.ArrayList;
@@ -46,14 +49,16 @@ public class MainTab_ContactFragment extends Fragment implements View.OnClickLis
         Observable.create(new ObservableOnSubscribe<List<ContactInfo>>() {
             @Override
             public void subscribe(ObservableEmitter<List<ContactInfo>> observableEmitter) {
-                //获取全部好友信息
                 if (UtilsHelper.getInstance().isNetworkConnected()) {
                     try {
+                        //获取全部好友信息--获取成功之后会把之前所有联系人数据delete
                         OKHttpClientHelper.getInstance().getAllContact();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
+                //添加自己为好友
+                addMySelf();
 
                 List<ContactInfo> mContactInfoList = DBHelper.getInstance().getDaoSession().
                         getContactInfoDao().queryBuilder().list();
@@ -162,5 +167,19 @@ public class MainTab_ContactFragment extends Fragment implements View.OnClickLis
             case R.id.publicChat_Contact:
                 break;
         }
+    }
+
+    //将自己加入联系人列表
+    private void addMySelf() {
+        String userId = SpHelper.getInstance().get(Constants.SP_LOGIN_USERID, "");
+        String region = SpHelper.getInstance().get(Constants.SP_LOGIN_PHONE_REGION, "");
+        String phone = SpHelper.getInstance().get(Constants.SP_LOGIN_PHONE, "");
+        String userHeadUri = SpHelper.getInstance().get(Constants.SP_LOGIN_HEAD_URI, "");
+        String nickname = SpHelper.getInstance().get(Constants.SP_LOGIN_NICKNAME, "");
+        String showNameLetter = UtilsHelper.getInstance().getFirstLetter(nickname);
+        ContactInfo contactInfo = new ContactInfo(userId, region, phone, userHeadUri, nickname, "", nickname, showNameLetter);
+
+        ContactInfoDao contactInfoDao = DBHelper.getInstance().getDaoSession().getContactInfoDao();
+        contactInfoDao.insertOrReplaceInTx(contactInfo);
     }
 }

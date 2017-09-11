@@ -321,16 +321,6 @@ public class OKHttpClientHelper {
                                 ContactInfo contactInfo = new ContactInfo(userId, region, phone, userHeadUri, nickname, remarkName, showName, showNameLetter);
                                 contactInfoList.add(contactInfo);
                             }
-                            //将自己加入联系人列表
-                            String userId = SpHelper.getInstance().get(Constants.SP_LOGIN_USERID, "");
-                            String region = SpHelper.getInstance().get(Constants.SP_LOGIN_PHONE_REGION, "");
-                            String phone = SpHelper.getInstance().get(Constants.SP_LOGIN_PHONE, "");
-                            String userHeadUri = SpHelper.getInstance().get(Constants.SP_LOGIN_HEAD_URI, "");
-                            String nickname = SpHelper.getInstance().get(Constants.SP_LOGIN_NICKNAME, "");
-                            String showNameLetter = UtilsHelper.getInstance().getFirstLetter(nickname);
-                            ContactInfo contactInfo = new ContactInfo(userId, region, phone, userHeadUri, nickname, "", nickname, showNameLetter);
-                            contactInfoList.add(contactInfo);
-
                             ContactInfoDao contactInfoDao = DBHelper.getInstance().getDaoSession().getContactInfoDao();
                             //清空之前的数据,将服务器最新数据插入数据库
                             contactInfoDao.deleteAll();
