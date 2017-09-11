@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:text="T"
-            android:textColor="@color/shallow_black"
+            android:textColor="@color/text_gray"
             android:textSize="16sp" />
 
     </LinearLayout>

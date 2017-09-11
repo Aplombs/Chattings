@@ -6,14 +6,16 @@
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="transparent">#00000000</color>
-    <color name="shallow_black">#313237</color>
 
     <color name="text_gray">#B4B3B4</color>
     <color name="title_bar_gray">#393A3F</color>
     <!--最多用于整个背景色 一条横线色-->
     <color name="bg_gray">#22484848</color>
+    <!--标题栏竖线颜色-->
+    <color name="title_bar_vertical_line">#313237</color>
     <!--置顶颜色-->
     <color name="message_to_top">#00484848</color>
+    <!--无网络提示背景色-->
     <color name="network_state_bg">#FEDCDE</color>
 
     <color name="yellow">#ff7d00</color>
