@@ -57,6 +57,7 @@ public class Constants {
     public static final int OK_LOGIN = 2;//成功--登录
     public static final int OK_REGISTER = 3;//成功--注册
     public static final int OK_GET_USER_INFO = 4;//成功--通过ID获取个人信息
+    public static final int OK_SEARCH_FRIEND = 5;//成功--搜索好友
 
     /**
      * 失败状态码---比如:是登录失败还是注册失败...
@@ -65,6 +66,7 @@ public class Constants {
     public static final int FAILURE_LOGIN = 2;//失败--登录
     public static final int FAILURE_REGISTER = 3;//失败--注册
     public static final int FAILURE_GET_USER_INFO = 4;//失败--通过ID获取个人信息
+    public static final int FAILURE_SEARCH_FRIEND = 5;//失败--搜索好友
 
     /**
      * 失败原因状态码---比如:是登录密码错误还是用户名错误...
@@ -74,6 +76,7 @@ public class Constants {
     public static final int FAILURE_TYPE_VERIFY_CODE_WRONG = 2;//失败原因--验证码错误
     public static final int FAILURE_TYPE_VERIFY_CODE_OVERDUE = 3;//失败原因--验证码过去
     public static final int FAILURE_TYPE_LOGIN_PHONE_OR_PASSWORD_WRONG = 4;//失败原因--手机号或者密码错误
+    public static final int FAILURE_TYPE_SEARCH_FRIEND_NOT_EXIST = 5;//失败原因--好友不存在
 
     /**
      * 数据库名称

@@ -59,7 +59,7 @@ public class UIHelper {
         return true;
     }
 
-    public Dialog createDialog(Context context) {
+    public Dialog createLoadingDialog(Context context) {
         Dialog mDialog = new Dialog(context, R.style.common_progress_dialog);
         mDialog.setContentView(R.layout.dialog_lodding);
         mDialog.setCancelable(false);

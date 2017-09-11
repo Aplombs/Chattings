@@ -3,15 +3,95 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
+    android:background="@color/line_bg"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <!--搜索内容-->
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="添加好友"
-        android:textColor="@color/black"
-        android:textSize="17sp"
-        tools:ignore="HardcodedText" />
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/phone_search_friend"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_margin="5dp"
+            android:layout_weight="4"
+            android:background="@color/white"
+            android:digits="0123456789"
+            android:hint="请输入手机号添加好友"
+            android:imeOptions="actionSearch"
+            android:inputType="phone"
+            android:maxLength="11"
+            android:singleLine="true"
+            tools:ignore="HardcodedText" />
+
+        <ImageView
+            android:id="@+id/search_search_friend"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:src="@drawable/icon_search" />
+
+    </LinearLayout>
+
+    <!--我的手机号-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/my_phone_search_friend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我的手机号:187-3103-3105"
+            android:textColor="@color/gray"
+            android:textSize="16sp"
+            tools:ignore="HardcodedText" />
+
+        <ImageView
+            android:id="@+id/my_qrcode_search_friend"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="3dp"
+            android:src="@drawable/me_qrcode" />
+
+    </LinearLayout>
+
+    <!--搜索到的联系人头像 备注-->
+    <LinearLayout
+        android:id="@+id/ll_search_friend_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/userHead_search_friend"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/default_user_header" />
+
+        <TextView
+            android:id="@+id/userNickName_search_friend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:text="唐利涛"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+    </LinearLayout>
 
 </LinearLayout>

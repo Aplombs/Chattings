@@ -13,6 +13,7 @@ import com.chat.im.jsonbean.GetAllContactResponse;
 import com.chat.im.jsonbean.GetTokenRequest;
 import com.chat.im.jsonbean.GetTokenResponse;
 import com.chat.im.jsonbean.GetUserInfoByIdResponse;
+import com.chat.im.jsonbean.GetUserInfoByPhoneResponse;
 import com.chat.im.jsonbean.LoginRequest;
 import com.chat.im.jsonbean.LoginResponse;
 import com.chat.im.jsonbean.RegisterRequest;
@@ -356,6 +357,38 @@ public class OKHttpClientHelper {
             @Override
             public void onError() {
                 mResponseListener.onFailure(Constants.FAILURE_GET_USER_INFO, Constants.FAILURE_TYPE_OTHER);
+            }
+        });
+    }
+
+    /***
+     * 通过手机号搜索好友信息
+     * @param region 地域号
+     * @param phone 手机号
+     */
+    public void searchFriendByPhone(String region, String phone) {
+        String url = RequestURLHelper.getInstance().getSearchFriendUrl(region, phone);
+
+        sendGetRequest(url, new CallBack() {
+            @Override
+            public void onNext(String result) throws Exception {
+                LogHelper.e(TAG + "searchFriendByPhone onResponse()--->>" + result);
+                if ("Unknown user.".equalsIgnoreCase(result)) {
+                    mResponseListener.onFailure(Constants.FAILURE_SEARCH_FRIEND, Constants.FAILURE_TYPE_SEARCH_FRIEND_NOT_EXIST);
+                    return;
+                }
+                GetUserInfoByPhoneResponse userInfoByPhoneResponse = JsonHelper.jsonToBean(result, GetUserInfoByPhoneResponse.class);
+                int getUserInfoResponseCode = userInfoByPhoneResponse.getCode();
+                if (200 == getUserInfoResponseCode) {
+                    mResponseListener.onResponse(Constants.OK_SEARCH_FRIEND, userInfoByPhoneResponse);
+                } else {
+                    mResponseListener.onFailure(Constants.FAILURE_SEARCH_FRIEND, Constants.FAILURE_TYPE_OTHER);
+                }
+            }
+
+            @Override
+            public void onError() {
+                mResponseListener.onFailure(Constants.FAILURE_SEARCH_FRIEND, Constants.FAILURE_TYPE_OTHER);
             }
         });
     }
