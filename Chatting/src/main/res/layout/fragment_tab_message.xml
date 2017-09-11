@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -8,10 +9,34 @@
         layout="@layout/network_state_layout"
         android:visibility="gone" />
 
+    <LinearLayout
+        android:id="@+id/ll_not_message_tip"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/ll_network_hint"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/tab_message_0" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="暂时没有新消息"
+            android:textColor="@color/text_gray"
+            android:textSize="17sp"
+            tools:ignore="HardcodedText" />
+
+    </LinearLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView_tabMessage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/ll_network_hint" />
+        android:layout_below="@+id/ll_network_hint"
+        android:visibility="gone" />
 
 </RelativeLayout>
