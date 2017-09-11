@@ -19,10 +19,11 @@ public class Constants {
     /**
      * 常量字段
      */
-    public static final String ACTIVITY_RETURN_PHONE = "phone";
-    public static final String ACTIVITY_RETURN_PASSWORD = "password";
-    public static final String ACTIVITY_RETURN_NICKNAME = "nickname";
-    public static final String ACTIVITY_RETURN_USERID = "userID";
+    public static final String USER_ID = "user_id";
+    public static final String USER_PHONE = "user_phone";
+    public static final String USER_HEAD_URI = "user_head_uri";
+    public static final String USER_NICK_NAME = "user_nick_name";
+    public static final String USER_PASSWORD = "user_password";
     public static final String TAG_INITIATE_GROUP_CHAT_POPUP_WINDOW = "发起群聊";
     public static final String TAG_ADD_FRIEND_POPUP_WINDOW = "添加好友";
     public static final String TAG_SCANNER_POPUP_WINDOW = "扫一扫";

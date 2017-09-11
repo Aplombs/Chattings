@@ -118,10 +118,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == START_REGISTER_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
-            String phone = data.getStringExtra(Constants.ACTIVITY_RETURN_PHONE);
-            String password = data.getStringExtra(Constants.ACTIVITY_RETURN_PASSWORD);
-            String id = data.getStringExtra(Constants.ACTIVITY_RETURN_USERID);
-            String nickname = data.getStringExtra(Constants.ACTIVITY_RETURN_NICKNAME);
+            String phone = data.getStringExtra(Constants.USER_PHONE);
+            String password = data.getStringExtra(Constants.USER_PASSWORD);
+            String id = data.getStringExtra(Constants.USER_ID);
+            String nickname = data.getStringExtra(Constants.USER_NICK_NAME);
             if (!TextUtils.isEmpty(phone) && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(id) && !TextUtils.isEmpty(nickname)) {
                 et_phone.setText(phone);
                 et_password.setText(password);

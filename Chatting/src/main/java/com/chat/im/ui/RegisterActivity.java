@@ -237,10 +237,10 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 UIHelper.getInstance().toast("注册成功");
                 RegisterResponse registerResponse = (RegisterResponse) response;
                 Intent data = new Intent();
-                data.putExtra(Constants.ACTIVITY_RETURN_PHONE, mPhone);
-                data.putExtra(Constants.ACTIVITY_RETURN_PASSWORD, mPassword);
-                data.putExtra(Constants.ACTIVITY_RETURN_NICKNAME, mNickName);
-                data.putExtra(Constants.ACTIVITY_RETURN_USERID, registerResponse.getResult().getId());
+                data.putExtra(Constants.USER_PHONE, mPhone);
+                data.putExtra(Constants.USER_PASSWORD, mPassword);
+                data.putExtra(Constants.USER_NICK_NAME, mNickName);
+                data.putExtra(Constants.USER_ID, registerResponse.getResult().getId());
                 setResult(RESULT_OK, data);
                 new Handler().postAtTime(new Runnable() {
                     @Override
