@@ -1,5 +1,8 @@
 package com.chat.im.adapter;
 
+import android.content.Context;
+import android.content.Intent;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,8 +11,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chat.im.R;
+import com.chat.im.constant.Constants;
 import com.chat.im.db.bean.ContactInfo;
 import com.chat.im.helper.ContextHelper;
+import com.chat.im.ui.UserInfoDetailActivity;
 
 import java.util.List;
 import java.util.Map;
@@ -20,10 +25,12 @@ import java.util.Map;
 
 public class ContactAdapter extends BaseExpandableListAdapter {
 
+    private Context mContext;
     private List<String> mLetterList;
     private Map<String, List<ContactInfo>> mMap;
 
-    public ContactAdapter(List<String> letterList, Map<String, List<ContactInfo>> map) {
+    public ContactAdapter(Context context, List<String> letterList, Map<String, List<ContactInfo>> map) {
+        this.mContext = context;
         this.mMap = map;
         this.mLetterList = letterList;
     }
@@ -90,14 +97,34 @@ public class ContactAdapter extends BaseExpandableListAdapter {
             holder = (ContactInfoViewHolder) convertView.getTag();
         }
 
-        holder.userName.setText(mMap.get(mLetterList.get(groupPosition)).get(childPosition).getShowName());
-
+        final ContactInfo contactInfo = mMap.get(mLetterList.get(groupPosition)).get(childPosition);
+        holder.userName.setText(contactInfo.getShowName());
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String nickName = contactInfo.getRemarkName();
+                if (TextUtils.isEmpty(nickName)) {
+                    nickName = contactInfo.getNickName();
+                }
+                goToUserInfoDetail(contactInfo.getUserId(), contactInfo.getPhone(), nickName, contactInfo.getHeadUri());
+            }
+        });
         return convertView;
     }
 
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return false;
+    }
+
+    //打开好友详细资料界面
+    private void goToUserInfoDetail(String id, String phone, String userNickName, String headUri) {
+        Intent intent = new Intent(mContext, UserInfoDetailActivity.class);
+        intent.putExtra(Constants.USER_ID, id);
+        intent.putExtra(Constants.USER_PHONE, phone);
+        intent.putExtra(Constants.USER_NICK_NAME, userNickName);
+        intent.putExtra(Constants.USER_HEAD_URI, headUri);
+        mContext.startActivity(intent);
     }
 
     private class ContactLetterViewHolder {
@@ -115,8 +142,8 @@ public class ContactAdapter extends BaseExpandableListAdapter {
         TextView userName;
 
         public ContactInfoViewHolder(View itemView) {
-            userHead = (ImageView) itemView.findViewById(R.id.userHead_itemContact);
-            userName = (TextView) itemView.findViewById(R.id.userNickName_itemContact);
+            userHead = (ImageView) itemView.findViewById(R.id.userHead_item_contact);
+            userName = (TextView) itemView.findViewById(R.id.userNickName_item_contact);
         }
     }
 }

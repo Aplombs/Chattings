@@ -1,14 +1,17 @@
 package com.chat.im.fragment;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,6 +23,7 @@ import com.chat.im.helper.SpHelper;
 import com.chat.im.helper.UIHelper;
 import com.chat.im.helper.UtilsHelper;
 import com.chat.im.jsonbean.GetUserInfoByPhoneResponse;
+import com.chat.im.ui.UserInfoDetailActivity;
 
 /**
  * popupWindow-添加好友
@@ -33,6 +37,8 @@ public class PopupWindow_AddFriendFragment extends Fragment implements View.OnCl
     private View mll_SearchFriendInfo;
     private TextView mMyPhone, mUserName;
     private Dialog loadingDialog;
+    private String mSearchUserId, mSearchNickname, mSearchHeadUri;
+    private String mSearchPhone;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,6 +63,7 @@ public class PopupWindow_AddFriendFragment extends Fragment implements View.OnCl
 
         mView.findViewById(R.id.my_qrcode_search_friend).setOnClickListener(this);
         mView.findViewById(R.id.search_search_friend).setOnClickListener(this);
+        mView.findViewById(R.id.ll_search_friend_info).setOnClickListener(this);
 
         String phone = SpHelper.getInstance().get(Constants.SP_LOGIN_PHONE, "");
         phone = UtilsHelper.getInstance().formatPhone(phone);
@@ -82,6 +89,17 @@ public class PopupWindow_AddFriendFragment extends Fragment implements View.OnCl
 
             }
         });
+
+        et_phone.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    searchFriend();//键盘搜索按钮
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     @Override
@@ -91,8 +109,22 @@ public class PopupWindow_AddFriendFragment extends Fragment implements View.OnCl
                 searchFriend();//搜索按钮
                 break;
             case R.id.my_qrcode_search_friend://我的二维码
+                UIHelper.getInstance().toast("我的二维码");
+                break;
+            case R.id.ll_search_friend_info://搜索到的好友,点击发送添加好友
+                GoToUserInfoDetail();
                 break;
         }
+    }
+
+    //打开好友详细资料界面
+    private void GoToUserInfoDetail() {
+        Intent intent = new Intent(getActivity(), UserInfoDetailActivity.class);
+        intent.putExtra(Constants.USER_PHONE, mSearchPhone);
+        intent.putExtra(Constants.USER_ID, mSearchUserId);
+        intent.putExtra(Constants.USER_NICK_NAME, mSearchNickname);
+        intent.putExtra(Constants.USER_HEAD_URI, mSearchHeadUri);
+        startActivity(intent);
     }
 
     @Override
@@ -102,8 +134,10 @@ public class PopupWindow_AddFriendFragment extends Fragment implements View.OnCl
                 loadingDialog.dismiss();
                 GetUserInfoByPhoneResponse phoneResponse = (GetUserInfoByPhoneResponse) response;
                 mll_SearchFriendInfo.setVisibility(View.VISIBLE);
-                String nickname = phoneResponse.getResult().getNickname();
-                mUserName.setText(nickname);
+                mSearchUserId = phoneResponse.getResult().getId();
+                mSearchNickname = phoneResponse.getResult().getNickname();
+                mSearchHeadUri = phoneResponse.getResult().getPortraitUri();
+                mUserName.setText(mSearchNickname);
                 break;
         }
     }
@@ -128,10 +162,10 @@ public class PopupWindow_AddFriendFragment extends Fragment implements View.OnCl
         if (!UIHelper.getInstance().checkNetwork()) {
             return;
         }
-        String phone = et_phone.getText().toString();
-        int length = phone.length();
+        mSearchPhone = et_phone.getText().toString();
+        int length = mSearchPhone.length();
         //此处再次判断手机号是否11位是为了用户点击后面的搜索按钮
-        if (length != 11 || !UtilsHelper.getInstance().isMobile(phone)) {
+        if (length != 11 || !UtilsHelper.getInstance().isMobile(mSearchPhone)) {
             UIHelper.getInstance().toast("请输入正确的手机号");
             return;
         }
@@ -139,6 +173,6 @@ public class PopupWindow_AddFriendFragment extends Fragment implements View.OnCl
         loadingDialog = UIHelper.getInstance().createLoadingDialog(getActivity());
         loadingDialog.show();
         //手机号正确自动搜索好友
-        OKHttpClientHelper.getInstance().searchFriendByPhone(Constants.REGION, phone);
+        OKHttpClientHelper.getInstance().searchFriendByPhone(Constants.REGION, mSearchPhone);
     }
 }

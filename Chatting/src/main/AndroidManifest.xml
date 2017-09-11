@@ -52,6 +52,9 @@
         <activity
             android:name=".ui.PopupWindowActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.UserInfoDetailActivity"
+            android:screenOrientation="portrait" />
 
         <!-- imlib config begin -->
         <meta-data

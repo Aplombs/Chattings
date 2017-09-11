@@ -109,7 +109,7 @@ public class MainTab_ContactFragment extends Fragment implements View.OnClickLis
                 mLoading.setVisibility(View.GONE);
                 mContactNum.setText(String.valueOf(infoList.size() + "位联系人"));
                 mExpandableListView.setVisibility(View.VISIBLE);
-                ContactAdapter adapter2 = new ContactAdapter(letterList, map);
+                ContactAdapter adapter2 = new ContactAdapter(getActivity(), letterList, map);
                 mExpandableListView.setAdapter(adapter2);
                 //默认都打开
                 for (int i = 0; i < adapter2.getGroupCount(); i++) {

@@ -17,6 +17,8 @@
     <color name="message_to_top">#00484848</color>
     <!--无网络提示背景色-->
     <color name="network_state_bg">#FEDCDE</color>
+    <!--超链接颜色-->
+    <color name="href_link">#336699</color>
 
     <color name="yellow">#ff7d00</color>
 </resources>

@@ -16,13 +16,13 @@
         android:padding="5dp">
 
         <ImageView
-            android:id="@+id/userHead_itemContact"
+            android:id="@+id/userHead_item_contact"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:src="@drawable/default_user_header" />
 
         <TextView
-            android:id="@+id/userNickName_itemContact"
+            android:id="@+id/userNickName_item_contact"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
