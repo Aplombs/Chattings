@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="gray">#393A3F</color>
+    <color name="colorPrimary">#36CAB6</color>
+    <color name="colorAccent">#36CAB6</color>
+    <color name="colorPrimaryDark">#36CAB6</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
-    <color name="colorPrimary">#36CAB6</color>
     <color name="transparent">#00000000</color>
-    <color name="popupWindowDivide">#585757</color>
-    <!--浅灰色-->
     <color name="shallow_black">#313237</color>
-    <color name="yellow">#ff7d00</color>
 
-    <color name="line_bg">#22484848</color>
-    <color name="common_bg">#00484848</color>
+    <color name="text_gray">#B4B3B4</color>
+    <color name="title_bar_gray">#393A3F</color>
+    <!--最多用于整个背景色 一条横线色-->
+    <color name="bg_gray">#22484848</color>
+    <!--置顶颜色-->
+    <color name="message_to_top">#00484848</color>
     <color name="network_state_bg">#FEDCDE</color>
 
+    <color name="yellow">#ff7d00</color>
 </resources>

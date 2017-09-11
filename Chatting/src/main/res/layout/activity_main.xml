@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:layout_above="@+id/ll_main_bottom_private"
-        android:background="@color/line_bg" />
+        android:background="@color/bg_gray" />
 
     <LinearLayout
         android:id="@+id/ll_main_bottom_private"
@@ -98,7 +98,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="5dp"
                     android:text="联系人"
-                    android:textColor="@color/gray"
+                    android:textColor="@color/text_gray"
                     android:textSize="12sp" />
 
                 <TextView
@@ -157,7 +157,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="5dp"
                     android:text="我"
-                    android:textColor="@color/gray"
+                    android:textColor="@color/text_gray"
                     android:textSize="12sp" />
 
             </RelativeLayout>

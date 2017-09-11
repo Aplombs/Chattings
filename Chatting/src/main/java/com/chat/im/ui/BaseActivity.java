@@ -70,7 +70,7 @@ public abstract class BaseActivity extends FragmentActivity {
             //需要设置这个才能设置状态栏颜色
             mWindow.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             //设置状态栏颜色
-            mWindow.setStatusBarColor(getResources().getColor(R.color.gray));
+            mWindow.setStatusBarColor(getResources().getColor(R.color.title_bar_gray));
             //解决状态栏和自己的titleBar中间有条水印线
             mWindow.getDecorView().setSystemUiVisibility(uiFlags);
         } else {
@@ -85,7 +85,7 @@ public abstract class BaseActivity extends FragmentActivity {
             params.gravity = Gravity.TOP;
             mStatusBarTintView.setLayoutParams(params);
             //设置想要的颜色
-            mStatusBarTintView.setBackgroundColor(getResources().getColor(R.color.gray));
+            mStatusBarTintView.setBackgroundColor(getResources().getColor(R.color.title_bar_gray));
             mStatusBarTintView.setVisibility(View.VISIBLE);
             decorViewGroup.addView(mStatusBarTintView);
         }

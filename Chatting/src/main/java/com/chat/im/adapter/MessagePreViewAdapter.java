@@ -42,7 +42,7 @@ public class MessagePreViewAdapter extends RecyclerView.Adapter<MessagePreViewAd
     public void onBindViewHolder(MessagePreViewHolder holder, int position) {
         MessagePreView messagePreView = mList.get(position);
         if (messagePreView.getIsTop()) {
-            holder.itemView.setBackgroundColor(ContextHelper.getContext().getResources().getColor(R.color.common_bg));
+            holder.itemView.setBackgroundColor(ContextHelper.getContext().getResources().getColor(R.color.message_to_top));
         } else {
             holder.itemView.setBackgroundColor(ContextHelper.getContext().getResources().getColor(R.color.white));
         }
