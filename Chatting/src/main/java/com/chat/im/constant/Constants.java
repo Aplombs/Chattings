@@ -17,17 +17,6 @@ public class Constants {
     public static final String REGION = "86";
 
     /**
-     * 具体访问接口地址
-     */
-    public static final String URL_CHECK_PHONE_AVAILABLE = "user/check_phone_available";//监测手机号是否可用
-    public static final String URL_SEND_CODE = "user/send_code";//发送验证码
-    public static final String URL_VERIFY_CODE = "user/verify_code";//验证用户输入验证码是否正确
-    public static final String URL_REGISTER = "user/register";//注册
-    public static final String URL_LOGIN = "user/login";//登录
-    public static final String URL_GET_ALL_CONTACT = "friendship/all";//获取所有联系人
-    public static final String URL_GET_USER_INFO = "user/";//获取用户信息
-
-    /**
      * 常量字段
      */
     public static final String ACTIVITY_RETURN_PHONE = "phone";

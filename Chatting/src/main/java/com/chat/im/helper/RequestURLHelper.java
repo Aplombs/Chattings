@@ -32,42 +32,42 @@ public class RequestURLHelper {
      * @return 获取检查手机号是否可用的URL
      */
     public String getCheckPhoneAvailableUrl() {
-        return getURL(Constants.URL_CHECK_PHONE_AVAILABLE);
+        return getURL("user/check_phone_available");
     }
 
     /**
      * @return 获取发送验证码的URL
      */
     public String getSendCodeUrl() {
-        return getURL(Constants.URL_SEND_CODE);
+        return getURL("user/send_code");
     }
 
     /**
      * @return 获取验证用户填写的验证码是否正确的URL
      */
     public String getVerifyCodeUrl() {
-        return getURL(Constants.URL_VERIFY_CODE);
+        return getURL("user/verify_code");
     }
 
     /**
      * @return 获取注册的URL
      */
     public String getRegisterUrl() {
-        return getURL(Constants.URL_REGISTER);
+        return getURL("user/register");
     }
 
     /**
      * @return 获取登录的URL
      */
     public String getLoginUrl() {
-        return getURL(Constants.URL_LOGIN);
+        return getURL("user/login");
     }
 
     /**
-     * @return 获取登录的URL
+     * @return 获取所有好友的URL
      */
     public String getAllContactUrl() {
-        return getURL(Constants.URL_GET_ALL_CONTACT);
+        return getURL("friendship/all");
     }
 
     /**
@@ -78,10 +78,17 @@ public class RequestURLHelper {
     }
 
     /**
-     * @return 获取查询用户信息的URL
+     * @return 获取查询用户信息的URL, 通过userID
      */
     public String getUserInfoUrl(String userID) {
-        return getURL(Constants.URL_GET_USER_INFO + userID);
+        return getURL("user/" + userID);
+    }
+
+    /**
+     * @return 获取查询用户信息的URL, 通过手机号
+     */
+    public String getSearchFriendUrl(String region, String phone) {
+        return getURL("user/find/" + region + "/" + phone);
     }
 
     private String getURL(String url, String... params) {
