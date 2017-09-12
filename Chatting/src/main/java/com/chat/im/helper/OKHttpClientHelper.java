@@ -7,6 +7,8 @@ import com.chat.im.constant.Constants;
 import com.chat.im.cookie.PersistentCookieStore;
 import com.chat.im.db.bean.ContactInfo;
 import com.chat.im.db.dao.ContactInfoDao;
+import com.chat.im.jsonbean.AddFriendRequest;
+import com.chat.im.jsonbean.AddFriendResponse;
 import com.chat.im.jsonbean.CheckPhoneRequest;
 import com.chat.im.jsonbean.CheckPhoneResponse;
 import com.chat.im.jsonbean.GetAllContactResponse;
@@ -389,6 +391,37 @@ public class OKHttpClientHelper {
             @Override
             public void onError() {
                 mResponseListener.onFailure(Constants.FAILURE_SEARCH_FRIEND, Constants.FAILURE_TYPE_OTHER);
+            }
+        });
+    }
+
+    /**
+     * 发送添加好友请求
+     *
+     * @param id             要添加好友的id
+     * @param requestMessage 添加好友的附带信息
+     */
+    public void sendAddFriendRequest(String id, String requestMessage) {
+        String url = RequestURLHelper.getInstance().getAddFriendRequestUrl();
+        String json = JsonHelper.beanToJson(new AddFriendRequest(id, requestMessage));
+        RequestBody requestBody = getRequestBody(json);
+
+        sendPostRequest(url, requestBody, new CallBack() {
+            @Override
+            public void onNext(String result) throws Exception {
+                LogHelper.e(TAG + "sendAddFriendRequest onResponse()--->>" + result);
+                AddFriendResponse addFriendResponse = JsonHelper.jsonToBean(result, AddFriendResponse.class);
+                if (200 == addFriendResponse.getCode()) {
+                    //调用onNext之前已经判断过result不为null
+                    mResponseListener.onResponse(Constants.OK_ADD_FRIEND_REQUEST, addFriendResponse);
+                } else {
+                    mResponseListener.onFailure(Constants.FAILURE_ADD_FRIEND_REQUEST, Constants.FAILURE_TYPE_OTHER);
+                }
+            }
+
+            @Override
+            public void onError() {
+                mResponseListener.onFailure(Constants.FAILURE_ADD_FRIEND_REQUEST, Constants.FAILURE_TYPE_OTHER);
             }
         });
     }

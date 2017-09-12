@@ -1,8 +1,13 @@
 package com.chat.im.ui;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Handler;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -11,20 +16,25 @@ import com.chat.im.constant.Constants;
 import com.chat.im.db.bean.ContactInfo;
 import com.chat.im.db.dao.ContactInfoDao;
 import com.chat.im.helper.DBHelper;
+import com.chat.im.helper.OKHttpClientHelper;
+import com.chat.im.helper.SpHelper;
+import com.chat.im.helper.UIHelper;
 import com.chat.im.helper.UtilsHelper;
 
 /**
  * 用户详细资料界面
  */
 
-public class UserInfoDetailActivity extends BaseActivity implements View.OnClickListener {
+public class UserInfoDetailActivity extends BaseActivity implements View.OnClickListener, OKHttpClientHelper.ResponseListener {
 
-    private ImageView mUserHead;
-    private TextView mUserRemarkName, mUserPhone, mUserNickName;
-    private String userID, fromWhereFlag;
-    private View sendMessage;
-    private View requestAddFriend;
+    private String userID;
     private Intent mIntent;
+    private View sendMessage;
+    private ImageView mUserHead;
+    private Dialog loadingDialog;
+    private View requestAddFriend;
+    private Handler handler = new Handler();
+    private TextView mUserRemarkName, mUserPhone, mUserNickName;
 
     @Override
     protected int setLayoutRes() {
@@ -36,6 +46,8 @@ public class UserInfoDetailActivity extends BaseActivity implements View.OnClick
         mTitleName.setText("详细资料");
         mBt_Add.setVisibility(View.GONE);
         mReturnView.setVisibility(View.VISIBLE);
+
+        OKHttpClientHelper.getInstance().setResponseListener(this);
 
         mIntent = getIntent();
         userID = mIntent.getStringExtra(Constants.USER_ID);
@@ -53,6 +65,10 @@ public class UserInfoDetailActivity extends BaseActivity implements View.OnClick
             isMyContact(contactInfo);
         } else {
             isNotContact();
+        }
+
+        if (loadingDialog == null) {
+            loadingDialog = UIHelper.getInstance().createLoadingDialog(this);
         }
     }
 
@@ -97,8 +113,69 @@ public class UserInfoDetailActivity extends BaseActivity implements View.OnClick
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.send_message_user_detail:
+                openChatActivity();
                 break;
             case R.id.request_add_friend_user_detail:
+                sendAddFriendRequest();
+                break;
+        }
+    }
+
+    //打开聊天界面
+    private void openChatActivity() {
+    }
+
+    //发送添加好友请求
+    private void sendAddFriendRequest() {
+        String nickName = SpHelper.getInstance().get(Constants.SP_LOGIN_NICKNAME, "");
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("添加到联系人");
+        View view = View.inflate(this, R.layout.dialog_add_friend, null);
+        final EditText editText = (EditText) view.findViewById(R.id.addFriend_request_message);
+        editText.setText(String.format("我是%s", nickName));
+        builder.setView(view);
+        builder.setNegativeButton("取消", null);
+        builder.setPositiveButton("发送", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                loadingDialog.show();
+                String requestMessage = editText.getText().toString();
+                OKHttpClientHelper.getInstance().sendAddFriendRequest(userID, requestMessage);
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.setCanceledOnTouchOutside(false);
+        alertDialog.show();
+        //editText必须获取焦点 editText可见 alertDialog界面绘制完成才能弹出软键盘;虽然有焦点可见但是未必alertDialog界面全部绘制完成
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                editText.requestFocus();
+                UIHelper.getInstance().showSoftInput(editText);
+                String requestMessage = editText.getText().toString();
+                editText.setSelection(2, requestMessage.trim().length());
+            }
+        }, 200);
+    }
+
+    @Override
+    public void onResponse(int requestCode, Object response) {
+        switch (requestCode) {
+            case Constants.OK_ADD_FRIEND_REQUEST:
+                loadingDialog.dismiss();
+                UIHelper.getInstance().toast("已发送添加");
+                break;
+        }
+    }
+
+    @Override
+    public void onFailure(int requestCode, int statusCode) {
+        switch (requestCode) {
+            case Constants.FAILURE_ADD_FRIEND_REQUEST:
+                loadingDialog.dismiss();
+                UIHelper.getInstance().toast("添加到联系人失败,稍后重试");
                 break;
         }
     }

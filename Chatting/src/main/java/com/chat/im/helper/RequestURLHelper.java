@@ -91,6 +91,13 @@ public class RequestURLHelper {
         return getURL("user/find/" + region + "/" + phone);
     }
 
+    /**
+     * @return 获取请求添加好友的URL
+     */
+    public String getAddFriendRequestUrl() {
+        return getURL("friendship/invite");
+    }
+
     private String getURL(String url, String... params) {
         StringBuilder urlBuilder = new StringBuilder(Constants.DOMAIN).append(url);
         if (params != null) {
