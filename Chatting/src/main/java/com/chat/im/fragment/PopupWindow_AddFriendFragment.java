@@ -34,11 +34,10 @@ public class PopupWindow_AddFriendFragment extends Fragment implements View.OnCl
     private View mView;
     private EditText et_phone;
     private ImageView mUserHead;
+    private Dialog loadingDialog;
     private View mll_SearchFriendInfo;
     private TextView mMyPhone, mUserName;
-    private Dialog loadingDialog;
-    private String mSearchUserId, mSearchNickname, mSearchHeadUri;
-    private String mSearchPhone;
+    private String mSearchUserId, mSearchNickname, mSearchHeadUri, mSearchPhone;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -112,13 +111,13 @@ public class PopupWindow_AddFriendFragment extends Fragment implements View.OnCl
                 UIHelper.getInstance().toast("我的二维码");
                 break;
             case R.id.ll_search_friend_info://搜索到的好友,点击发送添加好友
-                GoToUserInfoDetail();
+                goToUserInfoDetail();
                 break;
         }
     }
 
     //打开好友详细资料界面
-    private void GoToUserInfoDetail() {
+    private void goToUserInfoDetail() {
         Intent intent = new Intent(getActivity(), UserInfoDetailActivity.class);
         intent.putExtra(Constants.USER_PHONE, mSearchPhone);
         intent.putExtra(Constants.USER_ID, mSearchUserId);

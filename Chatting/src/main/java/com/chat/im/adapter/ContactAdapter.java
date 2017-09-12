@@ -2,7 +2,6 @@ package com.chat.im.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -98,15 +97,12 @@ public class ContactAdapter extends BaseExpandableListAdapter {
         }
 
         final ContactInfo contactInfo = mMap.get(mLetterList.get(groupPosition)).get(childPosition);
-        holder.userName.setText(contactInfo.getShowName());
+        String showName = contactInfo.getShowName();
+        holder.userName.setText(showName);
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String nickName = contactInfo.getRemarkName();
-                if (TextUtils.isEmpty(nickName)) {
-                    nickName = contactInfo.getNickName();
-                }
-                goToUserInfoDetail(contactInfo.getUserId(), contactInfo.getPhone(), nickName, contactInfo.getHeadUri());
+                goToUserInfoDetail(contactInfo.getUserId());
             }
         });
         return convertView;
@@ -118,12 +114,9 @@ public class ContactAdapter extends BaseExpandableListAdapter {
     }
 
     //打开好友详细资料界面
-    private void goToUserInfoDetail(String id, String phone, String userNickName, String headUri) {
+    private void goToUserInfoDetail(String id) {
         Intent intent = new Intent(mContext, UserInfoDetailActivity.class);
         intent.putExtra(Constants.USER_ID, id);
-        intent.putExtra(Constants.USER_PHONE, phone);
-        intent.putExtra(Constants.USER_NICK_NAME, userNickName);
-        intent.putExtra(Constants.USER_HEAD_URI, headUri);
         mContext.startActivity(intent);
     }
 

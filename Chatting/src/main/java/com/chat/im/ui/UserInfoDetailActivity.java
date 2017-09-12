@@ -21,9 +21,10 @@ public class UserInfoDetailActivity extends BaseActivity implements View.OnClick
 
     private ImageView mUserHead;
     private TextView mUserRemarkName, mUserPhone, mUserNickName;
-    private String userID, phone, nickName, userHeadUri;
+    private String userID, fromWhereFlag;
     private View sendMessage;
     private View requestAddFriend;
+    private Intent mIntent;
 
     @Override
     protected int setLayoutRes() {
@@ -36,17 +37,8 @@ public class UserInfoDetailActivity extends BaseActivity implements View.OnClick
         mBt_Add.setVisibility(View.GONE);
         mReturnView.setVisibility(View.VISIBLE);
 
-        Intent intent = getIntent();
-        userID = intent.getStringExtra(Constants.USER_ID);
-        phone = intent.getStringExtra(Constants.USER_PHONE);
-        nickName = intent.getStringExtra(Constants.USER_NICK_NAME);
-        userHeadUri = intent.getStringExtra(Constants.USER_HEAD_URI);
-
-        String remarkName = "";
-        ContactInfo contactInfo = DBHelper.getInstance().getDaoSession().getContactInfoDao().queryBuilder().where(ContactInfoDao.Properties.UserId.eq(userID)).unique();
-        if (contactInfo != null) {
-            remarkName = contactInfo.getRemarkName();
-        }
+        mIntent = getIntent();
+        userID = mIntent.getStringExtra(Constants.USER_ID);
 
         mUserHead = (ImageView) findViewById(R.id.userHead_user_detail);
         mUserRemarkName = (TextView) findViewById(R.id.userRemarkName_user_detail);
@@ -55,26 +47,50 @@ public class UserInfoDetailActivity extends BaseActivity implements View.OnClick
         sendMessage = findViewById(R.id.send_message_user_detail);
         requestAddFriend = findViewById(R.id.request_add_friend_user_detail);
 
-        if (!TextUtils.isEmpty(remarkName)) {
-            mUserRemarkName.setVisibility(View.VISIBLE);
-            mUserRemarkName.setText(remarkName);
-        } else {
-            mUserRemarkName.setVisibility(View.GONE);
-        }
-
-        mUserNickName.setText(String.format("昵称:%s", nickName));
-        mUserPhone.setText(UtilsHelper.getInstance().formatPhone(phone));
+        ContactInfo contactInfo = DBHelper.getInstance().getDaoSession().getContactInfoDao().queryBuilder().where(ContactInfoDao.Properties.UserId.eq(userID)).unique();
 
         if (contactInfo != null) {
-            sendMessage.setVisibility(View.VISIBLE);
-            sendMessage.setOnClickListener(this);
-            requestAddFriend.setVisibility(View.GONE);
+            isMyContact(contactInfo);
         } else {
-            sendMessage.setVisibility(View.GONE);
-            requestAddFriend.setVisibility(View.VISIBLE);
-            requestAddFriend.setOnClickListener(this);
+            isNotContact();
+        }
+    }
+
+    private void isMyContact(ContactInfo contactInfo) {
+        String remarkName = contactInfo.getRemarkName();
+        String nickName = contactInfo.getNickName();
+        String phone = contactInfo.getPhone();
+
+        //优先展示备注 没有备注展示昵称;有备注的话备注名在第一行展示,昵称在第二行
+        if (!TextUtils.isEmpty(remarkName)) {
+            mUserRemarkName.setText(remarkName);
+            mUserNickName.setVisibility(View.VISIBLE);
+            mUserNickName.setText(String.format("昵称:%s", nickName));
+        } else {//没有备注的话隐藏展示昵称的控件
+            mUserNickName.setVisibility(View.GONE);
+            mUserRemarkName.setText(nickName);
         }
 
+        mUserPhone.setText(UtilsHelper.getInstance().formatPhone(phone));
+
+        sendMessage.setVisibility(View.VISIBLE);
+        sendMessage.setOnClickListener(this);
+        requestAddFriend.setVisibility(View.GONE);
+    }
+
+    private void isNotContact() {
+        String phone = mIntent.getStringExtra(Constants.USER_PHONE);
+        String nickName = mIntent.getStringExtra(Constants.USER_NICK_NAME);
+        String userHeadUri = mIntent.getStringExtra(Constants.USER_HEAD_URI);
+
+        mUserNickName.setVisibility(View.GONE);
+        mUserRemarkName.setText(nickName);
+
+        mUserPhone.setText(UtilsHelper.getInstance().formatPhone(phone));
+
+        sendMessage.setVisibility(View.GONE);
+        requestAddFriend.setOnClickListener(this);
+        requestAddFriend.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -84,7 +100,6 @@ public class UserInfoDetailActivity extends BaseActivity implements View.OnClick
                 break;
             case R.id.request_add_friend_user_detail:
                 break;
-
         }
     }
 }
