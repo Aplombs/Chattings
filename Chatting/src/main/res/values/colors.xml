@@ -19,6 +19,8 @@
     <color name="network_state_bg">#FEDCDE</color>
     <!--超链接颜色-->
     <color name="href_link">#336699</color>
+    <!--加载中背景色-->
+    <color name="loading_bg">#AB000000</color>
 
-    <color name="yellow">#ff7d00</color>
+    <color name="yellow">#FF7D00</color>
 </resources>

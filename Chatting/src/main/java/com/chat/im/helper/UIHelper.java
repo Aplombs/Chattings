@@ -2,6 +2,8 @@ package com.chat.im.helper;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -60,11 +62,19 @@ public class UIHelper {
     }
 
     public Dialog createLoadingDialog(Context context) {
-        Dialog mDialog = new Dialog(context, R.style.common_progress_dialog);
-        mDialog.setContentView(R.layout.dialog_lodding);
-        mDialog.setCancelable(false);
-        mDialog.setCanceledOnTouchOutside(false);
-        return mDialog;
+        Dialog dialog = new Dialog(context, R.style.loading_dialog);
+        dialog.setContentView(R.layout.dialog_lodding);
+        Window window = dialog.getWindow();
+        if (window != null) {
+            WindowManager.LayoutParams dialogLayoutParams = window.getAttributes();
+            dialogLayoutParams.dimAmount = 0;
+            dialogLayoutParams.width = UtilsHelper.getInstance().dp2px(context, 120);
+            dialogLayoutParams.height = UtilsHelper.getInstance().dp2px(context, 120);
+            window.setAttributes(dialogLayoutParams);
+        }
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        return dialog;
     }
 
     public void hideSoftInput(EditText editText) {
@@ -73,7 +83,9 @@ public class UIHelper {
 
         editText.clearFocus();
         InputMethodManager inputMethodManager = (InputMethodManager) ContextHelper.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+        if (inputMethodManager != null) {
+            inputMethodManager.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+        }
     }
 
     public void showSoftInput(EditText editText) {
@@ -82,6 +94,8 @@ public class UIHelper {
 
         editText.requestFocus();
         InputMethodManager inputMethodManager = (InputMethodManager) ContextHelper.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputMethodManager.showSoftInput(editText, 0);
+        if (inputMethodManager != null) {
+            inputMethodManager.showSoftInput(editText, 0);
+        }
     }
 }
