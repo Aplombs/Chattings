@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 
+import com.chat.im.application.IMApp;
 import com.chat.im.constant.Constants;
 import com.chat.im.helper.LogHelper;
 import com.chat.im.helper.SpHelper;
@@ -58,6 +59,8 @@ public class LauncherActivity extends Activity {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
+                    //已登录状态为全局变量赋值
+                    IMApp.getInstance().mLoginID = SpHelper.getInstance().get(Constants.SP_LOGIN_USERID, "");
                     goToMain();
                 }
             }, 800);

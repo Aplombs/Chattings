@@ -2,6 +2,7 @@ package com.chat.im.helper;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.view.Gravity;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -74,6 +75,21 @@ public class UIHelper {
         }
         dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);
+        return dialog;
+    }
+
+    public Dialog createFriendSettingDialog(Context context) {
+        Dialog dialog = new Dialog(context, R.style.loading_dialog);
+        dialog.setContentView(R.layout.dialog_friend_setting);
+        Window window = dialog.getWindow();
+        if (window != null) {
+            WindowManager.LayoutParams dialogLayoutParams = window.getAttributes();
+            //dialogLayoutParams.dimAmount = 0;
+            dialogLayoutParams.gravity = Gravity.BOTTOM;
+            dialogLayoutParams.width = UtilsHelper.getInstance().dp2px(context, UtilsHelper.getInstance().getScreenWidth(context));
+            dialogLayoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;//UtilsHelper.getInstance().dp2px(context, 310);
+            window.setAttributes(dialogLayoutParams);
+        }
         return dialog;
     }
 

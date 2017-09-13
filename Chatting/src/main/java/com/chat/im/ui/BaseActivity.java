@@ -29,6 +29,7 @@ public abstract class BaseActivity extends FragmentActivity {
 
     //右上角+
     protected ImageView mBt_Add;
+    protected ImageView mBt_More;
     //顶部标题
     protected TextView mTitleName;
     //左上角返回按钮
@@ -44,6 +45,7 @@ public abstract class BaseActivity extends FragmentActivity {
 
         mTitleName = (TextView) findViewById(R.id.title_bar_title);
         mBt_Add = (ImageView) findViewById(R.id.title_bar_add);
+        mBt_More = (ImageView) findViewById(R.id.title_bar_more);
         mReturnView = findViewById(R.id.ll_return_top);
 
         mReturnView.setOnClickListener(new View.OnClickListener() {

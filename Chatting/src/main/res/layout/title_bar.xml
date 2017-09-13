@@ -59,6 +59,16 @@
         android:layout_marginEnd="25dp"
         android:src="@drawable/title_bar_add" />
 
+    <ImageView
+        android:id="@+id/title_bar_more"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="25dp"
+        android:src="@drawable/title_bar_more"
+        android:visibility="gone" />
+
     <!--为了让popupWindow展示此位置-->
     <View
         android:id="@+id/popup_add_location"

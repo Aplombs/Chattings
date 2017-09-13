@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chat.im.R;
+import com.chat.im.application.IMApp;
 import com.chat.im.constant.Constants;
 import com.chat.im.db.bean.ContactInfo;
 import com.chat.im.db.dao.ContactInfoDao;
@@ -31,9 +32,9 @@ public class UserInfoDetailActivity extends BaseActivity implements View.OnClick
     private Intent mIntent;
     private View sendMessage;
     private ImageView mUserHead;
-    private Dialog loadingDialog;
     private View requestAddFriend;
     private Handler handler = new Handler();
+    private Dialog loadingDialog, friendSettingDialog;
     private TextView mUserRemarkName, mUserPhone, mUserNickName;
 
     @Override
@@ -70,6 +71,9 @@ public class UserInfoDetailActivity extends BaseActivity implements View.OnClick
         if (loadingDialog == null) {
             loadingDialog = UIHelper.getInstance().createLoadingDialog(this);
         }
+        if (friendSettingDialog == null) {
+            friendSettingDialog = UIHelper.getInstance().createFriendSettingDialog(this);
+        }
     }
 
     private void isMyContact(ContactInfo contactInfo) {
@@ -92,6 +96,22 @@ public class UserInfoDetailActivity extends BaseActivity implements View.OnClick
         sendMessage.setVisibility(View.VISIBLE);
         sendMessage.setOnClickListener(this);
         requestAddFriend.setVisibility(View.GONE);
+
+        //自己不展示更多
+        if (IMApp.getInstance().mLoginID.equals(userID)) {
+            mBt_More.setVisibility(View.GONE);
+        } else {
+            mBt_More.setVisibility(View.VISIBLE);
+            mBt_More.setOnClickListener(this);
+        }
+
+        if (friendSettingDialog != null) {
+            friendSettingDialog.findViewById(R.id.setRemarkName_friendSetting).setOnClickListener(this);
+            friendSettingDialog.findViewById(R.id.recommendedContact_friendSetting).setOnClickListener(this);
+            friendSettingDialog.findViewById(R.id.deleteContact_friendSetting).setOnClickListener(this);
+            friendSettingDialog.findViewById(R.id.addBlack_friendSetting).setOnClickListener(this);
+            friendSettingDialog.findViewById(R.id.more_friendSetting).setOnClickListener(this);
+        }
     }
 
     private void isNotContact() {
@@ -104,6 +124,8 @@ public class UserInfoDetailActivity extends BaseActivity implements View.OnClick
 
         mUserPhone.setText(UtilsHelper.getInstance().formatPhone(phone));
 
+        mBt_More.setVisibility(View.GONE);
+
         sendMessage.setVisibility(View.GONE);
         requestAddFriend.setOnClickListener(this);
         requestAddFriend.setVisibility(View.VISIBLE);
@@ -112,6 +134,19 @@ public class UserInfoDetailActivity extends BaseActivity implements View.OnClick
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.title_bar_more://右上角更多按钮
+                friendSetting();
+                break;
+            case R.id.setRemarkName_friendSetting://右上角更多按钮--设置备注
+                break;
+            case R.id.recommendedContact_friendSetting://右上角更多按钮--推荐联系人
+                break;
+            case R.id.deleteContact_friendSetting://右上角更多按钮--删除联系人
+                break;
+            case R.id.addBlack_friendSetting://右上角更多按钮--加入黑名单
+                break;
+            case R.id.more_friendSetting://右上角更多按钮--更多
+                break;
             case R.id.send_message_user_detail:
                 openChatActivity();
                 break;
@@ -121,8 +156,16 @@ public class UserInfoDetailActivity extends BaseActivity implements View.OnClick
         }
     }
 
+    //好友设置
+    private void friendSetting() {
+        if (friendSettingDialog != null) {
+            friendSettingDialog.show();
+        }
+    }
+
     //打开聊天界面
     private void openChatActivity() {
+
     }
 
     //发送添加好友请求
