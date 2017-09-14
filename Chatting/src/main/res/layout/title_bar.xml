@@ -37,7 +37,7 @@
         android:layout_marginEnd="12dp"
         android:layout_toStartOf="@+id/title_bar_title"
         android:indeterminateBehavior="repeat"
-        android:indeterminateDrawable="@drawable/progress_bar_anim"
+        android:indeterminateDrawable="@drawable/loading_progress_anim"
         android:visibility="gone" />
 
     <TextView

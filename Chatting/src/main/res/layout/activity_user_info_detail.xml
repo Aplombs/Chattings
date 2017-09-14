@@ -94,7 +94,7 @@
         android:layout_marginEnd="10dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/bt_corners_round"
+        android:background="@drawable/btn_round_send_message"
         android:text="添加到联系人"
         android:textColor="@color/white"
         tools:ignore="HardcodedText" />
@@ -106,7 +106,7 @@
         android:layout_marginEnd="10dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/bt_corners_round"
+        android:background="@drawable/btn_round_send_message"
         android:text="发消息"
         android:textColor="@color/white"
         tools:ignore="HardcodedText" />

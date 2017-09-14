@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/loading_corners_round"
+    android:background="@drawable/loading_progress_round_bg"
     android:orientation="vertical">
 
     <LinearLayout
@@ -17,7 +17,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:indeterminateBehavior="repeat"
-            android:indeterminateDrawable="@drawable/progress_bar_anim" />
+            android:indeterminateDrawable="@drawable/loading_progress_anim" />
 
         <TextView
             android:layout_width="wrap_content"
