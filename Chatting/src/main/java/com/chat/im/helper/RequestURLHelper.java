@@ -98,6 +98,13 @@ public class RequestURLHelper {
         return getURL("friendship/invite");
     }
 
+    /**
+     * @return 获取删除好友的URL
+     */
+    public String getDeleteFriendRequestUrl() {
+        return getURL("friendship/delete");
+    }
+
     private String getURL(String url, String... params) {
         StringBuilder urlBuilder = new StringBuilder(Constants.DOMAIN).append(url);
         if (params != null) {

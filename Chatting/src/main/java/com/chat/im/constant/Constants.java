@@ -60,6 +60,7 @@ public class Constants {
     public static final int OK_GET_USER_INFO = 4;//成功--通过ID获取个人信息
     public static final int OK_SEARCH_FRIEND = 5;//成功--搜索好友
     public static final int OK_ADD_FRIEND_REQUEST = 6;//成功--发送添加好友请求
+    public static final int OK_DELETE_FRIEND_REQUEST = 7;//成功--删除好友
 
     /**
      * 失败状态码---比如:是登录失败还是注册失败...
@@ -70,6 +71,7 @@ public class Constants {
     public static final int FAILURE_GET_USER_INFO = 4;//失败--通过ID获取个人信息
     public static final int FAILURE_SEARCH_FRIEND = 5;//失败--搜索好友
     public static final int FAILURE_ADD_FRIEND_REQUEST = 6;//失败--发送添加好友请求
+    public static final int FAILURE_DELETE_FRIEND_REQUEST = 7;//失败--删除好友
 
     /**
      * 失败原因状态码---比如:是登录密码错误还是用户名错误...
