@@ -7,16 +7,21 @@ public class GetAllContactResponse {
     /**
      * code : 200
      * result : [{"displayName":"","message":"手机号:18622222222昵称:的用户请求添加你为好友","status":11,"updatedAt":"2016-01-07T06:22:55.000Z","user":{"id":"i3gRfA1ml","nickname":"nihaoa","portraitUri":""}}]
-     */
-
-    private int code;
-    /**
+     * <p>
      * displayName :
      * message : 手机号:18622222222昵称:的用户请求添加你为好友
      * status : 11
      * updatedAt : 2016-01-07T06:22:55.000Z
      * user : {"id":"i3gRfA1ml","nickname":"nihaoa","portraitUri":""}
+     * <p>
+     * status说明
+     * 11: //收到了好友邀请
+     * 10: // 发出了好友邀请
+     * 21: // 忽略好友邀请
+     * 20: // 已是好友
+     * 30: // 删除了好友关系
      */
+    private int code;
 
     private List<ResultEntity> result;
 

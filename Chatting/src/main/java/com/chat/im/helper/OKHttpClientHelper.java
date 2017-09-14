@@ -11,6 +11,8 @@ import com.chat.im.jsonbean.AddFriendRequest;
 import com.chat.im.jsonbean.AddFriendResponse;
 import com.chat.im.jsonbean.CheckPhoneRequest;
 import com.chat.im.jsonbean.CheckPhoneResponse;
+import com.chat.im.jsonbean.DeleteFriendRequest;
+import com.chat.im.jsonbean.DeleteFriendResponse;
 import com.chat.im.jsonbean.GetAllContactResponse;
 import com.chat.im.jsonbean.GetTokenRequest;
 import com.chat.im.jsonbean.GetTokenResponse;
@@ -304,25 +306,27 @@ public class OKHttpClientHelper {
                         if (list != null && list.size() > 0) {
                             List<ContactInfo> contactInfoList = new ArrayList<>();
                             for (GetAllContactResponse.ResultEntity resultEntity : list) {
-                                GetAllContactResponse.ResultEntity.UserEntity userEntity = resultEntity.getUser();
-                                String userId = userEntity.getId();
-                                String nickname = userEntity.getNickname();
-                                String remarkName = resultEntity.getDisplayName();
-                                String userHeadUri = userEntity.getPortraitUri();
-                                String region = userEntity.getRegion();
-                                String phone = userEntity.getPhone();
-                                String showName;
-                                String showNameLetter;
-                                if (TextUtils.isEmpty(remarkName)) {//备注为空取昵称的首字母
-                                    showName = nickname;
-                                    showNameLetter = UtilsHelper.getInstance().getFirstLetter(nickname);
-                                } else {
-                                    showName = remarkName;
-                                    showNameLetter = UtilsHelper.getInstance().getFirstLetter(remarkName);
-                                }
+                                if (resultEntity.getStatus() == 20) {
+                                    GetAllContactResponse.ResultEntity.UserEntity userEntity = resultEntity.getUser();
+                                    String userId = userEntity.getId();
+                                    String nickname = userEntity.getNickname();
+                                    String remarkName = resultEntity.getDisplayName();
+                                    String userHeadUri = userEntity.getPortraitUri();
+                                    String region = userEntity.getRegion();
+                                    String phone = userEntity.getPhone();
+                                    String showName;
+                                    String showNameLetter;
+                                    if (TextUtils.isEmpty(remarkName)) {//备注为空取昵称的首字母
+                                        showName = nickname;
+                                        showNameLetter = UtilsHelper.getInstance().getFirstLetter(nickname);
+                                    } else {
+                                        showName = remarkName;
+                                        showNameLetter = UtilsHelper.getInstance().getFirstLetter(remarkName);
+                                    }
 
-                                ContactInfo contactInfo = new ContactInfo(userId, region, phone, userHeadUri, nickname, remarkName, showName, showNameLetter);
-                                contactInfoList.add(contactInfo);
+                                    ContactInfo contactInfo = new ContactInfo(userId, region, phone, userHeadUri, nickname, remarkName, showName, showNameLetter);
+                                    contactInfoList.add(contactInfo);
+                                }
                             }
                             ContactInfoDao contactInfoDao = DBHelper.getInstance().getDaoSession().getContactInfoDao();
                             //清空之前的数据,将服务器最新数据插入数据库
@@ -422,6 +426,36 @@ public class OKHttpClientHelper {
             @Override
             public void onError() {
                 mResponseListener.onFailure(Constants.FAILURE_ADD_FRIEND_REQUEST, Constants.FAILURE_TYPE_OTHER);
+            }
+        });
+    }
+
+    /**
+     * 删除好友
+     *
+     * @param id 好友id
+     */
+    public void deleteFriend(String id) {
+        String url = RequestURLHelper.getInstance().getDeleteFriendRequestUrl();
+        String json = JsonHelper.beanToJson(new DeleteFriendRequest(id));
+        RequestBody requestBody = getRequestBody(json);
+
+        sendPostRequest(url, requestBody, new CallBack() {
+            @Override
+            public void onNext(String result) throws Exception {
+                LogHelper.e(TAG + "deleteFriend onResponse()--->>" + result);
+                DeleteFriendResponse deleteFriendResponse = JsonHelper.jsonToBean(result, DeleteFriendResponse.class);
+                if (200 == deleteFriendResponse.getCode()) {
+                    //调用onNext之前已经判断过result不为null
+                    mResponseListener.onResponse(Constants.OK_DELETE_FRIEND_REQUEST, deleteFriendResponse);
+                } else {
+                    mResponseListener.onFailure(Constants.FAILURE_DELETE_FRIEND_REQUEST, Constants.FAILURE_TYPE_OTHER);
+                }
+            }
+
+            @Override
+            public void onError() {
+                mResponseListener.onFailure(Constants.FAILURE_DELETE_FRIEND_REQUEST, Constants.FAILURE_TYPE_OTHER);
             }
         });
     }
