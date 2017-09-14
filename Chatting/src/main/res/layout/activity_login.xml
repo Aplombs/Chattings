@@ -29,7 +29,7 @@
         android:layout_centerInParent="true"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:background="@drawable/round_bg_login_phone_pwd"
+        android:background="@drawable/login_round_bg_phone_pwd"
         android:orientation="vertical"
         android:padding="10dp">
 
@@ -111,7 +111,7 @@
             android:id="@+id/tv_login"
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:background="@drawable/text_round_bg_login_register"
+            android:background="@drawable/login_register_text_round_bg"
             android:gravity="center"
             android:padding="10dp"
             android:text="登  录"
@@ -129,7 +129,7 @@
         android:layout_below="@+id/ll_user_and_pass_login_private"
         android:layout_centerInParent="true"
         android:layout_margin="20dp"
-        android:background="@drawable/btn_round_login_register"
+        android:background="@drawable/login_register_round_loging_registering"
         android:gravity="center"
         android:orientation="vertical"
         android:visibility="gone">
