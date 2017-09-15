@@ -21,6 +21,7 @@ import com.chat.im.helper.LogHelper;
 import com.chat.im.helper.OKHttpClientHelper;
 import com.chat.im.helper.SpHelper;
 import com.chat.im.helper.UtilsHelper;
+import com.chat.im.ui.NewFriendOrGroupChatOrPublicChatActivity;
 import com.chat.im.ui.UserInfoDetailActivity;
 
 import java.util.ArrayList;
@@ -42,8 +43,8 @@ import io.reactivex.schedulers.Schedulers;
 
 public class MainTab_ContactFragment extends Fragment implements View.OnClickListener, ContactAdapter.ContactItemClickListener {
 
-    public static final int START_USER_DETAIL_RESULT_CODE = 999;
-    private final int START_USER_DETAIL_REQUEST_CODE = 99;
+    public static final int START_RESULT_CODE = 999;
+    private final int START_REQUEST_CODE = 99;//打开好友资料和打开新朋友界面回来之后都需要刷新好友列表
     private View mView, mLoading;
     private TextView mContactNum, mNewFriendNum;
     private ExpandableListView mExpandableListView;
@@ -116,7 +117,7 @@ public class MainTab_ContactFragment extends Fragment implements View.OnClickLis
     private void initView(LayoutInflater inflater) {
         mView = inflater.inflate(R.layout.fragment_tab_contact, null);
 
-        mLoading = mView.findViewById(R.id.loading_Contact);
+        mLoading = mView.findViewById(R.id.loading_contact);
         mExpandableListView = (ExpandableListView) mView.findViewById(R.id.expandableListView_tabContact);
 
         View headerView = inflater.inflate(R.layout.listview_header_view_contact, null);
@@ -137,10 +138,13 @@ public class MainTab_ContactFragment extends Fragment implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.newFriend_Contact:
+                goToNewFriendOrGroupChatOrPublicChat(Constants.TAG_NEW_FRIEND_HEADER);
                 break;
             case R.id.groupChat_Contact:
+                goToNewFriendOrGroupChatOrPublicChat(Constants.TAG_GROUP_CHAT_HEADER);
                 break;
             case R.id.publicChat_Contact:
+                goToNewFriendOrGroupChatOrPublicChat(Constants.TAG_PUBLIC_CHAT_HEADER);
                 break;
         }
     }
@@ -148,12 +152,11 @@ public class MainTab_ContactFragment extends Fragment implements View.OnClickLis
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (START_USER_DETAIL_REQUEST_CODE == requestCode && START_USER_DETAIL_RESULT_CODE == resultCode) {
+        if (START_REQUEST_CODE == requestCode && START_RESULT_CODE == resultCode) {
             //刷新好友列表
             List<ContactInfo> mContactInfoList = DBHelper.getInstance().getDaoSession().
                     getContactInfoDao().queryBuilder().list();
             initContactAdapter(mContactInfoList, false);
-
         }
     }
 
@@ -218,11 +221,18 @@ public class MainTab_ContactFragment extends Fragment implements View.OnClickLis
         });
     }
 
+    //打开新朋友 群聊 公众号 界面
+    private void goToNewFriendOrGroupChatOrPublicChat(String tag) {
+        Intent intent = new Intent(getContext(), NewFriendOrGroupChatOrPublicChatActivity.class);
+        intent.putExtra("tag", tag);
+        startActivityForResult(intent, START_REQUEST_CODE);
+    }
+
     //打开好友详细资料界面
     private void goToUserInfoDetail(String id) {
         Intent intent = new Intent(getContext(), UserInfoDetailActivity.class);
         intent.putExtra(Constants.USER_ID, id);
-        startActivityForResult(intent, START_USER_DETAIL_REQUEST_CODE);
+        startActivityForResult(intent, START_REQUEST_CODE);
     }
 
     //将自己加入联系人列表

@@ -34,6 +34,9 @@ public class Constants {
     public static final String TAG_COLLECTION_ME_TAB = "收藏";
     public static final String TAG_EXPRESSION_ME_TAB = "表情";
     public static final String TAG_SETTING_ME_TAB = "设置";
+    public static final String TAG_NEW_FRIEND_HEADER = "新朋友";
+    public static final String TAG_GROUP_CHAT_HEADER = "群聊";
+    public static final String TAG_PUBLIC_CHAT_HEADER = "公众号";
 
     /**
      * 登录成功,保存用户手机号,用户密码,用户ID

@@ -7,7 +7,7 @@
 
     <!--正在加载-->
     <LinearLayout
-        android:id="@+id/loading_contact"
+        android:id="@+id/loading_contact_new_friend"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
@@ -27,14 +27,11 @@
 
     </LinearLayout>
 
-    <!--联系人列表-->
-    <ExpandableListView
-        android:id="@+id/expandableListView_tabContact"
+    <!--待添加联系人列表-->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView_contact_new_friend"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:childIndicator="@null"
-        android:divider="@null"
-        android:groupIndicator="@null"
         android:scrollbars="none"
         android:visibility="gone" />
 

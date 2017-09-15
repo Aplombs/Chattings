@@ -225,7 +225,7 @@ public class UserInfoDetailActivity extends BaseActivity implements View.OnClick
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                setResult(MainTab_ContactFragment.START_USER_DETAIL_RESULT_CODE);
+                setResult(MainTab_ContactFragment.START_RESULT_CODE);
                 UserInfoDetailActivity.this.finish();
             }
         }, 500);

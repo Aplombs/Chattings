@@ -56,6 +56,9 @@
             android:name=".ui.UserInfoDetailActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".ui.NewFriendOrGroupChatOrPublicChatActivity"
+            android:screenOrientation="portrait" />
 
         <!-- imlib config begin -->
         <meta-data
