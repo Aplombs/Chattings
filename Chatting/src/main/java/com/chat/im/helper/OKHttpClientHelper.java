@@ -6,7 +6,10 @@ import android.text.TextUtils;
 import com.chat.im.constant.Constants;
 import com.chat.im.cookie.PersistentCookieStore;
 import com.chat.im.db.bean.ContactInfo;
+import com.chat.im.db.bean.WaitAddFriends;
 import com.chat.im.db.dao.ContactInfoDao;
+import com.chat.im.db.dao.DaoSession;
+import com.chat.im.db.dao.WaitAddFriendsDao;
 import com.chat.im.jsonbean.AddFriendRequest;
 import com.chat.im.jsonbean.AddFriendResponse;
 import com.chat.im.jsonbean.CheckPhoneRequest;
@@ -305,33 +308,59 @@ public class OKHttpClientHelper {
                         List<GetAllContactResponse.ResultEntity> list = allContactResponse.getResult();
                         if (list != null && list.size() > 0) {
                             List<ContactInfo> contactInfoList = new ArrayList<>();
+                            List<WaitAddFriends> waitAddFriendsList = new ArrayList<>();
                             for (GetAllContactResponse.ResultEntity resultEntity : list) {
-                                if (resultEntity.getStatus() == 20) {
-                                    GetAllContactResponse.ResultEntity.UserEntity userEntity = resultEntity.getUser();
-                                    String userId = userEntity.getId();
-                                    String nickname = userEntity.getNickname();
-                                    String remarkName = resultEntity.getDisplayName();
-                                    String userHeadUri = userEntity.getPortraitUri();
-                                    String region = userEntity.getRegion();
-                                    String phone = userEntity.getPhone();
-                                    String showName;
-                                    String showNameLetter;
-                                    if (TextUtils.isEmpty(remarkName)) {//备注为空取昵称的首字母
-                                        showName = nickname;
-                                        showNameLetter = UtilsHelper.getInstance().getFirstLetter(nickname);
-                                    } else {
-                                        showName = remarkName;
-                                        showNameLetter = UtilsHelper.getInstance().getFirstLetter(remarkName);
-                                    }
 
+                                GetAllContactResponse.ResultEntity.UserEntity userEntity = resultEntity.getUser();
+                                String userId = userEntity.getId();
+                                String nickname = userEntity.getNickname();
+                                String remarkName = resultEntity.getDisplayName();
+                                String userHeadUri = userEntity.getPortraitUri();
+                                String region = userEntity.getRegion();
+                                String phone = userEntity.getPhone();
+                                String showName;
+                                String showNameLetter;
+                                if (TextUtils.isEmpty(remarkName)) {//备注为空取昵称的首字母
+                                    showName = nickname;
+                                    showNameLetter = UtilsHelper.getInstance().getFirstLetter(nickname);
+                                } else {
+                                    showName = remarkName;
+                                    showNameLetter = UtilsHelper.getInstance().getFirstLetter(remarkName);
+                                }
+
+                                /*
+                                 * status说明
+                                 * 10: // 发出了好友邀请
+                                 * 11: // 收到了好友邀请
+                                 * 21: // 忽略好友邀请
+                                 * 20: // 已是好友
+                                 * 30: // 删除了好友关系
+                                 */
+                                if (resultEntity.getStatus() == 20) {
                                     ContactInfo contactInfo = new ContactInfo(userId, region, phone, userHeadUri, nickname, remarkName, showName, showNameLetter);
                                     contactInfoList.add(contactInfo);
                                 }
+
+                                if (resultEntity.getStatus() == 11) {
+                                    String addFriendAttachMsg = resultEntity.getMessage();
+                                    WaitAddFriends waitAddFriends = new WaitAddFriends(userId, region, phone, userHeadUri, nickname, remarkName, showName, showNameLetter, addFriendAttachMsg);
+                                    waitAddFriendsList.add(waitAddFriends);
+                                }
                             }
-                            ContactInfoDao contactInfoDao = DBHelper.getInstance().getDaoSession().getContactInfoDao();
+
+                            DaoSession daoSession = DBHelper.getInstance().getDaoSession();
+
+                            ContactInfoDao contactInfoDao = daoSession.getContactInfoDao();
                             //清空之前的数据,将服务器最新数据插入数据库
                             contactInfoDao.deleteAll();
                             contactInfoDao.insertOrReplaceInTx(contactInfoList);
+
+                            if (waitAddFriendsList.size() > 0) {
+                                WaitAddFriendsDao waitAddFriendsDao = daoSession.getWaitAddFriendsDao();
+                                //清空之前的数据,将服务器最新数据插入数据库
+                                waitAddFriendsDao.deleteAll();
+                                waitAddFriendsDao.insertOrReplaceInTx(waitAddFriendsList);
+                            }
                         }
                     }
                 }
@@ -344,6 +373,7 @@ public class OKHttpClientHelper {
      *
      * @param userID 要查询的用户ID
      */
+
     public void getUserInfoByID(String userID) {
         String userInfoUrl = RequestURLHelper.getInstance().getUserInfoUrl(userID);
 

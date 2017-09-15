@@ -16,6 +16,7 @@ import com.chat.im.application.IMApp;
 import com.chat.im.constant.Constants;
 import com.chat.im.db.bean.ContactInfo;
 import com.chat.im.db.dao.ContactInfoDao;
+import com.chat.im.fragment.MainTab_ContactFragment;
 import com.chat.im.helper.DBHelper;
 import com.chat.im.helper.OKHttpClientHelper;
 import com.chat.im.helper.SpHelper;
@@ -36,6 +37,7 @@ public class UserInfoDetailActivity extends BaseActivity implements View.OnClick
     private Handler handler = new Handler();
     private Dialog loadingDialog, friendSettingDialog;
     private TextView mUserRemarkName, mUserPhone, mUserNickName;
+    private ContactInfo mContactInfo;
 
     @Override
     protected int setLayoutRes() {
@@ -60,13 +62,7 @@ public class UserInfoDetailActivity extends BaseActivity implements View.OnClick
         sendMessage = findViewById(R.id.send_message_user_detail);
         requestAddFriend = findViewById(R.id.request_add_friend_user_detail);
 
-        ContactInfo contactInfo = DBHelper.getInstance().getDaoSession().getContactInfoDao().queryBuilder().where(ContactInfoDao.Properties.UserId.eq(userID)).unique();
-
-        if (contactInfo != null) {
-            isMyContact(contactInfo);
-        } else {
-            isNotContact();
-        }
+        mContactInfo = DBHelper.getInstance().getDaoSession().getContactInfoDao().queryBuilder().where(ContactInfoDao.Properties.UserId.eq(userID)).unique();
 
         if (loadingDialog == null) {
             loadingDialog = UIHelper.getInstance().createLoadingDialog(this);
@@ -74,12 +70,18 @@ public class UserInfoDetailActivity extends BaseActivity implements View.OnClick
         if (friendSettingDialog == null) {
             friendSettingDialog = UIHelper.getInstance().createFriendSettingDialog(this);
         }
+
+        if (mContactInfo != null) {
+            isMyContact();
+        } else {
+            isNotContact();
+        }
     }
 
-    private void isMyContact(ContactInfo contactInfo) {
-        String remarkName = contactInfo.getRemarkName();
-        String nickName = contactInfo.getNickName();
-        String phone = contactInfo.getPhone();
+    private void isMyContact() {
+        String remarkName = mContactInfo.getRemarkName();
+        String nickName = mContactInfo.getNickName();
+        String phone = mContactInfo.getPhone();
 
         //优先展示备注 没有备注展示昵称;有备注的话备注名在第一行展示,昵称在第二行
         if (!TextUtils.isEmpty(remarkName)) {
@@ -142,6 +144,7 @@ public class UserInfoDetailActivity extends BaseActivity implements View.OnClick
             case R.id.recommendedContact_friendSetting://右上角更多按钮--推荐联系人
                 break;
             case R.id.deleteContact_friendSetting://右上角更多按钮--删除联系人
+                deleteFriend();
                 break;
             case R.id.addBlack_friendSetting://右上角更多按钮--加入黑名单
                 break;
@@ -156,16 +159,81 @@ public class UserInfoDetailActivity extends BaseActivity implements View.OnClick
         }
     }
 
-    //好友设置
-    private void friendSetting() {
-        if (friendSettingDialog != null) {
-            friendSettingDialog.show();
+    @Override
+    public void onResponse(int requestCode, Object response) {
+        switch (requestCode) {
+            case Constants.OK_ADD_FRIEND_REQUEST://添加好友
+                hideLoadingDialog();
+                UIHelper.getInstance().toast("已发送添加");
+                break;
+            case Constants.OK_DELETE_FRIEND_REQUEST://删除好友
+                deleteFriendFromDao();
+                break;
+        }
+    }
+
+    @Override
+    public void onFailure(int requestCode, int statusCode) {
+        switch (requestCode) {
+            case Constants.FAILURE_ADD_FRIEND_REQUEST://添加好友
+                hideLoadingDialog();
+                UIHelper.getInstance().toast("添加到联系人失败,稍后重试");
+                break;
+            case Constants.FAILURE_DELETE_FRIEND_REQUEST://删除好友
+                hideLoadingDialog();
+                UIHelper.getInstance().toast("删除失败,稍后重试");
+                break;
         }
     }
 
     //打开聊天界面
     private void openChatActivity() {
 
+    }
+
+    //删除好友
+    private void deleteFriend() {
+        hideFriendSettingDialog();
+        if (!UIHelper.getInstance().checkNetwork()) {
+            return;
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("删除联系人");
+        builder.setMessage("将联系人" + mContactInfo.getShowName() + "删除,将同时删除与该联系人的聊天记录");
+        builder.setNegativeButton("取消", null);
+        builder.setPositiveButton("删除", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                showLoadingDialog();
+                OKHttpClientHelper.getInstance().deleteFriend(userID);
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.setCanceledOnTouchOutside(false);
+        alertDialog.show();
+        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.red));
+        alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.text_gray));
+    }
+
+    //从数据库将好友删除
+    private void deleteFriendFromDao() {
+        DBHelper.getInstance().getDaoSession().getContactInfoDao().deleteByKey(userID);
+        hideLoadingDialog();
+        UIHelper.getInstance().toast("已删除");
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                setResult(MainTab_ContactFragment.START_USER_DETAIL_RESULT_CODE);
+                UserInfoDetailActivity.this.finish();
+            }
+        }, 500);
+    }
+
+    //好友设置
+    private void friendSetting() {
+        showFriendSettingDialog();
     }
 
     //发送添加好友请求
@@ -182,7 +250,7 @@ public class UserInfoDetailActivity extends BaseActivity implements View.OnClick
         builder.setPositiveButton("发送", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                loadingDialog.show();
+                showLoadingDialog();
                 String requestMessage = editText.getText().toString();
                 OKHttpClientHelper.getInstance().sendAddFriendRequest(userID, requestMessage);
             }
@@ -203,23 +271,27 @@ public class UserInfoDetailActivity extends BaseActivity implements View.OnClick
         }, 200);
     }
 
-    @Override
-    public void onResponse(int requestCode, Object response) {
-        switch (requestCode) {
-            case Constants.OK_ADD_FRIEND_REQUEST:
-                loadingDialog.dismiss();
-                UIHelper.getInstance().toast("已发送添加");
-                break;
+    private void showLoadingDialog() {
+        if (loadingDialog != null) {
+            loadingDialog.show();
         }
     }
 
-    @Override
-    public void onFailure(int requestCode, int statusCode) {
-        switch (requestCode) {
-            case Constants.FAILURE_ADD_FRIEND_REQUEST:
-                loadingDialog.dismiss();
-                UIHelper.getInstance().toast("添加到联系人失败,稍后重试");
-                break;
+    private void hideLoadingDialog() {
+        if (loadingDialog != null) {
+            loadingDialog.dismiss();
+        }
+    }
+
+    private void showFriendSettingDialog() {
+        if (friendSettingDialog != null) {
+            friendSettingDialog.show();
+        }
+    }
+
+    private void hideFriendSettingDialog() {
+        if (friendSettingDialog != null) {
+            friendSettingDialog.dismiss();
         }
     }
 }

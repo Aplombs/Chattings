@@ -81,7 +81,10 @@ public class UtilsHelper {
      */
     public boolean isNetworkConnected() {
         ConnectivityManager connectivityManager = (ConnectivityManager) ContextHelper.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo ni = connectivityManager.getActiveNetworkInfo();
+        NetworkInfo ni = null;
+        if (connectivityManager != null) {
+            ni = connectivityManager.getActiveNetworkInfo();
+        }
         return ni != null && ni.isConnectedOrConnecting();
     }
 

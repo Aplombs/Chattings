@@ -1,7 +1,6 @@
 package com.chat.im.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chat.im.R;
-import com.chat.im.constant.Constants;
 import com.chat.im.db.bean.ContactInfo;
 import com.chat.im.helper.ContextHelper;
-import com.chat.im.ui.UserInfoDetailActivity;
 
 import java.util.List;
 import java.util.Map;
@@ -27,11 +24,20 @@ public class ContactAdapter extends BaseExpandableListAdapter {
     private Context mContext;
     private List<String> mLetterList;
     private Map<String, List<ContactInfo>> mMap;
+    private ContactItemClickListener mItemClickListener;
 
     public ContactAdapter(Context context, List<String> letterList, Map<String, List<ContactInfo>> map) {
         this.mContext = context;
         this.mMap = map;
         this.mLetterList = letterList;
+    }
+
+    public void reLoadData(List<String> letterList, Map<String, List<ContactInfo>> map) {
+        this.mMap = null;
+        this.mLetterList = null;
+        this.mMap = map;
+        this.mLetterList = letterList;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -102,7 +108,9 @@ public class ContactAdapter extends BaseExpandableListAdapter {
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToUserInfoDetail(contactInfo.getUserId());
+                if (mItemClickListener != null) {
+                    mItemClickListener.onItemClick(contactInfo.getUserId());
+                }
             }
         });
         return convertView;
@@ -113,11 +121,12 @@ public class ContactAdapter extends BaseExpandableListAdapter {
         return false;
     }
 
-    //打开好友详细资料界面
-    private void goToUserInfoDetail(String id) {
-        Intent intent = new Intent(mContext, UserInfoDetailActivity.class);
-        intent.putExtra(Constants.USER_ID, id);
-        mContext.startActivity(intent);
+    public void setOnItemClick(ContactItemClickListener listener) {
+        this.mItemClickListener = listener;
+    }
+
+    public interface ContactItemClickListener {
+        void onItemClick(String contactId);
     }
 
     private class ContactLetterViewHolder {
