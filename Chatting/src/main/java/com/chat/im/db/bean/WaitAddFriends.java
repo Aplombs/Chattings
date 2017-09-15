@@ -8,7 +8,7 @@ import org.greenrobot.greendao.annotation.Id;
  * 待添加好友
  */
 @Entity
-public class WaitAddFriends extends ContactInfo {
+public class WaitAddFriends {
 
     @Id
     private String userId;
@@ -20,11 +20,12 @@ public class WaitAddFriends extends ContactInfo {
     private String showName;
     private String showNameLetter;
     private String addFriendAttachMessage;
+    private boolean isAdded;
 
-    @Generated(hash = 1348973547)
+    @Generated(hash = 677675480)
     public WaitAddFriends(String userId, String region, String phone,
                           String headUri, String nickName, String remarkName, String showName,
-                          String showNameLetter, String addFriendAttachMessage) {
+                          String showNameLetter, String addFriendAttachMessage, boolean isAdded) {
         this.userId = userId;
         this.region = region;
         this.phone = phone;
@@ -34,6 +35,7 @@ public class WaitAddFriends extends ContactInfo {
         this.showName = showName;
         this.showNameLetter = showNameLetter;
         this.addFriendAttachMessage = addFriendAttachMessage;
+        this.isAdded = isAdded;
     }
 
     @Generated(hash = 434751742)
@@ -110,5 +112,13 @@ public class WaitAddFriends extends ContactInfo {
 
     public void setAddFriendAttachMessage(String addFriendAttachMessage) {
         this.addFriendAttachMessage = addFriendAttachMessage;
+    }
+
+    public boolean getIsAdded() {
+        return this.isAdded;
+    }
+
+    public void setIsAdded(boolean isAdded) {
+        this.isAdded = isAdded;
     }
 }

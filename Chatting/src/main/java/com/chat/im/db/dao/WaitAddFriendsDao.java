@@ -33,6 +33,7 @@ public class WaitAddFriendsDao extends AbstractDao<WaitAddFriends, String> {
         public final static Property ShowName = new Property(6, String.class, "showName", false, "SHOW_NAME");
         public final static Property ShowNameLetter = new Property(7, String.class, "showNameLetter", false, "SHOW_NAME_LETTER");
         public final static Property AddFriendAttachMessage = new Property(8, String.class, "addFriendAttachMessage", false, "ADD_FRIEND_ATTACH_MESSAGE");
+        public final static Property IsAdded = new Property(9, boolean.class, "isAdded", false, "IS_ADDED");
     }
 
 
@@ -56,7 +57,8 @@ public class WaitAddFriendsDao extends AbstractDao<WaitAddFriends, String> {
                 "\"REMARK_NAME\" TEXT," + // 5: remarkName
                 "\"SHOW_NAME\" TEXT," + // 6: showName
                 "\"SHOW_NAME_LETTER\" TEXT," + // 7: showNameLetter
-                "\"ADD_FRIEND_ATTACH_MESSAGE\" TEXT);"); // 8: addFriendAttachMessage
+                "\"ADD_FRIEND_ATTACH_MESSAGE\" TEXT," + // 8: addFriendAttachMessage
+                "\"IS_ADDED\" INTEGER NOT NULL );"); // 9: isAdded
     }
 
     /** Drops the underlying database table. */
@@ -113,6 +115,7 @@ public class WaitAddFriendsDao extends AbstractDao<WaitAddFriends, String> {
         if (addFriendAttachMessage != null) {
             stmt.bindString(9, addFriendAttachMessage);
         }
+        stmt.bindLong(10, entity.getIsAdded() ? 1L: 0L);
     }
 
     @Override
@@ -163,6 +166,7 @@ public class WaitAddFriendsDao extends AbstractDao<WaitAddFriends, String> {
         if (addFriendAttachMessage != null) {
             stmt.bindString(9, addFriendAttachMessage);
         }
+        stmt.bindLong(10, entity.getIsAdded() ? 1L: 0L);
     }
 
     @Override
@@ -181,7 +185,8 @@ public class WaitAddFriendsDao extends AbstractDao<WaitAddFriends, String> {
             cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // remarkName
             cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // showName
             cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // showNameLetter
-            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8) // addFriendAttachMessage
+            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // addFriendAttachMessage
+            cursor.getShort(offset + 9) != 0 // isAdded
         );
         return entity;
     }
@@ -197,6 +202,7 @@ public class WaitAddFriendsDao extends AbstractDao<WaitAddFriends, String> {
         entity.setShowName(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
         entity.setShowNameLetter(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
         entity.setAddFriendAttachMessage(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
+        entity.setIsAdded(cursor.getShort(offset + 9) != 0);
      }
     
     @Override

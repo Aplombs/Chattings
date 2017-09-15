@@ -20,7 +20,7 @@
             android:src="@drawable/default_user_header" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="220dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_toEndOf="@id/userHead_item_contact_new_friend"
@@ -30,6 +30,7 @@
                 android:id="@+id/userNickName_item_contact_new_friend"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:singleLine="true"
                 android:text="唐利涛"
                 android:textColor="@color/black"
                 android:textSize="16sp"
@@ -39,6 +40,7 @@
                 android:id="@+id/attach_message_item_contact_new_friend"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:singleLine="true"
                 android:text="我是唐利涛"
                 android:textColor="@color/text_gray"
                 android:textSize="16sp"

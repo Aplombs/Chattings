@@ -345,7 +345,7 @@ public class OKHttpClientHelper {
 
                                 if (resultEntity.getStatus() == 11) {
                                     String addFriendAttachMsg = resultEntity.getMessage();
-                                    WaitAddFriends waitAddFriends = new WaitAddFriends(userId, region, phone, userHeadUri, nickname, remarkName, showName, showNameLetter, addFriendAttachMsg);
+                                    WaitAddFriends waitAddFriends = new WaitAddFriends(userId, region, phone, userHeadUri, nickname, remarkName, showName, showNameLetter, addFriendAttachMsg, false);
                                     waitAddFriendsList.add(waitAddFriends);
                                 }
                             }

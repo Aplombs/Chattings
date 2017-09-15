@@ -47,14 +47,20 @@ public class ContactNewFriendAdapter extends RecyclerView.Adapter<ContactNewFrie
         holder.userName.setText(waitAddFriends.getNickName());
         holder.attachMessage.setText(waitAddFriends.getAddFriendAttachMessage());
 
-        holder.agree_add_friend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mItemAgreeListener != null) {
-                    mItemAgreeListener.onItemAgreeClick(position);
+        if (waitAddFriends.getIsAdded()) {
+            holder.agree_add_friend.setEnabled(false);
+            holder.agree_add_friend.setText("已添加");
+            holder.agree_add_friend.setBackgroundResource(R.drawable.add_friend_yes_agree_btn_round);
+        } else {
+            holder.agree_add_friend.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mItemAgreeListener != null) {
+                        mItemAgreeListener.onItemAgreeClick(position);
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     @Override

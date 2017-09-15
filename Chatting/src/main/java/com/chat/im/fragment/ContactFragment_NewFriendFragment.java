@@ -142,8 +142,8 @@ public class ContactFragment_NewFriendFragment extends Fragment implements OKHtt
         Observable.create(new ObservableOnSubscribe<List<WaitAddFriends>>() {
             @Override
             public void subscribe(ObservableEmitter<List<WaitAddFriends>> observableEmitter) {
-
-                DBHelper.getInstance().getDaoSession().getWaitAddFriendsDao().deleteByKey(waitAddFriends.getUserId());
+                waitAddFriends.setIsAdded(true);
+                DBHelper.getInstance().getDaoSession().getWaitAddFriendsDao().insertOrReplace(waitAddFriends);
 
                 ContactInfo contactInfo = new ContactInfo(waitAddFriends.getUserId(), waitAddFriends.getRegion(), waitAddFriends.getPhone(), waitAddFriends.getHeadUri(), waitAddFriends.getNickName(), waitAddFriends.getRemarkName(), waitAddFriends.getShowName(), waitAddFriends.getShowNameLetter());
                 DBHelper.getInstance().getDaoSession().getContactInfoDao().insertOrReplaceInTx(contactInfo);

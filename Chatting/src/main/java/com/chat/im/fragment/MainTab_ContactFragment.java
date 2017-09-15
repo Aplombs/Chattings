@@ -46,9 +46,9 @@ public class MainTab_ContactFragment extends Fragment implements View.OnClickLis
     public static final int START_RESULT_CODE = 999;
     private final int START_REQUEST_CODE = 99;//打开好友资料和打开新朋友界面回来之后都需要刷新好友列表
     private View mView, mLoading;
-    private TextView mContactNum, mNewFriendNum;
     private ExpandableListView mExpandableListView;
     private ContactAdapter mContactAdapter;
+    private TextView mContactNum, mNewFriendNum, mNotRead_tabContact;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -89,6 +89,7 @@ public class MainTab_ContactFragment extends Fragment implements View.OnClickLis
 
         mNewFriendNum = (TextView) headerView.findViewById(R.id.not_read_tab_contact);
         mContactNum = (TextView) footerView.findViewById(R.id.contactNum_Contact);
+        mNotRead_tabContact = (TextView) getActivity().findViewById(R.id.not_read_tab_contact);
 
         mExpandableListView.addHeaderView(headerView);
         mExpandableListView.addFooterView(footerView);
@@ -155,11 +156,21 @@ public class MainTab_ContactFragment extends Fragment implements View.OnClickLis
                 List<ContactInfo> mContactInfoList = (List<ContactInfo>) dataMap.get("contact");
                 List<WaitAddFriends> waitAddFriendsList = (List<WaitAddFriends>) dataMap.get("newContact");
 
-                if (waitAddFriendsList.size() > 0) {
+                int waitFriendCount = 0;
+                for (WaitAddFriends waitFriend : waitAddFriendsList) {
+                    if (!waitFriend.getIsAdded()) {
+                        waitFriendCount++;
+                    }
+                }
+                if (waitFriendCount > 0) {
                     mNewFriendNum.setVisibility(View.VISIBLE);
-                    mNewFriendNum.setText(String.valueOf(waitAddFriendsList.size()));
+                    mNewFriendNum.setText(String.valueOf(waitFriendCount));
+
+                    mNotRead_tabContact.setVisibility(View.VISIBLE);
+                    mNotRead_tabContact.setText(String.valueOf(waitFriendCount));
                 } else {
                     mNewFriendNum.setVisibility(View.GONE);
+                    mNotRead_tabContact.setVisibility(View.GONE);
                 }
 
                 Map<String, List<ContactInfo>> map = new HashMap<>();

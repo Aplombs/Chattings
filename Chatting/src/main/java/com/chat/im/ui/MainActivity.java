@@ -32,7 +32,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private ViewPager mViewPager;
     private ImageView mImage_tabMessage, mImage_tabContact, mImage_tabMe;
     private View mLoading, mTip_me, mTabMessage, mTabContact, mTabMe, mPopupView, mPopupWindowLocationView;
-    private TextView mText_tabMessage, mText_tabContact, mText_tabMe, mNotRead_tabMessage, mNotRead_tabContact;
+    private TextView mText_tabMessage, mText_tabContact, mText_tabMe, mNotRead_tabMessage;
 
     @Override
     protected void init() {
@@ -55,7 +55,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mText_tabContact = (TextView) findViewById(R.id.text_tab_contact);
         mText_tabMe = (TextView) findViewById(R.id.text_tab_me);
         mNotRead_tabMessage = (TextView) findViewById(R.id.not_read_tab_message);
-        mNotRead_tabContact = (TextView) findViewById(R.id.not_read_tab_contact);
         mTip_me = findViewById(R.id.tip_tab_me);
 
         mViewPager = (ViewPager) findViewById(R.id.viewpager_main);
