@@ -53,48 +53,8 @@ public class MainTab_ContactFragment extends Fragment implements View.OnClickLis
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Observable.create(new ObservableOnSubscribe<Map>() {
-            @Override
-            public void subscribe(ObservableEmitter<Map> observableEmitter) {
-                if (UtilsHelper.getInstance().isNetworkConnected()) {
-                    try {
-                        //获取全部好友信息--获取成功之后会把之前所有联系人数据delete
-                        OKHttpClientHelper.getInstance().getAllContact();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-                //添加自己为好友
-                addMySelf();
 
-                Map<String, List> map = new HashMap<>();
-                List<ContactInfo> mContactInfoList = DBHelper.getInstance().getDaoSession().
-                        getContactInfoDao().queryBuilder().list();
-                List<WaitAddFriends> waitAddFriendsList = DBHelper.getInstance().getDaoSession().
-                        getWaitAddFriendsDao().queryBuilder().list();
-                map.put("contact", mContactInfoList);
-                map.put("newContact", waitAddFriendsList);
-                observableEmitter.onNext(map);
-            }
-        }).subscribeOn(Schedulers.io())//被观察者在子线程
-                .observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<Map>() {
-            @Override
-            public void accept(Map map) throws Exception {
-                if (mLoading == null) {
-                    return;
-                }
-                List<ContactInfo> mContactInfoList = (List<ContactInfo>) map.get("contact");
-                List<WaitAddFriends> waitAddFriendsList = (List<WaitAddFriends>) map.get("newContact");
-
-                mNewFriendNum.setVisibility(View.VISIBLE);
-                mNewFriendNum.setText(String.valueOf(waitAddFriendsList.size()));
-
-                initContactAdapter(mContactInfoList, true);
-
-                mLoading.setVisibility(View.GONE);
-                mExpandableListView.setVisibility(View.VISIBLE);
-            }
-        });
+        initContactAdapter(true);
     }
 
     @Nullable
@@ -154,69 +114,114 @@ public class MainTab_ContactFragment extends Fragment implements View.OnClickLis
         super.onActivityResult(requestCode, resultCode, data);
         if (START_REQUEST_CODE == requestCode && START_RESULT_CODE == resultCode) {
             //刷新好友列表
-            List<ContactInfo> mContactInfoList = DBHelper.getInstance().getDaoSession().
-                    getContactInfoDao().queryBuilder().list();
-            initContactAdapter(mContactInfoList, false);
+            initContactAdapter(false);
         }
     }
 
     //初始化联系人Adapter
-    private void initContactAdapter(List<ContactInfo> infoList, boolean isCreate) {
-        Map<String, List<ContactInfo>> map = new HashMap<>();
-
-        //字母集合
-        List<String> letterList = new ArrayList<>();
-        for (ContactInfo contactInfo : infoList) {
-            String nameLetter = contactInfo.getShowNameLetter();
-            if (!letterList.contains(nameLetter)) {
-                letterList.add(nameLetter);
-            }
-        }
-
-        //集合排序
-        Collections.sort(letterList);
-        LogHelper.e("list sort " + letterList);
-        if (letterList.contains("#")) {
-            //将集合进行旋转(负数正向移动 正数反向移动)
-            Collections.rotate(letterList, -1);
-            LogHelper.e("list rotate " + letterList);
-        }
-
-        for (int i = 0; i < letterList.size(); i++) {
-            //每个字母所对应的联系人信息集合
-            List<ContactInfo> contactList = new ArrayList<>();
-            String letter = letterList.get(i);
-            //遍历联系人集合匹配哪个联系人的首字母和letter一样
-            for (int j = 0; j < infoList.size(); j++) {
-                String firstNameLetter = infoList.get(j).getShowNameLetter();
-                if (letter.equals(firstNameLetter)) {
-                    contactList.add(infoList.get(j));
-                }
-            }
-            map.put(letter, contactList);
-        }
-
-        mContactNum.setText(String.valueOf(infoList.size() + "位联系人"));
-
-        if (isCreate) {
-            mContactAdapter = new ContactAdapter(getActivity(), letterList, map);
-            mExpandableListView.setAdapter(mContactAdapter);
-        } else {
-            mContactAdapter.reLoadData(letterList, map);
-        }
-
-        mContactAdapter.setOnItemClick(MainTab_ContactFragment.this);
-
-        //默认都打开
-        for (int i = 0; i < mContactAdapter.getGroupCount(); i++) {
-            mExpandableListView.expandGroup(i);
-        }
-
-        //字母不可点击
-        mExpandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+    private void initContactAdapter(final boolean isCreate) {
+        Observable.create(new ObservableOnSubscribe<Map>() {
             @Override
-            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-                return true;
+            public void subscribe(ObservableEmitter<Map> observableEmitter) {
+                if (isCreate) {
+                    if (UtilsHelper.getInstance().isNetworkConnected()) {
+                        try {
+                            //获取全部好友信息--获取成功之后会把之前所有联系人数据delete
+                            OKHttpClientHelper.getInstance().getAllContact();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    //添加自己为好友
+                    addMySelf();
+                }
+                Map<String, List> map = new HashMap<>();
+                List<ContactInfo> mContactInfoList = DBHelper.getInstance().getDaoSession().
+                        getContactInfoDao().queryBuilder().list();
+                List<WaitAddFriends> waitAddFriendsList = DBHelper.getInstance().getDaoSession().
+                        getWaitAddFriendsDao().queryBuilder().list();
+                map.put("contact", mContactInfoList);
+                map.put("newContact", waitAddFriendsList);
+                observableEmitter.onNext(map);
+            }
+        }).subscribeOn(Schedulers.io())//被观察者在子线程
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<Map>() {
+            @Override
+            public void accept(Map dataMap) throws Exception {
+                if (mLoading == null) {
+                    return;
+                }
+
+                List<ContactInfo> mContactInfoList = (List<ContactInfo>) dataMap.get("contact");
+                List<WaitAddFriends> waitAddFriendsList = (List<WaitAddFriends>) dataMap.get("newContact");
+
+                if (waitAddFriendsList.size() > 0) {
+                    mNewFriendNum.setVisibility(View.VISIBLE);
+                    mNewFriendNum.setText(String.valueOf(waitAddFriendsList.size()));
+                } else {
+                    mNewFriendNum.setVisibility(View.GONE);
+                }
+
+                Map<String, List<ContactInfo>> map = new HashMap<>();
+
+                //字母集合
+                List<String> letterList = new ArrayList<>();
+                for (ContactInfo contactInfo : mContactInfoList) {
+                    String nameLetter = contactInfo.getShowNameLetter();
+                    if (!letterList.contains(nameLetter)) {
+                        letterList.add(nameLetter);
+                    }
+                }
+
+                //集合排序
+                Collections.sort(letterList);
+                LogHelper.e("list sort " + letterList);
+                if (letterList.contains("#")) {
+                    //将集合进行旋转(负数正向移动 正数反向移动)
+                    Collections.rotate(letterList, -1);
+                    LogHelper.e("list rotate " + letterList);
+                }
+
+                for (int i = 0; i < letterList.size(); i++) {
+                    //每个字母所对应的联系人信息集合
+                    List<ContactInfo> contactList = new ArrayList<>();
+                    String letter = letterList.get(i);
+                    //遍历联系人集合匹配哪个联系人的首字母和letter一样
+                    for (int j = 0; j < mContactInfoList.size(); j++) {
+                        String firstNameLetter = mContactInfoList.get(j).getShowNameLetter();
+                        if (letter.equals(firstNameLetter)) {
+                            contactList.add(mContactInfoList.get(j));
+                        }
+                    }
+                    map.put(letter, contactList);
+                }
+
+                mContactNum.setText(String.valueOf(mContactInfoList.size() + "位联系人"));
+
+                if (isCreate) {
+                    mContactAdapter = new ContactAdapter(getActivity(), letterList, map);
+                    mExpandableListView.setAdapter(mContactAdapter);
+                } else {
+                    mContactAdapter.reLoadData(letterList, map);
+                }
+
+                mContactAdapter.setOnItemClick(MainTab_ContactFragment.this);
+
+                //默认都打开
+                for (int i = 0; i < mContactAdapter.getGroupCount(); i++) {
+                    mExpandableListView.expandGroup(i);
+                }
+
+                //字母不可点击
+                mExpandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+                    @Override
+                    public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+                        return true;
+                    }
+                });
+
+                mLoading.setVisibility(View.GONE);
+                mExpandableListView.setVisibility(View.VISIBLE);
             }
         });
     }

@@ -12,6 +12,8 @@ import com.chat.im.db.dao.DaoSession;
 import com.chat.im.db.dao.WaitAddFriendsDao;
 import com.chat.im.jsonbean.AddFriendRequest;
 import com.chat.im.jsonbean.AddFriendResponse;
+import com.chat.im.jsonbean.AgreeFriendsRequest;
+import com.chat.im.jsonbean.AgreeFriendsResponse;
 import com.chat.im.jsonbean.CheckPhoneRequest;
 import com.chat.im.jsonbean.CheckPhoneResponse;
 import com.chat.im.jsonbean.DeleteFriendRequest;
@@ -456,6 +458,36 @@ public class OKHttpClientHelper {
             @Override
             public void onError() {
                 mResponseListener.onFailure(Constants.FAILURE_ADD_FRIEND_REQUEST, Constants.FAILURE_TYPE_OTHER);
+            }
+        });
+    }
+
+    /**
+     * 同意添加好友
+     *
+     * @param id 好友id
+     */
+    public void agreeAddFriend(String id) {
+        String url = RequestURLHelper.getInstance().getAgreeAddFriendRequestUrl();
+        String json = JsonHelper.beanToJson(new AgreeFriendsRequest(id));
+        RequestBody requestBody = getRequestBody(json);
+
+        sendPostRequest(url, requestBody, new CallBack() {
+            @Override
+            public void onNext(String result) throws Exception {
+                LogHelper.e(TAG + "agreeAddFriend onResponse()--->>" + result);
+                AgreeFriendsResponse agreeFriendsResponse = JsonHelper.jsonToBean(result, AgreeFriendsResponse.class);
+                if (200 == agreeFriendsResponse.getCode()) {
+                    //调用onNext之前已经判断过result不为null
+                    mResponseListener.onResponse(Constants.OK_AGREE_FRIEND_REQUEST, agreeFriendsResponse);
+                } else {
+                    mResponseListener.onFailure(Constants.FAILURE_AGREE_FRIEND_REQUEST, Constants.FAILURE_TYPE_OTHER);
+                }
+            }
+
+            @Override
+            public void onError() {
+                mResponseListener.onFailure(Constants.FAILURE_AGREE_FRIEND_REQUEST, Constants.FAILURE_TYPE_OTHER);
             }
         });
     }

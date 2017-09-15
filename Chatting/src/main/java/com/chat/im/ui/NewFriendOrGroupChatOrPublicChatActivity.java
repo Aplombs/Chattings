@@ -1,6 +1,7 @@
 package com.chat.im.ui;
 
 import android.support.v4.app.Fragment;
+import android.view.KeyEvent;
 import android.view.View;
 
 import com.chat.im.R;
@@ -14,6 +15,8 @@ import com.chat.im.fragment.ContactFragment_PublicChatFragment;
  */
 
 public class NewFriendOrGroupChatOrPublicChatActivity extends BaseActivity {
+
+    private OnBackListener onBackListener;
 
     @Override
     protected int setLayoutRes() {
@@ -42,5 +45,32 @@ public class NewFriendOrGroupChatOrPublicChatActivity extends BaseActivity {
         }
 
         getSupportFragmentManager().beginTransaction().replace(R.id.new_friend_group_public_activity_content, fragment).commit();
+
+        mReturnView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onBackListener != null) {
+                    onBackListener.onBack();
+                }
+            }
+        });
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (onBackListener != null) {
+                onBackListener.onBack();
+            }
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    public void setOnBackListener(OnBackListener onBackListener) {
+        this.onBackListener = onBackListener;
+    }
+
+    public interface OnBackListener {
+        void onBack();
     }
 }

@@ -20,7 +20,7 @@ import java.util.List;
 public class ContactNewFriendAdapter extends RecyclerView.Adapter<ContactNewFriendAdapter.ContactNewFriendViewHolder> {
 
     private List<WaitAddFriends> mList;
-    private DegreeItemClickListener mItemDegreeListener;
+    private AgreeItemClickListener mItemAgreeListener;
 
     public ContactNewFriendAdapter(List<WaitAddFriends> waitAddFriendsList) {
         this.mList = waitAddFriendsList;
@@ -31,6 +31,7 @@ public class ContactNewFriendAdapter extends RecyclerView.Adapter<ContactNewFrie
             this.mList.clear();
         }
         this.mList = waitAddFriendsList;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -46,11 +47,11 @@ public class ContactNewFriendAdapter extends RecyclerView.Adapter<ContactNewFrie
         holder.userName.setText(waitAddFriends.getNickName());
         holder.attachMessage.setText(waitAddFriends.getAddFriendAttachMessage());
 
-        holder.degree_add_friend.setOnClickListener(new View.OnClickListener() {
+        holder.agree_add_friend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mItemDegreeListener != null) {
-                    mItemDegreeListener.onItemDegreeClick(position);
+                if (mItemAgreeListener != null) {
+                    mItemAgreeListener.onItemAgreeClick(position);
                 }
             }
         });
@@ -61,18 +62,18 @@ public class ContactNewFriendAdapter extends RecyclerView.Adapter<ContactNewFrie
         return mList.size();
     }
 
-    public void setOnDegreeClick(DegreeItemClickListener listener) {
-        this.mItemDegreeListener = listener;
+    public void setOnAgreeClick(AgreeItemClickListener listener) {
+        this.mItemAgreeListener = listener;
     }
 
-    public interface DegreeItemClickListener {
-        void onItemDegreeClick(int position);
+    public interface AgreeItemClickListener {
+        void onItemAgreeClick(int position);
     }
 
     public class ContactNewFriendViewHolder extends RecyclerView.ViewHolder {
 
         public ImageView userHead;
-        public Button degree_add_friend;
+        public Button agree_add_friend;
         public TextView userName, attachMessage;
 
         public ContactNewFriendViewHolder(View itemView) {
@@ -80,7 +81,7 @@ public class ContactNewFriendAdapter extends RecyclerView.Adapter<ContactNewFrie
             userHead = (ImageView) itemView.findViewById(R.id.userHead_item_contact_new_friend);
             userName = (TextView) itemView.findViewById(R.id.userNickName_item_contact_new_friend);
             attachMessage = (TextView) itemView.findViewById(R.id.attach_message_item_contact_new_friend);
-            degree_add_friend = (Button) itemView.findViewById(R.id.degree_add_friend);
+            agree_add_friend = (Button) itemView.findViewById(R.id.agree_add_friend);
         }
     }
 }

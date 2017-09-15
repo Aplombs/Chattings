@@ -99,6 +99,13 @@ public class RequestURLHelper {
     }
 
     /**
+     * @return 获取同意添加好友的URL
+     */
+    public String getAgreeAddFriendRequestUrl() {
+        return getURL("friendship/agree");
+    }
+
+    /**
      * @return 获取删除好友的URL
      */
     public String getDeleteFriendRequestUrl() {

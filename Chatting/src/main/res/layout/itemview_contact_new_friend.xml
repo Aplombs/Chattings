@@ -48,7 +48,7 @@
 
 
         <Button
-            android:id="@+id/degree_add_friend"
+            android:id="@+id/agree_add_friend"
             android:layout_width="55dp"
             android:layout_height="30dp"
             android:layout_alignParentEnd="true"

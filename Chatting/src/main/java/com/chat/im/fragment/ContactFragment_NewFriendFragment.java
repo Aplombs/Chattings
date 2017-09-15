@@ -12,11 +12,15 @@ import android.view.ViewGroup;
 
 import com.chat.im.R;
 import com.chat.im.adapter.ContactNewFriendAdapter;
+import com.chat.im.constant.Constants;
+import com.chat.im.db.bean.ContactInfo;
 import com.chat.im.db.bean.WaitAddFriends;
 import com.chat.im.helper.ContextHelper;
 import com.chat.im.helper.DBHelper;
+import com.chat.im.helper.LogHelper;
 import com.chat.im.helper.OKHttpClientHelper;
 import com.chat.im.helper.UIHelper;
+import com.chat.im.ui.NewFriendOrGroupChatOrPublicChatActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,11 +36,14 @@ import io.reactivex.schedulers.Schedulers;
  * 联系人页签--新朋友
  */
 
-public class ContactFragment_NewFriendFragment extends Fragment implements OKHttpClientHelper.ResponseListener, ContactNewFriendAdapter.DegreeItemClickListener {
+public class ContactFragment_NewFriendFragment extends Fragment implements OKHttpClientHelper.ResponseListener, ContactNewFriendAdapter.AgreeItemClickListener, NewFriendOrGroupChatOrPublicChatActivity.OnBackListener {
 
+    private final String TAG = "[ContactFragment_NewFriendFragment] ";
     private View mView, mLoading;
     private Dialog loadingDialog;
     private RecyclerView mRecyclerView;
+    private boolean isClickAgree = false;//是否点击过接受添加联系人,判断是否刷新联系人界面
+    private WaitAddFriends waitAddFriends;
     private ContactNewFriendAdapter mAdapter;
     private List<WaitAddFriends> mWaitAddFriendList = new ArrayList<>();
 
@@ -74,20 +81,39 @@ public class ContactFragment_NewFriendFragment extends Fragment implements OKHtt
     }
 
     @Override
-    public void onItemDegreeClick(int position) {
+    public void onResume() {
+        super.onResume();
+        OKHttpClientHelper.getInstance().setResponseListener(this);
+        ((NewFriendOrGroupChatOrPublicChatActivity) getActivity()).setOnBackListener(this);
+    }
 
+    @Override
+    public void onItemAgreeClick(int position) {
+        if (!UIHelper.getInstance().checkNetwork()) return;
+        showLoadingDialog();
+        waitAddFriends = mWaitAddFriendList.get(position);
+        OKHttpClientHelper.getInstance().agreeAddFriend(waitAddFriends.getUserId());
     }
 
     @Override
     public void onResponse(int requestCode, Object response) {
-        initAdapter(false);
         switch (requestCode) {
+            case Constants.OK_AGREE_FRIEND_REQUEST:
+                isClickAgree = true;
+                //将此待添加联系人从待添加数据库删除并且添加到联系人数据库
+                deleteWaitFriendAndInsertDao();
+                break;
         }
     }
 
     @Override
     public void onFailure(int requestCode, int statusCode) {
-
+        switch (requestCode) {
+            case Constants.FAILURE_AGREE_FRIEND_REQUEST:
+                hideLoadingDialog();
+                UIHelper.getInstance().toast("添加失败,稍后重试");
+                break;
+        }
     }
 
     private void initView(LayoutInflater inflater) {
@@ -103,12 +129,50 @@ public class ContactFragment_NewFriendFragment extends Fragment implements OKHtt
     private void initAdapter(boolean isCreate) {
         if (isCreate) {
             mAdapter = new ContactNewFriendAdapter(mWaitAddFriendList);
-            mAdapter.setOnDegreeClick(this);
+            mAdapter.setOnAgreeClick(this);
             mRecyclerView.setLayoutManager(new LinearLayoutManager(ContextHelper.getContext()));
             mRecyclerView.setAdapter(mAdapter);
         } else {
             mAdapter.reloadList(mWaitAddFriendList);
         }
+    }
+
+    private void deleteWaitFriendAndInsertDao() {
+        //从数据库将待添加好友删除并将好友信息添加到联系人数据库
+        Observable.create(new ObservableOnSubscribe<List<WaitAddFriends>>() {
+            @Override
+            public void subscribe(ObservableEmitter<List<WaitAddFriends>> observableEmitter) {
+
+                DBHelper.getInstance().getDaoSession().getWaitAddFriendsDao().deleteByKey(waitAddFriends.getUserId());
+
+                ContactInfo contactInfo = new ContactInfo(waitAddFriends.getUserId(), waitAddFriends.getRegion(), waitAddFriends.getPhone(), waitAddFriends.getHeadUri(), waitAddFriends.getNickName(), waitAddFriends.getRemarkName(), waitAddFriends.getShowName(), waitAddFriends.getShowNameLetter());
+                DBHelper.getInstance().getDaoSession().getContactInfoDao().insertOrReplaceInTx(contactInfo);
+
+                mWaitAddFriendList.clear();
+                mWaitAddFriendList = DBHelper.getInstance().getDaoSession().
+                        getWaitAddFriendsDao().queryBuilder().list();
+                observableEmitter.onNext(mWaitAddFriendList);
+            }
+        }).subscribeOn(Schedulers.io())//被观察者在子线程
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<List<WaitAddFriends>>() {
+            @Override
+            public void accept(List<WaitAddFriends> waitAddFriendsList) throws Exception {
+                hideLoadingDialog();
+                UIHelper.getInstance().toast("已添加到联系人");
+
+                initAdapter(false);
+            }
+        });
+    }
+
+    //返回的时候setResult,联系人界面刷新
+    @Override
+    public void onBack() {
+        LogHelper.e(TAG + "是否刷新联系人界面--->>> " + isClickAgree);
+        if (isClickAgree) {
+            getActivity().setResult(MainTab_ContactFragment.START_RESULT_CODE);
+        }
+        getActivity().finish();
     }
 
     private void showLoadingDialog() {
