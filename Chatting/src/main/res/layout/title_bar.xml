@@ -18,7 +18,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_return" />
+            android:src="@drawable/title_bar_return" />
 
         <View
             android:layout_width="1dp"

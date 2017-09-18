@@ -8,11 +8,11 @@
     android:visibility="visible">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_gravity="center_vertical"
         android:layout_marginStart="22dp"
-        android:src="@drawable/chat_bubble_faild" />
+        android:src="@drawable/icon_failed" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -26,4 +26,3 @@
         tools:ignore="HardcodedText" />
 
 </LinearLayout>
-    

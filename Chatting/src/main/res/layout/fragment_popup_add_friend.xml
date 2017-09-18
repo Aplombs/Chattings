@@ -33,7 +33,7 @@
         <ImageView
             android:id="@+id/search_search_friend"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="20dp"
             android:layout_weight="0.5"
             android:src="@drawable/icon_search" />
 
