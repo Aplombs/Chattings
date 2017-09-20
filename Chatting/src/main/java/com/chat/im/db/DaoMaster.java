@@ -1,9 +1,13 @@
-package com.chat.im.db.dao;
+package com.chat.im.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.util.Log;
+
+import com.chat.im.db.dao.ContactInfoDao;
+import com.chat.im.db.dao.MessagePreViewDao;
+import com.chat.im.db.dao.WaitAddFriendsDao;
 
 import org.greenrobot.greendao.AbstractDaoMaster;
 import org.greenrobot.greendao.database.StandardDatabase;

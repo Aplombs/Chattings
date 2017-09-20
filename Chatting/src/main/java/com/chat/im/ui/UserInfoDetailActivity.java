@@ -188,7 +188,10 @@ public class UserInfoDetailActivity extends BaseActivity implements View.OnClick
 
     //打开聊天界面
     private void openChatActivity() {
-
+        Intent intent = new Intent(this, SingleChatActivity.class);
+        intent.putExtra(Constants.USER_ID, userID);
+        startActivity(intent);
+        this.finish();
     }
 
     //删除好友

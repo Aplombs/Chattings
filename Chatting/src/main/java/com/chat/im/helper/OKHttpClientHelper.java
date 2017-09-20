@@ -8,7 +8,7 @@ import com.chat.im.cookie.PersistentCookieStore;
 import com.chat.im.db.bean.ContactInfo;
 import com.chat.im.db.bean.WaitAddFriends;
 import com.chat.im.db.dao.ContactInfoDao;
-import com.chat.im.db.dao.DaoSession;
+import com.chat.im.db.DaoSession;
 import com.chat.im.db.dao.WaitAddFriendsDao;
 import com.chat.im.jsonbean.AddFriendRequest;
 import com.chat.im.jsonbean.AddFriendResponse;
