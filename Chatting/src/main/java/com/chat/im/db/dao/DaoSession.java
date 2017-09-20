@@ -1,11 +1,8 @@
-package com.chat.im.db;
+package com.chat.im.db.dao;
 
 import com.chat.im.db.bean.ContactInfo;
 import com.chat.im.db.bean.MessagePreView;
 import com.chat.im.db.bean.WaitAddFriends;
-import com.chat.im.db.dao.ContactInfoDao;
-import com.chat.im.db.dao.MessagePreViewDao;
-import com.chat.im.db.dao.WaitAddFriendsDao;
 
 import org.greenrobot.greendao.AbstractDao;
 import org.greenrobot.greendao.AbstractDaoSession;

@@ -1,8 +1,8 @@
 package com.chat.im.helper;
 
 import com.chat.im.constant.Constants;
-import com.chat.im.db.DaoMaster;
-import com.chat.im.db.DaoSession;
+import com.chat.im.db.dao.DaoMaster;
+import com.chat.im.db.dao.DaoSession;
 
 /**
  * 数据库帮助类

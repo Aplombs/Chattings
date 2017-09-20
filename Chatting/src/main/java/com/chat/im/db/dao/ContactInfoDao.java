@@ -3,7 +3,6 @@ package com.chat.im.db.dao;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteStatement;
 
-import com.chat.im.db.DaoSession;
 import com.chat.im.db.bean.ContactInfo;
 
 import org.greenrobot.greendao.AbstractDao;
