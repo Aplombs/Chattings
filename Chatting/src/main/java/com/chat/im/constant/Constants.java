@@ -92,4 +92,12 @@ public class Constants {
      * 数据库名称
      */
     public static final String DB_NAME = "chatting";
+
+    /**
+     * 消息内容的类型:文本消息
+     */
+    public static final int MESSAGE_CONTENTTYPE_UNKNOWN = -1;//未知消息
+    public static final int MESSAGE_CONTENTTYPE_TEXT = 1;//文本消息
+    public static final int MESSAGE_CONTENTTYPE_IMAGE = 2;//图片消息
+    public static final int MESSAGE_CONTENTTYPE_VOICE = 3;//语音消息
 }
