@@ -51,6 +51,8 @@ public class NewFriendOrGroupChatOrPublicChatActivity extends BaseActivity {
             public void onClick(View v) {
                 if (onBackListener != null) {
                     onBackListener.onBack();
+                } else {
+                    NewFriendOrGroupChatOrPublicChatActivity.this.finish();
                 }
             }
         });
