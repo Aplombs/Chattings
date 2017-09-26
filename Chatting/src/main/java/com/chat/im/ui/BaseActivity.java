@@ -1,5 +1,6 @@
 package com.chat.im.ui;
 
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -63,23 +64,27 @@ public abstract class BaseActivity extends FragmentActivity {
         Window mWindow = getWindow();
         //android 6.0以上设置状态栏
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            //防止系统栏隐藏时内容区域大小发生变化
-            int uiFlags = View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
-            //Activity全屏显示,但状态栏不会被隐藏覆盖,状态栏依然可见,Activity顶端布局部分会被状态栏遮住
-            uiFlags |= View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
 
-            mWindow.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             //需要设置这个才能设置状态栏颜色
             mWindow.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             //设置状态栏颜色
             mWindow.setStatusBarColor(getResources().getColor(R.color.title_bar_gray));
-            //解决状态栏和自己的titleBar中间有条水印线
-            mWindow.getDecorView().setSystemUiVisibility(uiFlags);
+
+            //让应用的主体内容占用系统状态栏的空间(将布局内容延伸到状态栏),应用主题theme需要使用AppCompat类的
+            //int uiFlags = View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
+            //mWindow.getDecorView().setSystemUiVisibility(uiFlags);
+            //mWindow.setStatusBarColor(Color.TRANSPARENT);
+            //也可在布局中使用view(可以是图片)占位状态栏位置,最后动态设置view高度
+            //View mStatusBarTintView = findViewById(R.id.status_height);
+            //int statusBarHeight = getStatusBarHeight(getResources());
+            //LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, statusBarHeight);
+            //params.gravity = Gravity.TOP;
+            //mStatusBarTintView.setLayoutParams(params);
         } else {
             // 初始化5.0以下，4.4以上沉浸式
             mWindow.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             ViewGroup decorViewGroup = (ViewGroup) mWindow.getDecorView();
-            //创建一个宽高大小和statusBar一样的view,颜色设置成Toolbar或者ActionBar保持一致,然后添加到decorView
+            //创建一个宽高大小和statusBar一样的view,颜色设置成自己的titleBar或者Toolbar或者ActionBar保持一致,然后添加到decorView
             View mStatusBarTintView = new View(this);
             //获取系统statusBar高度
             int statusBarHeight = UtilsHelper.getInstance().getStatusBarHeight(getResources());
