@@ -97,10 +97,11 @@ public class UIHelper {
         if (editText == null)
             return;
 
-        editText.clearFocus();
         InputMethodManager inputMethodManager = (InputMethodManager) ContextHelper.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         if (inputMethodManager != null) {
-            inputMethodManager.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+            editText.clearFocus();
+            editText.setCursorVisible(false);
+            inputMethodManager.hideSoftInputFromWindow(editText.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         }
     }
 
@@ -108,10 +109,11 @@ public class UIHelper {
         if (editText == null)
             return;
 
-        editText.requestFocus();
         InputMethodManager inputMethodManager = (InputMethodManager) ContextHelper.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         if (inputMethodManager != null) {
-            inputMethodManager.showSoftInput(editText, 0);
+            editText.requestFocus();
+            editText.setCursorVisible(true);
+            inputMethodManager.showSoftInput(editText, InputMethodManager.RESULT_UNCHANGED_SHOWN);
         }
     }
 }

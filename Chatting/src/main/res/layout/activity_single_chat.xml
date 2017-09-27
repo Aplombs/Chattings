@@ -12,12 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerView_single_chat"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
         <FrameLayout
+            android:id="@+id/ll_edit_chat_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -27,6 +23,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -36,6 +34,7 @@
                     android:src="@drawable/chat_voice_0" />
 
                 <EditText
+                    android:id="@+id/edit_content_single_chat"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="5" />
@@ -49,6 +48,13 @@
             </LinearLayout>
 
         </FrameLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView_single_chat"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/ll_edit_chat_content"
+            android:scrollbars="vertical" />
 
     </RelativeLayout>
 
