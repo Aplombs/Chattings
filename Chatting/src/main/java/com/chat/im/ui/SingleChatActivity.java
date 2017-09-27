@@ -1,9 +1,11 @@
 package com.chat.im.ui;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.EditText;
 
 import com.chat.im.R;
 import com.chat.im.adapter.ChattingAdapter;
@@ -12,6 +14,7 @@ import com.chat.im.db.bean.ContactInfo;
 import com.chat.im.db.bean.message.MessageBase;
 import com.chat.im.db.dao.ContactInfoDao;
 import com.chat.im.helper.DBHelper;
+import com.chat.im.helper.UIHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,11 +23,14 @@ import java.util.List;
  * 单聊界面
  */
 
-public class SingleChatActivity extends BaseActivity {
+public class SingleChatActivity extends BaseActivity implements View.OnClickListener {
 
     private RecyclerView mRecyclerView;
     private ContactInfo mContactInfo;
     private ChattingAdapter mAdapter;
+    private List<MessageBase> mList;
+    private EditText mEditContent;
+    private Handler mHandler = new Handler();
 
     @Override
     protected int setLayoutRes() {
@@ -42,7 +48,9 @@ public class SingleChatActivity extends BaseActivity {
         mReturnView.setVisibility(View.VISIBLE);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView_single_chat);
-        List<MessageBase> mList = new ArrayList<>();
+        mEditContent = (EditText) findViewById(R.id.edit_content_single_chat);
+
+        mList = new ArrayList<>();
         MessageBase messageBase = new MessageBase();
         messageBase.setMessageContentType(Constants.MESSAGE_CONTENTTYPE_TEXT);
         messageBase.setMessageDirection(1);
@@ -57,8 +65,59 @@ public class SingleChatActivity extends BaseActivity {
         mList.add(messageBase);
         mList.add(messageBase2);
 
+        mList.add(messageBase);
+        mList.add(messageBase2);
+
+        mList.add(messageBase);
+        mList.add(messageBase2);
+
+
+        mList.add(messageBase);
+        mList.add(messageBase2);
+
+        mList.add(messageBase);
+        mList.add(messageBase2);
+
+        mList.add(messageBase);
+        mList.add(messageBase2);
+
         mAdapter = new ChattingAdapter(this, mList);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setStackFromEnd(true);//软键盘弹出 布局展示最后一个item
+        mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
+
+        mEditContent.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+
+                } else {
+
+                }
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mRecyclerView.scrollToPosition(mList.size() - 1);
+    }
+
+    public void showSoftInput() {
+        //输入法弹出,输入框显示光标
+        UIHelper.getInstance().showSoftInput(mEditContent);
+    }
+
+    private void hideSoftInput() {
+        //输入法消失,输入框隐藏光标
+        UIHelper.getInstance().hideSoftInput(mEditContent);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+        }
     }
 }

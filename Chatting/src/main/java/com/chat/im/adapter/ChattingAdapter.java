@@ -20,7 +20,6 @@ import java.util.List;
 
 public class ChattingAdapter extends RecyclerView.Adapter<ChattingViewHolder> {
 
-    private int position;
     private Context mContext;
     private List<MessageBase> mList;
 
@@ -39,22 +38,18 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingViewHolder> {
 
     @Override
     public int getItemViewType(int position) {
-        this.position = position;
         return mList.get(position).getMessageContentType();
-    }
-
-    private MessageBase getItemData() {
-        return mList.get(position);
     }
 
     @Override
     public ChattingViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return createHolder();
+        return createHolder(viewType);
     }
 
     @Override
     public void onBindViewHolder(ChattingViewHolder holder, final int position) {
-        holder.initView();
+        MessageBase messageBase = mList.get(position);
+        holder.initView(messageBase);
     }
 
     @Override
@@ -62,40 +57,14 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingViewHolder> {
         return mList.size();
     }
 
-    private ChattingViewHolder createHolder() {
-        MessageBase messageBase = getItemData();
-        int messageContentType = messageBase.getMessageContentType();
-        int direction = messageBase.getMessageDirection();
+    private ChattingViewHolder createHolder(int viewType) {
         ChattingViewHolder viewHolder;
-        if (messageContentType == Constants.MESSAGE_CONTENTTYPE_TEXT) {
-            View view;
-            if (direction == 1) {//发送
-                view = View.inflate(mContext, R.layout.itemview_message_text_send, null);
-            } else {//接收
-                view = View.inflate(mContext, R.layout.itemview_message_text_receive, null);
-            }
+        if (viewType == Constants.MESSAGE_CONTENTTYPE_TEXT) {
+            View view = View.inflate(mContext, R.layout.itemview_message_text, null);
             viewHolder = new ChattingViewHolderText(view);
         } else {
             viewHolder = new ChattingViewHolderUnKnown(null);
         }
         return viewHolder;
-    }
-
-    private class ViewType {
-        private static final int MODE_SHIFT = 30;
-        private static final int MODE_MASK = 0x3 << MODE_SHIFT;
-
-        public int makeViewType(int size, int mode) {
-
-            return size + mode;
-        }
-
-        public int getViewType(int viewType) {
-            return (viewType & MODE_MASK);
-        }
-
-        public int getPosition(int viewType) {
-            return (viewType & ~MODE_MASK);
-        }
     }
 }
