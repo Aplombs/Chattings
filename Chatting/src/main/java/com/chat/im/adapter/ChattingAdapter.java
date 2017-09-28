@@ -2,6 +2,7 @@ package com.chat.im.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -43,7 +44,7 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingViewHolder> {
 
     @Override
     public ChattingViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return createHolder(viewType);
+        return createHolder(parent, viewType);
     }
 
     @Override
@@ -57,13 +58,16 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingViewHolder> {
         return mList.size();
     }
 
-    private ChattingViewHolder createHolder(int viewType) {
+    private ChattingViewHolder createHolder(ViewGroup parent, int viewType) {
         ChattingViewHolder viewHolder;
+        LayoutInflater inflater = LayoutInflater.from(mContext);
         if (viewType == Constants.MESSAGE_CONTENTTYPE_TEXT) {
-            View view = View.inflate(mContext, R.layout.itemview_message_text, null);
+            View view = inflater.inflate(R.layout.itemview_message_text, parent, false);
+            View.inflate(mContext,R.layout.itemview_message_unknown,null);
             viewHolder = new ChattingViewHolderText(view);
         } else {
-            viewHolder = new ChattingViewHolderUnKnown(null);
+            View view = inflater.inflate(R.layout.itemview_message_unknown, parent, false);
+            viewHolder = new ChattingViewHolderUnKnown(view);
         }
         return viewHolder;
     }

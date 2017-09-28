@@ -81,6 +81,11 @@ public class SingleChatActivity extends BaseActivity implements View.OnClickList
         mList.add(messageBase);
         mList.add(messageBase2);
 
+        MessageBase messageBase3 = new MessageBase();
+        messageBase3.setMessageContentType(Constants.MESSAGE_CONTENTTYPE_UNKNOWN);
+
+        mList.add(messageBase3);
+
         mAdapter = new ChattingAdapter(this, mList);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setStackFromEnd(true);//软键盘弹出 布局展示最后一个item
