@@ -96,8 +96,9 @@ public class Constants {
     /**
      * 消息内容的类型:文本消息
      */
-    public static final int MESSAGE_CONTENTTYPE_UNKNOWN = -1;//未知消息
-    public static final int MESSAGE_CONTENTTYPE_TEXT = 1;//文本消息
-    public static final int MESSAGE_CONTENTTYPE_IMAGE = 2;//图片消息
-    public static final int MESSAGE_CONTENTTYPE_VOICE = 3;//语音消息
+    public static final int MESSAGE_CONTENT_TYPE_UNKNOWN = -1;//未知消息
+    public static final int MESSAGE_CONTENT_TYPE_TEXT_SEND = 11;//文本消息-发送
+    public static final int MESSAGE_CONTENT_TYPE_TEXT_RECEIVE = 12;//文本消息-接受
+    public static final int MESSAGE_CONTENT_TYPE_IMAGE = 2;//图片消息
+    public static final int MESSAGE_CONTENT_TYPE_VOICE = 3;//语音消息
 }

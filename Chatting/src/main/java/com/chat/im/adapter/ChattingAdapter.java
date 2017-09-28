@@ -8,7 +8,8 @@ import android.view.ViewGroup;
 
 import com.chat.im.R;
 import com.chat.im.adapter.holder.ChattingViewHolder;
-import com.chat.im.adapter.holder.ChattingViewHolderText;
+import com.chat.im.adapter.holder.ChattingViewHolderTextReceive;
+import com.chat.im.adapter.holder.ChattingViewHolderTextSend;
 import com.chat.im.adapter.holder.ChattingViewHolderUnKnown;
 import com.chat.im.constant.Constants;
 import com.chat.im.db.bean.message.MessageBase;
@@ -61,10 +62,12 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingViewHolder> {
     private ChattingViewHolder createHolder(ViewGroup parent, int viewType) {
         ChattingViewHolder viewHolder;
         LayoutInflater inflater = LayoutInflater.from(mContext);
-        if (viewType == Constants.MESSAGE_CONTENTTYPE_TEXT) {
-            View view = inflater.inflate(R.layout.itemview_message_text, parent, false);
-            View.inflate(mContext,R.layout.itemview_message_unknown,null);
-            viewHolder = new ChattingViewHolderText(view);
+        if (viewType == Constants.MESSAGE_CONTENT_TYPE_TEXT_SEND) {
+            View view = inflater.inflate(R.layout.itemview_message_text_send, parent, false);
+            viewHolder = new ChattingViewHolderTextSend(view);
+        } else if (viewType == Constants.MESSAGE_CONTENT_TYPE_TEXT_RECEIVE) {
+            View view = inflater.inflate(R.layout.itemview_message_text_receive, parent, false);
+            viewHolder = new ChattingViewHolderTextReceive(view);
         } else {
             View view = inflater.inflate(R.layout.itemview_message_unknown, parent, false);
             viewHolder = new ChattingViewHolderUnKnown(view);

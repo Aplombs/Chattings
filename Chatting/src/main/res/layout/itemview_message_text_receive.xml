@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <!--接受-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_margin="10dp">
+
+        <ImageView
+            android:id="@+id/userHead_item_message_text_left"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/default_user_header" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="5dp"
+            android:background="@drawable/chat_bubble_left"
+            android:gravity="center"
+            android:minHeight="35dp">
+
+            <TextView
+                android:id="@+id/text_content_receive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="2dp"
+                android:maxLength="1000"
+                android:maxWidth="240dp"
+                android:minWidth="45dip"
+                android:padding="5dp"
+                android:text="你好888888888888888888888888888888888888888"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                tools:ignore="HardcodedText" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
