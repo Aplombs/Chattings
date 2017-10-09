@@ -2,8 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_height="wrap_content">
 
     <!--发送-->
     <LinearLayout
@@ -30,7 +29,7 @@
                 android:maxWidth="240dp"
                 android:minWidth="45dip"
                 android:padding="5dp"
-                android:text="你好888888888888888888888888888888888888888"
+                android:text="你好"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 tools:ignore="HardcodedText" />
@@ -39,8 +38,8 @@
 
         <ImageView
             android:id="@+id/userHead_item_message_text_send"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/default_user_header" />
 
     </LinearLayout>
