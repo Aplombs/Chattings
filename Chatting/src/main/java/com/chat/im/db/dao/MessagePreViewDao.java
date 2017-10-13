@@ -38,6 +38,7 @@ public class MessagePreViewDao extends BaseDao {
             contentValues.put(Table_MessagePreView.MESSAGE_PREVIEW_ID, messagePreView.getMessagePreviewId());
             contentValues.put(Table_MessagePreView.USER_NICK_NAME, messagePreView.getUserNickName());
             contentValues.put(Table_MessagePreView.CONTENT_PREVIEW, messagePreView.getContentPreView());
+            contentValues.put(Table_MessagePreView.NOT_READ_MESSAGE_NUM, messagePreView.getNotReadMessageNum());
             contentValues.put(Table_MessagePreView.IS_TOP, messagePreView.getIsTop());
             super.insert(Table_MessagePreView.TABLE_NAME, contentValues);
         } else {
@@ -51,6 +52,16 @@ public class MessagePreViewDao extends BaseDao {
             return true;
         }
         return false;
+    }
+
+    public void updateMessagePreView(MessagePreView messagePreView) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(Table_MessagePreView.MESSAGE_PREVIEW_ID, messagePreView.getMessagePreviewId());
+        contentValues.put(Table_MessagePreView.USER_NICK_NAME, messagePreView.getUserNickName());
+        contentValues.put(Table_MessagePreView.CONTENT_PREVIEW, messagePreView.getContentPreView());
+        contentValues.put(Table_MessagePreView.NOT_READ_MESSAGE_NUM, messagePreView.getNotReadMessageNum());
+        contentValues.put(Table_MessagePreView.IS_TOP, messagePreView.getIsTop());
+        super.update(Table_MessagePreView.TABLE_NAME, contentValues, Table_MessagePreView.MESSAGE_PREVIEW_ID + " = ? ", new String[]{messagePreView.getMessagePreviewId()});
     }
 
     public MessagePreView queryMessagePreView(String messagePreViewId) {
@@ -74,12 +85,12 @@ public class MessagePreViewDao extends BaseDao {
         return messagePreView;
     }
 
-    public boolean queryMessagePreViewIsExist(String userId) {
+    public boolean queryMessagePreViewIsExist(String messagePreViewId) {
         boolean exist = false;
         Cursor cursor = null;
         try {
             String selectionArgs[] = new String[1];
-            selectionArgs[0] = String.valueOf(userId);
+            selectionArgs[0] = String.valueOf(messagePreViewId);
             String selection = Table_MessagePreView.MESSAGE_PREVIEW_ID + " = ?";
             cursor = super.query(Table_MessagePreView.TABLE_NAME, null, selection, selectionArgs, null);
             if (cursor != null && cursor.getCount() > 0) {
@@ -116,8 +127,10 @@ public class MessagePreViewDao extends BaseDao {
 
     private MessagePreView initMessagePreView(Cursor cursor) {
         MessagePreView messagePreView = new MessagePreView();
+        messagePreView.setMessagePreviewId(cursor.getString(cursor.getColumnIndex(Table_MessagePreView.MESSAGE_PREVIEW_ID)));
         messagePreView.setUserNickName(cursor.getString(cursor.getColumnIndex(Table_MessagePreView.USER_NICK_NAME)));
         messagePreView.setContentPreView(cursor.getString(cursor.getColumnIndex(Table_MessagePreView.CONTENT_PREVIEW)));
+        messagePreView.setNotReadMessageNum(cursor.getString(cursor.getColumnIndex(Table_MessagePreView.NOT_READ_MESSAGE_NUM)));
         messagePreView.setIsTop(cursor.getInt(cursor.getColumnIndex(Table_MessagePreView.IS_TOP)) == 1);
         return messagePreView;
     }

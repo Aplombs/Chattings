@@ -18,6 +18,8 @@ import com.chat.im.constant.Constants;
 import com.chat.im.fragment.MainTab_ContactFragment;
 import com.chat.im.fragment.MainTab_MeFragment;
 import com.chat.im.fragment.MainTab_MessageFragment;
+import com.chat.im.notify.NotifyMonitor;
+import com.chat.im.notify.NotifyReceiver;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +28,7 @@ import java.util.List;
  * 主界面
  */
 
-public class MainActivity extends BaseActivity implements View.OnClickListener {
+public class MainActivity extends BaseActivity implements View.OnClickListener, NotifyMonitor.NotifyMonitorListener {
 
     protected PopupWindow mPopupWindow;
     private ViewPager mViewPager;
@@ -36,6 +38,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     protected void init() {
+
+        NotifyMonitor.getInstance().registerNotifyMonitorListener(this);
+
         mBt_Add.setVisibility(View.VISIBLE);
         mReturnView.setVisibility(View.GONE);
 
@@ -236,6 +241,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 return true;
             }
             return super.onKeyDown(keyCode, event);
+        }
+    }
+
+    @Override
+    public void onUpdate(int type, Object data) {
+        if (NotifyReceiver.NOTIFY_TYPE_UPDATE_MESSAGE_PREVIEW == type) {
+            if (mViewPager.getCurrentItem() != 0) {
+                selectTab(0);
+            }
         }
     }
 }

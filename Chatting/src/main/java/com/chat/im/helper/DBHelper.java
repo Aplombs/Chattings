@@ -27,6 +27,10 @@ public class DBHelper {
         return dbHelper;
     }
 
+    public static void cleanCache() {
+        dbHelper = null;
+    }
+
     public ContactInfoDao getContactDao() {
         return ContactInfoDao.getInstance();
     }

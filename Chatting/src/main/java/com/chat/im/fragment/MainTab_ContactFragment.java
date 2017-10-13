@@ -42,8 +42,8 @@ import io.reactivex.schedulers.Schedulers;
 
 public class MainTab_ContactFragment extends Fragment implements View.OnClickListener, ContactAdapter.ContactItemClickListener {
 
-    public static final int START_RESULT_CODE = 999;
-    private final int START_REQUEST_CODE = 99;//打开好友资料和打开新朋友界面回来之后都需要刷新好友列表
+    public static final int START_RESULT_CODE_CONTACT = 999;
+    private final int START_REQUEST_CODE_CONTACT = 99;//打开好友资料和打开新朋友界面回来之后都需要刷新好友列表
     private View mView, mLoading;
     private ExpandableListView mExpandableListView;
     private ContactAdapter mContactAdapter;
@@ -112,7 +112,7 @@ public class MainTab_ContactFragment extends Fragment implements View.OnClickLis
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (START_REQUEST_CODE == requestCode && START_RESULT_CODE == resultCode) {
+        if (START_REQUEST_CODE_CONTACT == requestCode && START_RESULT_CODE_CONTACT == resultCode) {
             //刷新好友列表
             initContactAdapter(false);
         }
@@ -238,13 +238,13 @@ public class MainTab_ContactFragment extends Fragment implements View.OnClickLis
     private void goToNewFriendOrGroupChatOrPublicChat(String tag) {
         Intent intent = new Intent(getContext(), NewFriendOrGroupChatOrPublicChatActivity.class);
         intent.putExtra("tag", tag);
-        startActivityForResult(intent, START_REQUEST_CODE);
+        startActivityForResult(intent, START_REQUEST_CODE_CONTACT);
     }
 
     //打开好友详细资料界面
     private void goToUserInfoDetail(String id) {
         Intent intent = new Intent(getContext(), UserInfoDetailActivity.class);
         intent.putExtra(Constants.USER_ID, id);
-        startActivityForResult(intent, START_REQUEST_CODE);
+        startActivityForResult(intent, START_REQUEST_CODE_CONTACT);
     }
 }

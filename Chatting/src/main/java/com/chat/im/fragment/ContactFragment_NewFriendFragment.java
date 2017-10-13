@@ -169,7 +169,7 @@ public class ContactFragment_NewFriendFragment extends Fragment implements OKHtt
     public void onBack() {
         LogHelper.e(TAG + "是否刷新联系人界面--->>> " + isClickAgree);
         if (isClickAgree) {
-            getActivity().setResult(MainTab_ContactFragment.START_RESULT_CODE);
+            getActivity().setResult(MainTab_ContactFragment.START_RESULT_CODE_CONTACT);
         }
         getActivity().finish();
     }

@@ -14,6 +14,8 @@ import com.chat.im.adapter.MessagePreViewAdapter;
 import com.chat.im.db.bean.MessagePreView;
 import com.chat.im.helper.ContextHelper;
 import com.chat.im.helper.DBHelper;
+import com.chat.im.notify.NotifyMonitor;
+import com.chat.im.notify.NotifyReceiver;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,26 +31,56 @@ import io.reactivex.schedulers.Schedulers;
  * 消息页签
  */
 
-public class MainTab_MessageFragment extends Fragment {
+public class MainTab_MessageFragment extends Fragment implements NotifyMonitor.NotifyMonitorListener {
 
-    private View mView;
     private RecyclerView mRecyclerView;
-    private List<MessagePreView> mMessagePreViewList = new ArrayList<>();
     private MessagePreViewAdapter mAdapter;
-    private View mNotMessageTip;
+    private View mView, mNotMessageTip, mLoading;
+    private List<MessagePreView> mMessagePreViewList = new ArrayList<>();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        NotifyMonitor.getInstance().registerNotifyMonitorListener(this);
+        loadMessagePreView();
+    }
+
+    private void loadMessagePreView() {
         Observable.create(new ObservableOnSubscribe<List<MessagePreView>>() {
             @Override
             public void subscribe(ObservableEmitter<List<MessagePreView>> observableEmitter) {
-                mMessagePreViewList = DBHelper.getInstance().getMessagePreViewDao().queryAllMessagePreView();
+                List<MessagePreView> messagePreViewList = DBHelper.getInstance().getMessagePreViewDao().queryAllMessagePreView();
+                observableEmitter.onNext(messagePreViewList);
             }
         }).subscribeOn(Schedulers.io())//被观察者在子线程
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<List<MessagePreView>>() {
             @Override
             public void accept(List<MessagePreView> messagePreViewList) throws Exception {
+                if (mMessagePreViewList != null) {
+                    mMessagePreViewList.clear();
+                }
+
+                mMessagePreViewList = messagePreViewList;
+
+                if (mAdapter != null) {
+                    mAdapter.reloadList(mMessagePreViewList);
+                    mAdapter.notifyDataSetChanged();
+                } else {
+                    mAdapter = new MessagePreViewAdapter(getContext(), mMessagePreViewList);
+                    mRecyclerView.setLayoutManager(new LinearLayoutManager(ContextHelper.getContext()));
+                    mRecyclerView.setAdapter(mAdapter);
+                }
+                if (mLoading != null) {
+                    mLoading.setVisibility(View.GONE);
+                }
+
+                if (mMessagePreViewList.size() == 0) {
+                    mNotMessageTip.setVisibility(View.VISIBLE);
+                    mRecyclerView.setVisibility(View.GONE);
+                } else {
+                    mRecyclerView.setVisibility(View.VISIBLE);
+                    mNotMessageTip.setVisibility(View.GONE);
+                }
             }
         });
     }
@@ -64,20 +96,23 @@ public class MainTab_MessageFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (mMessagePreViewList.size() == 0) {
-            mNotMessageTip.setVisibility(View.VISIBLE);
-            mRecyclerView.setVisibility(View.GONE);
-        } else {
-            mRecyclerView.setVisibility(View.VISIBLE);
-            mNotMessageTip.setVisibility(View.GONE);
-        }
     }
 
     private void initView() {
         mRecyclerView = (RecyclerView) mView.findViewById(R.id.recyclerView_tabMessage);
+        mLoading = mView.findViewById(R.id.loading_tab_message);
         mNotMessageTip = mView.findViewById(R.id.ll_not_message_tip);
-        mAdapter = new MessagePreViewAdapter(mMessagePreViewList);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(ContextHelper.getContext()));
-        mRecyclerView.setAdapter(mAdapter);
+        if (mAdapter == null) {
+            mAdapter = new MessagePreViewAdapter(getContext(), mMessagePreViewList);
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(ContextHelper.getContext()));
+            mRecyclerView.setAdapter(mAdapter);
+        }
+    }
+
+    @Override
+    public void onUpdate(int type, Object data) {
+        if (type == NotifyReceiver.NOTIFY_TYPE_UPDATE_MESSAGE_PREVIEW) {//刷新消息页签
+            loadMessagePreView();
+        }
     }
 }

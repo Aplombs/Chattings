@@ -6,6 +6,7 @@ import android.support.multidex.MultiDexApplication;
 
 import com.chat.im.helper.ContextHelper;
 import com.chat.im.helper.CrashReporterHelper;
+import com.chat.im.helper.DBHelper;
 import com.chat.im.helper.LogHelper;
 import com.chat.im.helper.MD5Helper;
 import com.chat.im.helper.OKHttpClientHelper;
@@ -14,6 +15,8 @@ import com.chat.im.helper.SDCardHelper;
 import com.chat.im.helper.SpHelper;
 import com.chat.im.helper.UIHelper;
 import com.chat.im.helper.UtilsHelper;
+import com.chat.im.notify.NotifyHelper;
+import com.chat.im.notify.NotifyMonitor;
 
 import io.rong.imlib.RongIMClient;
 
@@ -93,6 +96,9 @@ public class ChattingApplication extends MultiDexApplication {
         MD5Helper.clearCache();
         RequestURLHelper.clearCache();
         SDCardHelper.clearCache();
+        DBHelper.cleanCache();
+        NotifyHelper.cleanCache();
+        NotifyMonitor.cleanCache();
         ContextHelper.clearCache();
     }
 }

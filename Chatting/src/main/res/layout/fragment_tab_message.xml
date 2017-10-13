@@ -5,6 +5,28 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <!--正在加载-->
+    <LinearLayout
+        android:id="@+id/loading_tab_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ProgressBar
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="正在加载..."
+            tools:ignore="HardcodedText" />
+
+    </LinearLayout>
+
     <include
         layout="@layout/network_state_layout"
         android:visibility="gone" />
@@ -15,7 +37,8 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/ll_network_hint"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <ImageView
             android:layout_width="wrap_content"

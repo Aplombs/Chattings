@@ -111,6 +111,7 @@
         <service
             android:name=".service.TestService"
             android:process="com.chat.im.push" />
+        <service android:name=".notify.NotifyReceiver$NotifyService" />
 
         <provider
             android:name=".db.provider.IMDBCipherProvider"
@@ -140,6 +141,16 @@
                 <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
             </intent-filter>
         </receiver>
+
+        <receiver
+            android:name=".notify.NotifyReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.chat.im.receiver.NotifyReceiver.ACTION_NOTIFY" />
+            </intent-filter>
+        </receiver>
+
         <!--必选： SDK 核心功能-->
         <!-- end -->
     </application>

@@ -1,7 +1,6 @@
 package com.chat.im.ui;
 
 import android.content.Intent;
-import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -15,9 +14,12 @@ import com.chat.im.R;
 import com.chat.im.adapter.ChattingAdapter;
 import com.chat.im.constant.Constants;
 import com.chat.im.db.bean.ContactInfo;
+import com.chat.im.db.bean.MessagePreView;
 import com.chat.im.db.bean.message.MessageBase;
 import com.chat.im.helper.DBHelper;
 import com.chat.im.helper.UIHelper;
+import com.chat.im.notify.NotifyHelper;
+import com.chat.im.notify.NotifyReceiver;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,15 +31,14 @@ import java.util.Random;
 
 public class SingleChatActivity extends BaseActivity implements View.OnClickListener {
 
-    private RecyclerView mRecyclerView;
+    private Button mSendContent;
+    private EditText mEditContent;
+    private boolean isSendOrReceive;
     private ContactInfo mContactInfo;
     private ChattingAdapter mAdapter;
-    private List<MessageBase> mList = new ArrayList<>();
-    private EditText mEditContent;
-    private Handler mHandler = new Handler();
+    private RecyclerView mRecyclerView;
     private ImageView mPlayVoice, mAddMore;
-    private Button mSendContent;
-    private boolean isSendOrReceive;
+    private List<MessageBase> mList = new ArrayList<>();
 
     @Override
     protected int setLayoutRes() {
@@ -67,6 +68,7 @@ public class SingleChatActivity extends BaseActivity implements View.OnClickList
         mAdapter = new ChattingAdapter(this, mList);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setStackFromEnd(true);//软键盘弹出 布局展示最后一个item
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
@@ -93,6 +95,13 @@ public class SingleChatActivity extends BaseActivity implements View.OnClickList
 
             }
         });
+
+        mReturnView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dealBackPress();
+            }
+        });
     }
 
     private void initList() {
@@ -103,6 +112,11 @@ public class SingleChatActivity extends BaseActivity implements View.OnClickList
     protected void onResume() {
         super.onResume();
         mRecyclerView.scrollToPosition(mList.size() - 1);
+    }
+
+    @Override
+    public void onBackPressed() {
+        dealBackPress();
     }
 
     public void showSoftInput() {
@@ -122,6 +136,14 @@ public class SingleChatActivity extends BaseActivity implements View.OnClickList
                 sendMessage();
                 break;
         }
+    }
+
+    //处理返回键
+    private void dealBackPress() {
+        if (null != mList && mList.size() > 0) {//是否发送过消息 是的话返回直接到消息页签
+            NotifyHelper.getInstance().notifyEvent(NotifyReceiver.NOTIFY_TYPE_UPDATE_MESSAGE_PREVIEW, null);
+        }
+        this.finish();
     }
 
     //发送消息
@@ -145,5 +167,16 @@ public class SingleChatActivity extends BaseActivity implements View.OnClickList
         mRecyclerView.scrollToPosition(mList.size() - 1);
 
         DBHelper.getInstance().getMessageBaseDao().insertMessage(messageBase);
+
+        //生成一条预览消息
+        MessagePreView messagePreView = new MessagePreView(mContactInfo.getUserId(), mContactInfo.getShowName(), messageBase.getMessageContent(), mList.size() + "", false);
+        //如果消息存在就更新
+        if (DBHelper.getInstance().getMessagePreViewDao().queryMessagePreViewIsExist(messagePreView.getMessagePreviewId())) {
+            //更新预览消息
+            DBHelper.getInstance().getMessagePreViewDao().updateMessagePreView(messagePreView);
+        } else {
+            DBHelper.getInstance().getMessagePreViewDao().insertMessagePreView(messagePreView);
+        }
+        NotifyHelper.getInstance().notifyEvent(NotifyReceiver.NOTIFY_TYPE_UPDATE_MESSAGE_PREVIEW, null);
     }
 }
