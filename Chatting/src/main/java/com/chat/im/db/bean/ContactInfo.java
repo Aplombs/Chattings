@@ -1,16 +1,11 @@
 package com.chat.im.db.bean;
 
-import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.Generated;
-import org.greenrobot.greendao.annotation.Id;
-
 /**
  * 联系人页签--联系人信息实体
  */
-@Entity
+
 public class ContactInfo {
 
-    @Id
     private String userId;
     private String region;
     private String phone;
@@ -20,7 +15,6 @@ public class ContactInfo {
     private String showName;
     private String showNameLetter;
 
-    @Generated(hash = 1596942737)
     public ContactInfo(String userId, String region, String phone, String headUri,
                        String nickName, String remarkName, String showName,
                        String showNameLetter) {
@@ -34,7 +28,6 @@ public class ContactInfo {
         this.showNameLetter = showNameLetter;
     }
 
-    @Generated(hash = 2019856331)
     public ContactInfo() {
     }
 

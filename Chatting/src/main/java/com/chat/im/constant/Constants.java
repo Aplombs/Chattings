@@ -1,5 +1,7 @@
 package com.chat.im.constant;
 
+import android.net.Uri;
+
 /**
  * 常量类
  */
@@ -15,6 +17,15 @@ public class Constants {
      * 地域号:默认86,中国
      */
     public static final String REGION = "86";
+
+    /**
+     * 数据库名称 版本号 URI
+     */
+    public static final String DB_NAME = "chatting_";
+    public static final int DB_VERSION = 1;
+    public static final String AUTHORITY = "com.chat.im.provider.imdb";
+    public static final Uri URI_RAWQUERY = Uri.parse("content://" + AUTHORITY + "/rawQuery");
+    public static final Uri URI_EXECSQL = Uri.parse("content://" + AUTHORITY + "/execSql");
 
     /**
      * 常量字段
@@ -87,11 +98,6 @@ public class Constants {
     public static final int FAILURE_TYPE_VERIFY_CODE_OVERDUE = 3;//失败原因--验证码过去
     public static final int FAILURE_TYPE_LOGIN_PHONE_OR_PASSWORD_WRONG = 4;//失败原因--手机号或者密码错误
     public static final int FAILURE_TYPE_SEARCH_FRIEND_NOT_EXIST = 5;//失败原因--好友不存在
-
-    /**
-     * 数据库名称
-     */
-    public static final String DB_NAME = "chatting";
 
     /**
      * 消息内容的类型:文本消息

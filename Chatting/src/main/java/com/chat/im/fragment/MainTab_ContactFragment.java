@@ -19,7 +19,6 @@ import com.chat.im.db.dao.ContactInfoDao;
 import com.chat.im.helper.DBHelper;
 import com.chat.im.helper.LogHelper;
 import com.chat.im.helper.OKHttpClientHelper;
-import com.chat.im.helper.SpHelper;
 import com.chat.im.helper.UtilsHelper;
 import com.chat.im.ui.NewFriendOrGroupChatOrPublicChatActivity;
 import com.chat.im.ui.UserInfoDetailActivity;
@@ -134,13 +133,11 @@ public class MainTab_ContactFragment extends Fragment implements View.OnClickLis
                         }
                     }
                     //添加自己为好友
-                    addMySelf();
+                    ContactInfoDao.getInstance().insertMySelf();
                 }
                 Map<String, List> map = new HashMap<>();
-                List<ContactInfo> mContactInfoList = DBHelper.getInstance().getDaoSession().
-                        getContactInfoDao().queryBuilder().list();
-                List<WaitAddFriends> waitAddFriendsList = DBHelper.getInstance().getDaoSession().
-                        getWaitAddFriendsDao().queryBuilder().list();
+                List<ContactInfo> mContactInfoList = ContactInfoDao.getInstance().queryAllContactList();
+                List<WaitAddFriends> waitAddFriendsList = DBHelper.getInstance().getWaitAddFriendsDao().queryAllWaitAddFriend();
                 map.put("contact", mContactInfoList);
                 map.put("newContact", waitAddFriendsList);
                 observableEmitter.onNext(map);
@@ -249,19 +246,5 @@ public class MainTab_ContactFragment extends Fragment implements View.OnClickLis
         Intent intent = new Intent(getContext(), UserInfoDetailActivity.class);
         intent.putExtra(Constants.USER_ID, id);
         startActivityForResult(intent, START_REQUEST_CODE);
-    }
-
-    //将自己加入联系人列表
-    private void addMySelf() {
-        String userId = SpHelper.getInstance().get(Constants.SP_LOGIN_USERID, "");
-        String region = SpHelper.getInstance().get(Constants.SP_LOGIN_PHONE_REGION, "");
-        String phone = SpHelper.getInstance().get(Constants.SP_LOGIN_PHONE, "");
-        String userHeadUri = SpHelper.getInstance().get(Constants.SP_LOGIN_HEAD_URI, "");
-        String nickname = SpHelper.getInstance().get(Constants.SP_LOGIN_NICKNAME, "");
-        String showNameLetter = UtilsHelper.getInstance().getFirstLetter(nickname);
-        ContactInfo contactInfo = new ContactInfo(userId, region, phone, userHeadUri, nickname, "", nickname, showNameLetter);
-
-        ContactInfoDao contactInfoDao = DBHelper.getInstance().getDaoSession().getContactInfoDao();
-        contactInfoDao.insertOrReplaceInTx(contactInfo);
     }
 }

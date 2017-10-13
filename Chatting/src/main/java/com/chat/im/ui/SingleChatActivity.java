@@ -16,7 +16,6 @@ import com.chat.im.adapter.ChattingAdapter;
 import com.chat.im.constant.Constants;
 import com.chat.im.db.bean.ContactInfo;
 import com.chat.im.db.bean.message.MessageBase;
-import com.chat.im.db.dao.ContactInfoDao;
 import com.chat.im.helper.DBHelper;
 import com.chat.im.helper.UIHelper;
 
@@ -49,7 +48,7 @@ public class SingleChatActivity extends BaseActivity implements View.OnClickList
     protected void init() {
         Intent intent = getIntent();
         String userId = intent.getStringExtra(Constants.USER_ID);
-        mContactInfo = DBHelper.getInstance().getDaoSession().getContactInfoDao().queryBuilder().where(ContactInfoDao.Properties.UserId.eq(userId)).unique();
+        mContactInfo = DBHelper.getInstance().getContactDao().queryContact(userId);
 
         initList();
 
@@ -97,7 +96,7 @@ public class SingleChatActivity extends BaseActivity implements View.OnClickList
     }
 
     private void initList() {
-        mList = DBHelper.getInstance().getDaoSession().getMessageBaseDao().queryBuilder().list();
+        mList = DBHelper.getInstance().getMessageBaseDao().queryAllMessages(mContactInfo.getUserId());
     }
 
     @Override
@@ -138,11 +137,13 @@ public class SingleChatActivity extends BaseActivity implements View.OnClickList
             messageBase.setMessageContentType(Constants.MESSAGE_CONTENT_TYPE_TEXT_RECEIVE);
         }
 
+        messageBase.setMessageTo(mContactInfo.getUserId());
+
         isSendOrReceive = !isSendOrReceive;
         mList.add(messageBase);
         mAdapter.notifyItemInserted(mList.size() - 1);
         mRecyclerView.scrollToPosition(mList.size() - 1);
 
-        DBHelper.getInstance().getDaoSession().getMessageBaseDao().insert(messageBase);
+        DBHelper.getInstance().getMessageBaseDao().insertMessage(messageBase);
     }
 }

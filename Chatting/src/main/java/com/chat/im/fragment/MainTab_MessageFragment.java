@@ -43,7 +43,7 @@ public class MainTab_MessageFragment extends Fragment {
         Observable.create(new ObservableOnSubscribe<List<MessagePreView>>() {
             @Override
             public void subscribe(ObservableEmitter<List<MessagePreView>> observableEmitter) {
-                mMessagePreViewList = DBHelper.getInstance().getDaoSession().getMessagePreViewDao().queryBuilder().list();
+                mMessagePreViewList = DBHelper.getInstance().getMessagePreViewDao().queryAllMessagePreView();
             }
         }).subscribeOn(Schedulers.io())//被观察者在子线程
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<List<MessagePreView>>() {

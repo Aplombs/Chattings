@@ -15,7 +15,6 @@ import com.chat.im.R;
 import com.chat.im.application.IMApp;
 import com.chat.im.constant.Constants;
 import com.chat.im.db.bean.ContactInfo;
-import com.chat.im.db.dao.ContactInfoDao;
 import com.chat.im.fragment.MainTab_ContactFragment;
 import com.chat.im.helper.DBHelper;
 import com.chat.im.helper.OKHttpClientHelper;
@@ -62,7 +61,7 @@ public class UserInfoDetailActivity extends BaseActivity implements View.OnClick
         sendMessage = findViewById(R.id.send_message_user_detail);
         requestAddFriend = findViewById(R.id.request_add_friend_user_detail);
 
-        mContactInfo = DBHelper.getInstance().getDaoSession().getContactInfoDao().queryBuilder().where(ContactInfoDao.Properties.UserId.eq(userID)).unique();
+        mContactInfo = DBHelper.getInstance().getContactDao().queryContact(userID);
 
         if (loadingDialog == null) {
             loadingDialog = UIHelper.getInstance().createLoadingDialog(this);
@@ -222,16 +221,19 @@ public class UserInfoDetailActivity extends BaseActivity implements View.OnClick
 
     //从数据库将好友删除
     private void deleteFriendFromDao() {
-        DBHelper.getInstance().getDaoSession().getContactInfoDao().deleteByKey(userID);
+        if (DBHelper.getInstance().getContactDao().deleteContact(userID)) {
+            UIHelper.getInstance().toast("已删除");
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    setResult(MainTab_ContactFragment.START_RESULT_CODE);
+                    UserInfoDetailActivity.this.finish();
+                }
+            }, 500);
+        } else {
+            UIHelper.getInstance().toast("删除失败,请稍后重试");
+        }
         hideLoadingDialog();
-        UIHelper.getInstance().toast("已删除");
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                setResult(MainTab_ContactFragment.START_RESULT_CODE);
-                UserInfoDetailActivity.this.finish();
-            }
-        }, 500);
     }
 
     //好友设置

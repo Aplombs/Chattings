@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'org.greenrobot.greendao'
 
 android {
     compileSdkVersion 25
@@ -25,12 +24,6 @@ android {
         }
     }
 
-    greendao{
-        schemaVersion 1 //表示数据库版本号
-        daoPackage 'com.chat.im.db.dao' //生成的数据库相关文件的包名,默认为你的entity所在的包名
-        targetGenDir 'src/main/java' //表示greenDAO生成的DAOMaster和DaoSession的位置
-    }
-
     //android 6.0不再支持 Apache HTTP client,建议使用 HttpURLConnection 代替
     useLibrary 'org.apache.http.legacy'
 }
@@ -40,7 +33,6 @@ dependencies {
     compile files('libs/Rong_IMLib.jar')
     compile 'com.belerweb:pinyin4j:2.5.1'
     compile 'com.alibaba:fastjson:1.2.36'
-    compile 'org.greenrobot:greendao:3.2.2'
     compile 'com.squareup.okhttp3:okhttp:3.8.1'
     compile 'io.reactivex.rxjava2:rxjava:2.1.2'
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
@@ -48,4 +40,5 @@ dependencies {
     compile 'com.android.support:support-v4:26.0.1'
     compile 'com.android.support:appcompat-v7:25.0.1'
     compile 'com.android.support:recyclerview-v7:26.0.1'
+    compile 'net.zetetic:android-database-sqlcipher:3.5.7'
 }

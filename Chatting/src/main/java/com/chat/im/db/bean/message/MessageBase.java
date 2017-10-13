@@ -1,28 +1,23 @@
 package com.chat.im.db.bean.message;
 
-import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.Generated;
-import org.greenrobot.greendao.annotation.Id;
-
 /**
  * 消息基类
  */
-@Entity
+
 public class MessageBase {
 
     /**
      * 消息id
      */
-    @Id
     private String messageId;
     /**
      * 消息发送者
      */
-    private long messageFrom;
+    private String messageFrom;
     /**
      * 消息接收者
      */
-    private long messageTo;
+    private String messageTo;
     /**
      * 消息方向:发送方 接收方
      */
@@ -44,8 +39,7 @@ public class MessageBase {
      */
     private String attachMessageContent;
 
-    @Generated(hash = 1292966825)
-    public MessageBase(String messageId, long messageFrom, long messageTo,
+    public MessageBase(String messageId, String messageFrom, String messageTo,
                        int messageDirection, int messageContentType, String messageContent,
                        int messageStatus, String attachMessageContent) {
         this.messageId = messageId;
@@ -58,7 +52,6 @@ public class MessageBase {
         this.attachMessageContent = attachMessageContent;
     }
 
-    @Generated(hash = 682811179)
     public MessageBase() {
     }
 
@@ -70,24 +63,24 @@ public class MessageBase {
         this.messageId = messageId;
     }
 
-    public long getMessageFrom() {
-        return this.messageFrom;
+    public String getMessageFrom() {
+        return messageFrom;
     }
 
-    public void setMessageFrom(long messageFrom) {
+    public void setMessageFrom(String messageFrom) {
         this.messageFrom = messageFrom;
     }
 
-    public long getMessageTo() {
-        return this.messageTo;
+    public String getMessageTo() {
+        return messageTo;
     }
 
-    public void setMessageTo(long messageTo) {
+    public void setMessageTo(String messageTo) {
         this.messageTo = messageTo;
     }
 
     public int getMessageDirection() {
-        return this.messageDirection;
+        return messageDirection;
     }
 
     public void setMessageDirection(int messageDirection) {
@@ -95,7 +88,7 @@ public class MessageBase {
     }
 
     public int getMessageContentType() {
-        return this.messageContentType;
+        return messageContentType;
     }
 
     public void setMessageContentType(int messageContentType) {
@@ -103,7 +96,7 @@ public class MessageBase {
     }
 
     public String getMessageContent() {
-        return this.messageContent;
+        return messageContent;
     }
 
     public void setMessageContent(String messageContent) {
@@ -111,7 +104,7 @@ public class MessageBase {
     }
 
     public int getMessageStatus() {
-        return this.messageStatus;
+        return messageStatus;
     }
 
     public void setMessageStatus(int messageStatus) {
@@ -119,7 +112,7 @@ public class MessageBase {
     }
 
     public String getAttachMessageContent() {
-        return this.attachMessageContent;
+        return attachMessageContent;
     }
 
     public void setAttachMessageContent(String attachMessageContent) {

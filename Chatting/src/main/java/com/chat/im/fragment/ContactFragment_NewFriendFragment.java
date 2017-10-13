@@ -55,8 +55,7 @@ public class ContactFragment_NewFriendFragment extends Fragment implements OKHtt
             @Override
             public void subscribe(ObservableEmitter<List<WaitAddFriends>> observableEmitter) {
                 mWaitAddFriendList.clear();
-                mWaitAddFriendList = DBHelper.getInstance().getDaoSession().
-                        getWaitAddFriendsDao().queryBuilder().list();
+                mWaitAddFriendList = DBHelper.getInstance().getWaitAddFriendsDao().queryAllWaitAddFriend();
                 observableEmitter.onNext(mWaitAddFriendList);
             }
         }).subscribeOn(Schedulers.io())//被观察者在子线程
@@ -143,14 +142,14 @@ public class ContactFragment_NewFriendFragment extends Fragment implements OKHtt
             @Override
             public void subscribe(ObservableEmitter<List<WaitAddFriends>> observableEmitter) {
                 waitAddFriends.setIsAdded(true);
-                DBHelper.getInstance().getDaoSession().getWaitAddFriendsDao().insertOrReplace(waitAddFriends);
+                //更新数据库中的内容
+                DBHelper.getInstance().getWaitAddFriendsDao().updateWaitAddFriend(waitAddFriends);
 
                 ContactInfo contactInfo = new ContactInfo(waitAddFriends.getUserId(), waitAddFriends.getRegion(), waitAddFriends.getPhone(), waitAddFriends.getHeadUri(), waitAddFriends.getNickName(), waitAddFriends.getRemarkName(), waitAddFriends.getShowName(), waitAddFriends.getShowNameLetter());
-                DBHelper.getInstance().getDaoSession().getContactInfoDao().insertOrReplaceInTx(contactInfo);
+                DBHelper.getInstance().getContactDao().insertContact(contactInfo);
 
                 mWaitAddFriendList.clear();
-                mWaitAddFriendList = DBHelper.getInstance().getDaoSession().
-                        getWaitAddFriendsDao().queryBuilder().list();
+                mWaitAddFriendList = DBHelper.getInstance().getWaitAddFriendsDao().queryAllWaitAddFriend();
                 observableEmitter.onNext(mWaitAddFriendList);
             }
         }).subscribeOn(Schedulers.io())//被观察者在子线程

@@ -1,28 +1,31 @@
 package com.chat.im.db.bean;
 
-import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.Generated;
-
 /**
  * 消息页签--预览消息实体
  */
-@Entity
 public class MessagePreView {
 
+    private String messagePreviewId;
     private String userNickName;
     private String contentPreView;
     private boolean isTop;
 
-    @Generated(hash = 49387675)
-    public MessagePreView(String userNickName, String contentPreView,
-                          boolean isTop) {
+    public MessagePreView(String messagePreviewId, String userNickName, String contentPreView, boolean isTop) {
+        this.messagePreviewId = messagePreviewId;
         this.userNickName = userNickName;
         this.contentPreView = contentPreView;
         this.isTop = isTop;
     }
 
-    @Generated(hash = 1584209322)
     public MessagePreView() {
+    }
+
+    public String getMessagePreviewId() {
+        return messagePreviewId;
+    }
+
+    public void setMessagePreviewId(String messagePreviewId) {
+        this.messagePreviewId = messagePreviewId;
     }
 
     public String getUserNickName() {

@@ -112,6 +112,12 @@
             android:name=".service.TestService"
             android:process="com.chat.im.push" />
 
+        <provider
+            android:name=".db.provider.IMDBCipherProvider"
+            android:authorities="com.chat.im.provider.imdb"
+            android:enabled="true"
+            android:exported="false" />
+
         <!-- push 相关事件接收器 -->
         <receiver
             android:name="io.rong.push.PushReceiver"

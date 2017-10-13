@@ -1,5 +1,6 @@
 package com.chat.im.helper;
 
+import android.content.ContentValues;
 import android.os.Build;
 import android.text.TextUtils;
 
@@ -7,9 +8,7 @@ import com.chat.im.constant.Constants;
 import com.chat.im.cookie.PersistentCookieStore;
 import com.chat.im.db.bean.ContactInfo;
 import com.chat.im.db.bean.WaitAddFriends;
-import com.chat.im.db.dao.ContactInfoDao;
-import com.chat.im.db.dao.DaoSession;
-import com.chat.im.db.dao.WaitAddFriendsDao;
+import com.chat.im.db.table.Table_ContactInfo;
 import com.chat.im.jsonbean.AddFriendRequest;
 import com.chat.im.jsonbean.AddFriendResponse;
 import com.chat.im.jsonbean.AgreeFriendsRequest;
@@ -339,29 +338,21 @@ public class OKHttpClientHelper {
                                  * 30: // 删除了好友关系
                                  */
                                 if (resultEntity.getStatus() == 20) {
-                                    ContactInfo contactInfo = new ContactInfo(userId, region, phone, userHeadUri, nickname, remarkName, showName, showNameLetter);
-                                    contactInfoList.add(contactInfo);
+                                    if (!DBHelper.getInstance().getContactDao().queryContactIsExist(userId)) {
+                                        ContactInfo contactInfo = new ContactInfo(userId, region, phone, userHeadUri, nickname, remarkName, showName, showNameLetter);
+                                        contactInfoList.add(contactInfo);
+                                        //之后改成批量插入
+                                        DBHelper.getInstance().getContactDao().insertContact(contactInfo);
+                                    }
                                 }
 
                                 if (resultEntity.getStatus() == 11) {
                                     String addFriendAttachMsg = resultEntity.getMessage();
                                     WaitAddFriends waitAddFriends = new WaitAddFriends(userId, region, phone, userHeadUri, nickname, remarkName, showName, showNameLetter, addFriendAttachMsg, false);
                                     waitAddFriendsList.add(waitAddFriends);
+                                    //之后改成批量插入
+                                    DBHelper.getInstance().getWaitAddFriendsDao().insertWaitAddFriend(waitAddFriends);
                                 }
-                            }
-
-                            DaoSession daoSession = DBHelper.getInstance().getDaoSession();
-
-                            ContactInfoDao contactInfoDao = daoSession.getContactInfoDao();
-                            //清空之前的数据,将服务器最新数据插入数据库
-                            contactInfoDao.deleteAll();
-                            contactInfoDao.insertOrReplaceInTx(contactInfoList);
-
-                            if (waitAddFriendsList.size() > 0) {
-                                WaitAddFriendsDao waitAddFriendsDao = daoSession.getWaitAddFriendsDao();
-                                //清空之前的数据,将服务器最新数据插入数据库
-                                waitAddFriendsDao.deleteAll();
-                                waitAddFriendsDao.insertOrReplaceInTx(waitAddFriendsList);
                             }
                         }
                     }

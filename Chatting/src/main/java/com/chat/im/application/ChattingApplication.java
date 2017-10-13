@@ -43,9 +43,9 @@ public class ChattingApplication extends MultiDexApplication {
 
         applicationContext = getApplicationContext();
 
-        initRongCloud();
-
         ContextHelper.init(applicationContext);
+
+        initRongCloud();
 
         //处理程序崩溃日志
         CrashReporterHelper.initCrashReporterInstance();
