@@ -42,7 +42,6 @@ public class MainTab_MessageFragment extends Fragment implements NotifyMonitor.N
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         NotifyMonitor.getInstance().registerNotifyMonitorListener(this);
-        loadMessagePreView();
     }
 
     private void loadMessagePreView() {
@@ -64,12 +63,13 @@ public class MainTab_MessageFragment extends Fragment implements NotifyMonitor.N
 
                 if (mAdapter != null) {
                     mAdapter.reloadList(mMessagePreViewList);
-                    mAdapter.notifyDataSetChanged();
                 } else {
                     mAdapter = new MessagePreViewAdapter(getContext(), mMessagePreViewList);
-                    mRecyclerView.setLayoutManager(new LinearLayoutManager(ContextHelper.getContext()));
-                    mRecyclerView.setAdapter(mAdapter);
                 }
+
+                mRecyclerView.setLayoutManager(new LinearLayoutManager(ContextHelper.getContext()));
+                mRecyclerView.setAdapter(mAdapter);
+
                 if (mLoading != null) {
                     mLoading.setVisibility(View.GONE);
                 }
@@ -82,6 +82,15 @@ public class MainTab_MessageFragment extends Fragment implements NotifyMonitor.N
                     mNotMessageTip.setVisibility(View.GONE);
                 }
             }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                if (mLoading != null) {
+                    mLoading.setVisibility(View.GONE);
+                }
+                mNotMessageTip.setVisibility(View.VISIBLE);
+                mRecyclerView.setVisibility(View.GONE);
+            }
         });
     }
 
@@ -90,6 +99,7 @@ public class MainTab_MessageFragment extends Fragment implements NotifyMonitor.N
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_tab_message, null);
         initView();
+        loadMessagePreView();
         return mView;
     }
 
@@ -102,11 +112,6 @@ public class MainTab_MessageFragment extends Fragment implements NotifyMonitor.N
         mRecyclerView = (RecyclerView) mView.findViewById(R.id.recyclerView_tabMessage);
         mLoading = mView.findViewById(R.id.loading_tab_message);
         mNotMessageTip = mView.findViewById(R.id.ll_not_message_tip);
-        if (mAdapter == null) {
-            mAdapter = new MessagePreViewAdapter(getContext(), mMessagePreViewList);
-            mRecyclerView.setLayoutManager(new LinearLayoutManager(ContextHelper.getContext()));
-            mRecyclerView.setAdapter(mAdapter);
-        }
     }
 
     @Override
