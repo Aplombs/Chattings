@@ -9,7 +9,8 @@
 
     <include layout="@layout/title_bar" />
 
-    <RelativeLayout
+    <com.chat.im.view.ResizeRelativeLayout
+        android:id="@+id/single_chat_root"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -73,6 +74,6 @@
             android:layout_above="@id/ll_edit_chat"
             android:scrollbars="vertical" />
 
-    </RelativeLayout>
+    </com.chat.im.view.ResizeRelativeLayout>
 
 </LinearLayout>

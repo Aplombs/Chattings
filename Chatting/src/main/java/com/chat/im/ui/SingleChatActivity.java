@@ -17,9 +17,11 @@ import com.chat.im.db.bean.ContactInfo;
 import com.chat.im.db.bean.MessagePreView;
 import com.chat.im.db.bean.message.MessageBase;
 import com.chat.im.helper.DBHelper;
+import com.chat.im.helper.LogHelper;
 import com.chat.im.helper.UIHelper;
 import com.chat.im.notify.NotifyHelper;
 import com.chat.im.notify.NotifyReceiver;
+import com.chat.im.view.ResizeRelativeLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,8 +33,10 @@ import java.util.Random;
 
 public class SingleChatActivity extends BaseActivity implements View.OnClickListener {
 
+    private final String TAG = "[SingleChatActivity] ";
     private Button mSendContent;
     private EditText mEditContent;
+    private int mMenuOpenedHeight;
     private boolean isSendOrReceive;
     private ContactInfo mContactInfo;
     private ChattingAdapter mAdapter;
@@ -66,9 +70,9 @@ public class SingleChatActivity extends BaseActivity implements View.OnClickList
         mSendContent.setOnClickListener(this);
 
         mAdapter = new ChattingAdapter(this, mList);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setStackFromEnd(true);//软键盘弹出 布局展示最后一个item
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        //reverseLayout false:新添加的在最下面 true:新添加的在最上面
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+//        linearLayoutManager.setStackFromEnd(true);//软键盘弹出 将最后item被顶上去
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
@@ -100,6 +104,35 @@ public class SingleChatActivity extends BaseActivity implements View.OnClickList
             @Override
             public void onClick(View v) {
                 dealBackPress();
+            }
+        });
+
+        ResizeRelativeLayout resizeRelativeLayout = (ResizeRelativeLayout) findViewById(R.id.single_chat_root);
+        //监听软键盘的变化
+        resizeRelativeLayout.setOnResizeRelativeListener(new ResizeRelativeLayout.OnResizeRelativeListener() {
+            @Override
+            public void onResizeRelative(int with, int height, int oldWith, int oldHeight) {
+                boolean isKeyboardOpened = false;
+
+                // 记录第一次打开输入法时的布局高度
+                if (height < oldWith && oldWith > 0 && mMenuOpenedHeight == 0) {
+                    mMenuOpenedHeight = height;
+                }
+
+                //布局当前的高度小于之前的高度
+                if (height < oldHeight) {
+                    isKeyboardOpened = true;
+                }// 或者输入法打开情况下,输入字符后再清除(三星输入法软键盘在输入后,软键盘高度增加一行,清除输入后,高度变小,但是软键盘仍是打开状态)
+                else if ((height <= mMenuOpenedHeight) && (mMenuOpenedHeight != 0)) {
+                    isKeyboardOpened = true;
+                }
+
+                if (isKeyboardOpened) {
+                    LogHelper.e(TAG + "软键盘弹起 height:" + height + "  oldHeight:" + oldHeight);
+                    mRecyclerView.scrollToPosition(mList.size() - 1);
+                } else {
+                    LogHelper.e(TAG + "软键盘隐藏 height:" + height + "  oldHeight:" + oldHeight);
+                }
             }
         });
     }
@@ -163,7 +196,7 @@ public class SingleChatActivity extends BaseActivity implements View.OnClickList
 
         isSendOrReceive = !isSendOrReceive;
         mList.add(messageBase);
-        mAdapter.notifyItemInserted(mList.size() - 1);
+        //mAdapter.notifyItemInserted(mList.size() - 1);
         mRecyclerView.scrollToPosition(mList.size() - 1);
 
         DBHelper.getInstance().getMessageBaseDao().insertMessage(messageBase);
