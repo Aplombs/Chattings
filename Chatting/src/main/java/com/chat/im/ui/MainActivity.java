@@ -140,17 +140,23 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             case R.id.tab_me_main:
                 selectTab(2);
                 break;
-            case R.id.popup_group_chat://发起群聊
+            //发起群聊
+            case R.id.popup_group_chat:
                 goToPopupWindow(Constants.TAG_INITIATE_GROUP_CHAT_POPUP_WINDOW);
                 break;
-            case R.id.popup_add_friend://添加好友
+            //添加好友
+            case R.id.popup_add_friend:
                 goToPopupWindow(Constants.TAG_ADD_FRIEND_POPUP_WINDOW);
                 break;
-            case R.id.popup_scanner://扫一扫
+            //扫一扫
+            case R.id.popup_scanner:
                 goToPopupWindow(Constants.TAG_SCANNER_POPUP_WINDOW);
                 break;
-            case R.id.popup_collect_payment://收付款
+            //收付款
+            case R.id.popup_collect_payment:
                 goToPopupWindow(Constants.TAG_COLLECT_PAYMENT_POPUP_WINDOW);
+                break;
+            default:
                 break;
         }
     }

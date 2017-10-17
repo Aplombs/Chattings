@@ -205,8 +205,15 @@ public class SingleChatActivity extends BaseActivity implements View.OnClickList
 
         DBHelper.getInstance().getMessageBaseDao().insertMessage(messageBase);
 
+        int notRead = 0;
+        for (MessageBase msg : mList) {
+            if (msg.getMessageContentType() == Constants.MESSAGE_CONTENT_TYPE_TEXT_RECEIVE) {
+                notRead++;
+            }
+        }
+
         //生成一条预览消息
-        MessagePreView messagePreView = new MessagePreView(mContactInfo.getUserId(), mContactInfo.getShowName(), messageBase.getMessageContent(), mList.size() + "", false);
+        MessagePreView messagePreView = new MessagePreView(mContactInfo.getUserId(), mContactInfo.getShowName(), messageBase.getMessageContent(), notRead + "", false);
         //如果消息存在就更新
         if (DBHelper.getInstance().getMessagePreViewDao().queryMessagePreViewIsExist(messagePreView.getMessagePreviewId())) {
             //更新预览消息
