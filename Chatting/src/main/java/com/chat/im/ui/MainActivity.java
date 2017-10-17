@@ -179,7 +179,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 mText_tabContact.setTextColor(getResources().getColor(R.color.text_gray));
                 mText_tabMe.setTextColor(getResources().getColor(R.color.text_gray));
 
-                mViewPager.setCurrentItem(0);
+                mViewPager.setCurrentItem(0, true);
                 break;
             case 1:
                 mTitleName.setText("联系人");
@@ -194,7 +194,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 mText_tabContact.setTextColor(getResources().getColor(R.color.colorPrimary));
                 mText_tabMe.setTextColor(getResources().getColor(R.color.text_gray));
 
-                mViewPager.setCurrentItem(1);
+                mViewPager.setCurrentItem(1, true);
                 break;
             case 2:
                 mLoading.setVisibility(View.GONE);
@@ -209,7 +209,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 mText_tabContact.setTextColor(getResources().getColor(R.color.text_gray));
                 mText_tabMe.setTextColor(getResources().getColor(R.color.colorPrimary));
 
-                mViewPager.setCurrentItem(2);
+                mViewPager.setCurrentItem(2, true);
+                break;
+            default:
                 break;
         }
     }

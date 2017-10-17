@@ -38,6 +38,8 @@ public class SingleChatActivity extends BaseActivity implements View.OnClickList
     private EditText mEditContent;
     private int mMenuOpenedHeight;
     private boolean isSendOrReceive;
+    //是否发送过消息
+    private boolean isSendedMessage;
     private ContactInfo mContactInfo;
     private ChattingAdapter mAdapter;
     private RecyclerView mRecyclerView;
@@ -72,7 +74,7 @@ public class SingleChatActivity extends BaseActivity implements View.OnClickList
         mAdapter = new ChattingAdapter(this, mList);
         //reverseLayout false:新添加的在最下面 true:新添加的在最上面
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-//        linearLayoutManager.setStackFromEnd(true);//软键盘弹出 将最后item被顶上去
+        //linearLayoutManager.setStackFromEnd(true);//软键盘弹出 将最后item被顶上去
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
@@ -168,12 +170,15 @@ public class SingleChatActivity extends BaseActivity implements View.OnClickList
             case R.id.send_content_single_chat:
                 sendMessage();
                 break;
+            default:
+                break;
         }
     }
 
     //处理返回键
     private void dealBackPress() {
-        if (null != mList && mList.size() > 0) {//是否发送过消息 是的话返回直接到消息页签
+        //是否发送过消息 是的话返回直接到消息页签
+        if (isSendedMessage && null != mList && mList.size() > 0) {
             NotifyHelper.getInstance().notifyEvent(NotifyReceiver.NOTIFY_TYPE_UPDATE_MESSAGE_PREVIEW, null);
         }
         this.finish();
@@ -196,7 +201,6 @@ public class SingleChatActivity extends BaseActivity implements View.OnClickList
 
         isSendOrReceive = !isSendOrReceive;
         mList.add(messageBase);
-        //mAdapter.notifyItemInserted(mList.size() - 1);
         mRecyclerView.scrollToPosition(mList.size() - 1);
 
         DBHelper.getInstance().getMessageBaseDao().insertMessage(messageBase);
@@ -211,5 +215,7 @@ public class SingleChatActivity extends BaseActivity implements View.OnClickList
             DBHelper.getInstance().getMessagePreViewDao().insertMessagePreView(messagePreView);
         }
         NotifyHelper.getInstance().notifyEvent(NotifyReceiver.NOTIFY_TYPE_UPDATE_MESSAGE_PREVIEW, null);
+
+        isSendedMessage = true;
     }
 }
