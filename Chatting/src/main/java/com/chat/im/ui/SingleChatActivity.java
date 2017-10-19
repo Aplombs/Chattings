@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -137,6 +138,17 @@ public class SingleChatActivity extends BaseActivity implements View.OnClickList
                 }
             }
         });
+
+        mEditContent.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    showSoftInput();
+                }
+            }
+        });
+
+        mRecyclerView.setOnTouchListener(onTouchListener);
     }
 
     private void initList() {
@@ -154,13 +166,37 @@ public class SingleChatActivity extends BaseActivity implements View.OnClickList
         dealBackPress();
     }
 
+    private View.OnTouchListener onTouchListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            float startY = 0;
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    startY = event.getY();
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    float endY = event.getY();
+                    //滑动距离大于5个像素代表上下滑动
+                    float abs = Math.abs(endY - startY);
+                    if (abs > 5) {
+                        hideSoftInput();
+                    }
+                default:
+                    break;
+            }
+            return false;
+        }
+    };
+
     public void showSoftInput() {
         //输入法弹出,输入框显示光标
+        mEditContent.setCursorVisible(true);
         UIHelper.getInstance().showSoftInput(mEditContent);
     }
 
     private void hideSoftInput() {
         //输入法消失,输入框隐藏光标
+        mEditContent.setCursorVisible(false);
         UIHelper.getInstance().hideSoftInput(mEditContent);
     }
 
