@@ -27,15 +27,13 @@ public class NotifyHelper {
         return mNotifyHelper;
     }
 
-    public void notifyEvent(int type, Intent data) {
+    public void notifyEvent(int function, Intent data) {
         if (data == null) {
             data = new Intent();
         }
-        if (data.hasExtra(NotifyReceiver.EXTRA_NOTIFY_TYPE)) {
-            throw new IllegalArgumentException("please send your extra_notify_type!");
-        }
+
         data.setAction(NotifyReceiver.ACTION_NOTIFY);
-        data.putExtra(NotifyReceiver.EXTRA_NOTIFY_TYPE, type);
+        data.putExtra(NotifyReceiver.EXTRA_NOTIFY_FUNCTION, function);
         ContextHelper.getContext().sendBroadcast(data);
     }
 

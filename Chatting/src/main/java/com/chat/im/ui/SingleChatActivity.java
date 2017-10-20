@@ -213,10 +213,11 @@ public class SingleChatActivity extends BaseActivity implements View.OnClickList
 
     //处理返回键
     private void dealBackPress() {
-        //是否发送过消息 是的话返回直接到消息页签
+        //是否发送过消息 是的话返回直接到消息页签且更新最后一条消息内容
         if (isSendedMessage && null != mList && mList.size() > 0) {
-            NotifyHelper.getInstance().notifyEvent(NotifyReceiver.NOTIFY_TYPE_UPDATE_MESSAGE_PREVIEW, null);
+            NotifyHelper.getInstance().notifyEvent(NotifyReceiver.NOTIFY_TYPE_UPDATE_MESSAGE_PREVIEW_ITEM_CONTENT, null);
         }
+
         this.finish();
     }
 
@@ -257,8 +258,7 @@ public class SingleChatActivity extends BaseActivity implements View.OnClickList
         } else {
             DBHelper.getInstance().getMessagePreViewDao().insertMessagePreView(messagePreView);
         }
-        NotifyHelper.getInstance().notifyEvent(NotifyReceiver.NOTIFY_TYPE_UPDATE_MESSAGE_PREVIEW, null);
-
+        //点击返回按钮的时候会刷新预览消息页签最后的消息内容
         isSendedMessage = true;
     }
 }

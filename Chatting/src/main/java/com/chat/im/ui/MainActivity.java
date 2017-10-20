@@ -5,6 +5,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -253,10 +254,25 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     @Override
-    public void onUpdate(int type, Object data) {
-        if (NotifyReceiver.NOTIFY_TYPE_UPDATE_MESSAGE_PREVIEW == type) {
+    public void onUpdate(int function, Object data) {
+        //需要刷新消息页签的最后一条消息内容就表示已经发送过消息 如果当前主界面的页签不是消息页签就用打开消息页签
+        if (NotifyReceiver.NOTIFY_TYPE_UPDATE_MESSAGE_PREVIEW_ITEM_CONTENT == function) {
             if (mViewPager.getCurrentItem() != 0) {
                 selectTab(0);
+            }
+        }
+        //刷新消息页签底部tab未读数=每个item未读数相加
+        if (function == NotifyReceiver.NOTIFY_TYPE_UPDATE_MESSAGE_PREVIEW_TAB_NOT_READ) {
+            if (data != null) {
+                Intent intent = (Intent) data;
+                String notReadNum = intent.getStringExtra("notReadNum");
+                notReadNum = TextUtils.isEmpty(notReadNum) ? "0" : notReadNum;
+                if (!"0".equals(notReadNum)) {
+                    mNotRead_tabMessage.setVisibility(View.VISIBLE);
+                    mNotRead_tabMessage.setText(notReadNum);
+                } else {
+                    mNotRead_tabMessage.setVisibility(View.GONE);
+                }
             }
         }
     }

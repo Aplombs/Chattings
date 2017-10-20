@@ -33,7 +33,7 @@ public class NotifyMonitor {
         mNotifyMonitor = null;
     }
 
-    public void notifyMonitorEvent(final int type, final Object data) {
+    public void notifyMonitorEvent(final int action, final Object data) {
         for (int i = 0; i < mNotifyListenerList.size(); ) {
             WeakReference<NotifyMonitorListener> wr = mNotifyListenerList.elementAt(i);
             final NotifyMonitorListener monitorListener = wr.get();
@@ -41,7 +41,7 @@ public class NotifyMonitor {
                 try {
                     mHandler.post(new Runnable() {
                         public void run() {
-                            monitorListener.onUpdate(type, data);
+                            monitorListener.onUpdate(action, data);
                         }
                     });
                 } catch (Exception e) {
@@ -76,6 +76,12 @@ public class NotifyMonitor {
     }
 
     public interface NotifyMonitorListener {
-        void onUpdate(int type, Object data);
+        /**
+         * 刷新UI
+         *
+         * @param function 更新哪种功能
+         * @param data     更新数据
+         */
+        void onUpdate(int function, Object data);
     }
 }

@@ -1,7 +1,6 @@
 package com.chat.im.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,13 +8,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chat.im.R;
-import com.chat.im.constant.Constants;
 import com.chat.im.db.bean.MessagePreView;
 import com.chat.im.helper.ContextHelper;
-import com.chat.im.helper.DBHelper;
-import com.chat.im.notify.NotifyHelper;
-import com.chat.im.notify.NotifyReceiver;
-import com.chat.im.ui.SingleChatActivity;
 
 import java.util.List;
 
@@ -27,6 +21,7 @@ public class MessagePreViewAdapter extends RecyclerView.Adapter<MessagePreViewAd
 
     private Context mContext;
     private List<MessagePreView> mList;
+    private onItemClickListener itemClickListener;
 
     public MessagePreViewAdapter(Context context, List<MessagePreView> messagePreViewList) {
         this.mContext = context;
@@ -47,7 +42,7 @@ public class MessagePreViewAdapter extends RecyclerView.Adapter<MessagePreViewAd
     }
 
     @Override
-    public void onBindViewHolder(MessagePreViewHolder holder, int position) {
+    public void onBindViewHolder(MessagePreViewHolder holder, final int position) {
         final MessagePreView messagePreView = mList.get(position);
         if (messagePreView.getIsTop()) {
             holder.itemView.setBackgroundColor(ContextHelper.getContext().getResources().getColor(R.color.message_to_top));
@@ -66,13 +61,9 @@ public class MessagePreViewAdapter extends RecyclerView.Adapter<MessagePreViewAd
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //打开聊天界面
-                Intent intent = new Intent(mContext, SingleChatActivity.class);
-                intent.putExtra(Constants.USER_ID, messagePreView.getMessagePreviewId());
-                mContext.startActivity(intent);
-                messagePreView.setNotReadMessageNum("0");
-                DBHelper.getInstance().getMessagePreViewDao().updateMessagePreView(messagePreView);
-                NotifyHelper.getInstance().notifyEvent(NotifyReceiver.NOTIFY_TYPE_UPDATE_MESSAGE_PREVIEW, null);
+                if (itemClickListener != null) {
+                    itemClickListener.onItemClick(position);
+                }
             }
         });
     }
@@ -80,6 +71,14 @@ public class MessagePreViewAdapter extends RecyclerView.Adapter<MessagePreViewAd
     @Override
     public int getItemCount() {
         return mList.size();
+    }
+
+    public interface onItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public void setItemClick(onItemClickListener itemClick) {
+        this.itemClickListener = itemClick;
     }
 
     public class MessagePreViewHolder extends RecyclerView.ViewHolder {
