@@ -161,7 +161,7 @@ public class MainTab_MessageFragment extends Fragment implements MessagePreViewA
                     notReadNum += Integer.parseInt(TextUtils.isEmpty(notReadMessageNum) ? "0" : notReadMessageNum);
                 }
                 Intent intent = new Intent();
-                intent.putExtra("notReadNum", notReadNum);
+                intent.putExtra("notReadNum", notReadNum + "");
 
                 subscriber.onNext(intent);
             }

@@ -70,6 +70,7 @@ public class SingleChatActivity extends BaseActivity implements View.OnClickList
         mAddMore = (ImageView) findViewById(R.id.more_single_chat);
         mSendContent = (Button) findViewById(R.id.send_content_single_chat);
 
+        mAddMore.setOnClickListener(this);
         mSendContent.setOnClickListener(this);
 
         mAdapter = new ChattingAdapter(this, mList);
@@ -205,6 +206,8 @@ public class SingleChatActivity extends BaseActivity implements View.OnClickList
         switch (v.getId()) {
             case R.id.send_content_single_chat:
                 sendMessage();
+                break;
+            case R.id.more_single_chat:
                 break;
             default:
                 break;
