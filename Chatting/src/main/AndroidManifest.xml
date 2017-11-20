@@ -66,6 +66,10 @@
 
         <activity android:name=".test.TestOnTouchEventActivity" />
 
+        <activity
+            android:name=".test.TestKotlinActivity"
+            android:theme="@style/AppThemeForKotlinTest" />
+
         <!-- imlib config begin -->
         <meta-data
             android:name="RONG_CLOUD_APP_KEY"

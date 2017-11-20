@@ -16,6 +16,7 @@ import com.chat.im.helper.ContextHelper;
 import com.chat.im.helper.SpHelper;
 import com.chat.im.helper.UIHelper;
 import com.chat.im.helper.UtilsHelper;
+import com.chat.im.test.TestNewsActivity;
 import com.chat.im.ui.MeActivity;
 
 /**
@@ -69,29 +70,39 @@ public class MainTab_MeFragment extends Fragment implements View.OnClickListener
         Intent intent = new Intent(ContextHelper.getContext(), MeActivity.class);
         String tag = "";
         switch (v.getId()) {
-            case R.id.head_nickname_qrCode_me_tab://个人信息
+            //个人信息
+            case R.id.head_nickname_qrCode_me_tab:
                 tag = Constants.TAG_USER_INFO_ME_TAB;
                 intent.putExtra("tag", tag);
                 startActivityForResult(intent, USER_INFO_ME_FRAGMENT_REQUEST_CODE);
                 return;
             //break;
-            case R.id.qrCode_me_tab://个人二维码
+            // 个人二维码
+            case R.id.qrCode_me_tab:
                 UIHelper.getInstance().toast("个人二维码");
                 return;
-            case R.id.wallet_me_tab://钱包
+            //钱包
+            case R.id.wallet_me_tab:
                 tag = Constants.TAG_WALLET_ME_TAB;
                 break;
-            case R.id.friend_me_tab://朋友圈
-                tag = Constants.TAG_FRIEND_INFO_ME_TAB;
-                break;
-            case R.id.collection_me_tab://收藏
+            //朋友圈
+            case R.id.friend_me_tab:
+                startActivity(new Intent(getContext(), TestNewsActivity.class));
+                //break;
+                return;
+            //收藏
+            case R.id.collection_me_tab:
                 tag = Constants.TAG_COLLECTION_ME_TAB;
                 break;
-            case R.id.expression_me_tab://表情
+            //表情
+            case R.id.expression_me_tab:
                 tag = Constants.TAG_EXPRESSION_ME_TAB;
                 break;
-            case R.id.setting_me_tab://设置
+            //设置
+            case R.id.setting_me_tab:
                 tag = Constants.TAG_SETTING_ME_TAB;
+                break;
+            default:
                 break;
         }
         intent.putExtra("tag", tag);

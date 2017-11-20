@@ -1,9 +1,9 @@
 package com.chat.im.ui;
 
-import android.graphics.Color;
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,8 +26,9 @@ import com.chat.im.helper.UtilsHelper;
  * mReturnView.setVisibility(View.VISIBLE);
  */
 
-public abstract class BaseActivity extends FragmentActivity {
+public abstract class BaseActivity extends AppCompatActivity {
 
+    private Context mContext = this;
     //右上角+
     protected ImageView mBt_Add;
     protected ImageView mBt_More;
@@ -59,7 +60,9 @@ public abstract class BaseActivity extends FragmentActivity {
         init();
     }
 
-    //状态栏透明处理--很多人都叫沉浸式状态栏
+    /**
+     * 状态栏透明处理--很多人都叫沉浸式状态栏
+     */
     private void setTranslucentStatusBar() {
         Window mWindow = getWindow();
         //android 6.0以上设置状态栏

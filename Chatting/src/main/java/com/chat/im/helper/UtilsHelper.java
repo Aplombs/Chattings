@@ -217,4 +217,12 @@ public class UtilsHelper {
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         return displayMetrics.widthPixels;
     }
+
+    /**
+     * @return 将sp值转换为px值，保证文字大小不变
+     */
+    public int sp2px(Context context, float spValue) {
+        final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
+        return (int) (spValue * fontScale + 0.5f);
+    }
 }

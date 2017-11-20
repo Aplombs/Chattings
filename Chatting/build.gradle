@@ -1,14 +1,23 @@
 apply plugin: 'com.android.application'
 
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 android {
-    compileSdkVersion 25
-    buildToolsVersion "26.0.0"
+    compileSdkVersion 26
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.chat.im"
-        minSdkVersion 19
-        targetSdkVersion 25
+        minSdkVersion 17
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
+
+        //annotation Processor编译错误
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath true
+            }
+        }
     }
 
     buildTypes {
@@ -29,16 +38,39 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile files('libs/Rong_IMLib.jar')
-    compile 'com.belerweb:pinyin4j:2.5.1'
-    compile 'com.alibaba:fastjson:1.2.36'
-    compile 'com.squareup.okhttp3:okhttp:3.8.1'
-    compile 'io.reactivex.rxjava2:rxjava:2.1.2'
-    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    compile 'com.android.support:multidex:1.0.1'
-    compile 'com.android.support:support-v4:26.0.1'
-    compile 'com.android.support:appcompat-v7:25.0.1'
-    compile 'com.android.support:recyclerview-v7:26.0.1'
-    compile 'net.zetetic:android-database-sqlcipher:3.5.7'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    implementation files('libs/Rong_IMLib.jar')
+
+    implementation 'com.belerweb:pinyin4j:2.5.1'
+
+    implementation 'com.alibaba:fastjson:1.2.36'
+    implementation 'com.google.code.gson:gson:2.8.2'
+
+    implementation 'com.squareup.okhttp3:okhttp:3.9.0'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.2'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+
+    implementation 'com.android.support:multidex:1.0.2'
+
+    implementation 'com.github.bumptech.glide:glide:4.3.1'
+
+    implementation 'com.android.support:design:27.0.0'
+    implementation 'com.android.support:support-v4:26.1.0'
+    implementation 'com.android.support:appcompat-v7:25.4.0'
+
+    implementation 'com.android.support:recyclerview-v7:26.1.0'
+
+    implementation 'net.zetetic:android-database-sqlcipher:3.5.7'
+
+    implementation 'com.android.support:multidex:1.0.2'
+
+    implementation "org.jetbrains.anko:anko-common:$anko_version"
+    implementation "org.jetbrains.anko:anko-sdk25:$anko_version"
+    implementation "org.jetbrains.anko:anko-appcompat-v7:$anko_version"
+    implementation "org.jetbrains.anko:anko-sdk25-coroutines:$anko_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
 }
