@@ -40,6 +40,8 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
+    implementation project(':refresh-layout')
+
     implementation files('libs/Rong_IMLib.jar')
 
     implementation 'com.belerweb:pinyin4j:2.5.1'
@@ -67,6 +69,9 @@ dependencies {
     //compile 'com.android.support:recyclerview-v7:25.0.1'
     //compile 'com.android.support:appcompat-v7:25.0.1'
     compile 'cn.bingoogolapple:bga-refreshlayout:1.1.7@aar'
+    //compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
+    //没有使用特殊Header，可以不加这行
+    //compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.3'
     // -------------------- 以上三个库是必须依赖的 ----------------------------
 
     implementation 'net.zetetic:android-database-sqlcipher:3.5.7'

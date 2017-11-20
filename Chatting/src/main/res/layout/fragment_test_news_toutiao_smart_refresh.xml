@@ -18,27 +18,26 @@
         android:visibility="gone"
         tools:ignore="HardcodedText" />
 
-    <cn.bingoogolapple.refreshlayout.BGARefreshLayout
-        android:id="@+id/bgaRefresh_layout_news"
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/smartRefresh_layout_news"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerView_imageText_news"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:overScrollMode="never"
                 android:padding="5dp"
                 android:scrollbars="vertical" />
 
         </LinearLayout>
 
-    </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 </LinearLayout>

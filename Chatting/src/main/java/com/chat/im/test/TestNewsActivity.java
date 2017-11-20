@@ -14,8 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chat.im.R;
-import com.chat.im.test.fragment.BeautyFragment;
 import com.chat.im.test.fragment.NewsFragmentTouTiao;
+import com.chat.im.test.fragment.NewsFragmentTouTiaoSmartRefresh;
 import com.chat.im.test.fragment.NewsFragmentWeibo;
 import com.chat.im.ui.BaseActivity;
 
@@ -44,7 +44,7 @@ public class TestNewsActivity extends BaseActivity {
 
 
     private String[] tabTitles = {"消息", "资讯", "公众号"};
-    private Fragment[] fragments = {new NewsFragmentWeibo(), new NewsFragmentTouTiao(), new BeautyFragment()};
+    private Fragment[] fragments = {new NewsFragmentWeibo(), new NewsFragmentTouTiao(), new NewsFragmentTouTiaoSmartRefresh()};
 
     @Override
     protected int setLayoutRes() {

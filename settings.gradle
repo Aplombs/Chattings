@@ -1,1 +1,1 @@
-include ':Chatting'
+include ':Chatting',':refresh-layout'
