@@ -17,6 +17,10 @@ import android.widget.TextView;
 
 import com.chat.im.R;
 import com.chat.im.test.adapter.NewsImageTextRecyclerViewAdapter;
+import com.chat.im.test.jsonbean.NewsImageText;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -37,6 +41,11 @@ public class NewsFragmentWeibo extends Fragment implements BGARefreshLayout.BGAR
     RecyclerView mRecyclerView;
     @Bind(R.id.bgaRefresh_layout_news)
     BGARefreshLayout mRefreshLayout;
+    /**
+     * 图文集合数据
+     */
+    private List<NewsImageText> mImageTextList = new ArrayList<>();
+
 
     private Handler mHandler = new Handler();
     private NewsImageTextRecyclerViewAdapter mAdapter;
@@ -67,13 +76,27 @@ public class NewsFragmentWeibo extends Fragment implements BGARefreshLayout.BGAR
         // 设置下拉刷新和上拉加载更多的风格
         mRefreshLayout.setRefreshViewHolder(normalRefreshViewHolder);
 
-
+        initFalseData();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(linearLayoutManager);
-        mAdapter = new NewsImageTextRecyclerViewAdapter(getActivity());
+        mAdapter = new NewsImageTextRecyclerViewAdapter(getActivity(), mImageTextList);
         mRecyclerView.setAdapter(mAdapter);
 
         return view;
+    }
+
+    /**
+     * 初始化本地假数据
+     */
+    private void initFalseData() {
+        NewsImageText imageText;
+        for (int i = 0; i < 15; i++) {
+            imageText = new NewsImageText();
+            if (i == 0) {
+                imageText.setItemViewType(100);
+            }
+            mImageTextList.add(imageText);
+        }
     }
 
     @Override

@@ -41,14 +41,6 @@
                 tools:ignore="HardcodedText,RtlSymmetry" />
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerView_publicAccountRecommend_news"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:overScrollMode="never"
-                android:padding="5dp"
-                android:scrollbars="horizontal" />
-
-            <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerView_imageText_news"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
