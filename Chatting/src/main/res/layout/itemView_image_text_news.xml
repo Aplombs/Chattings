@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:background="@color/bg_gray"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/item_imageText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="父亲节，让我们重温习近平写给父亲的一封信"
+        android:textColor="@color/black"
+        tools:ignore="HardcodedText" />
+
+</LinearLayout>

@@ -70,6 +70,8 @@
             android:name=".test.TestKotlinActivity"
             android:theme="@style/AppThemeForKotlinTest" />
 
+        <activity android:name=".test.TestNewsActivity" />
+
         <!-- imlib config begin -->
         <meta-data
             android:name="RONG_CLOUD_APP_KEY"

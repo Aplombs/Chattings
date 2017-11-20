@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="150dp"
+    android:layout_height="145dp"
+    android:layout_margin="5dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/public_recommend_news_layout_fillet_top"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_icbc" />
+
+        <TextView
+            android:layout_width="72dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="10dp"
+            android:text="中国工商银行股份有限公司"
+            android:textColor="#FF000000"
+            android:textSize="12sp"
+            tools:ignore="HardcodedText" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:background="@drawable/public_recommend_news_layout_fillet_bottom"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+        <TextView
+            android:layout_width="138dp"
+            android:layout_height="53.5dp"
+            android:text="为您提供专属化的服务，热门产品最新服务,热门产品最新资讯。"
+            android:textColor="#FF666666"
+            android:textSize="12sp"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:layout_width="125.5dp"
+            android:layout_height="20dp"
+            android:background="@drawable/public_recommend_news_follow_fillet_button"
+            android:text="+ 关注"
+            android:textColor="#FFA6844F"
+            android:textSize="10sp"
+            tools:ignore="HardcodedText,SmallSp" />
+
+    </LinearLayout>
+
+</LinearLayout>
