@@ -27,7 +27,7 @@ import com.chat.im.test.jsonbean.NewsImageText;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.bingoogolapple.refreshlayout.BGANormalRefreshViewHolder;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
@@ -41,16 +41,16 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 public class NewsFragmentTouTiao extends Fragment implements BGARefreshLayout.BGARefreshLayoutDelegate {
 
     //刷新之后顶部提示view
-    @Bind(R.id.view_refreshTip_news)
+    @BindView(R.id.view_refreshTip_news)
     TextView mRefreshTipView;
     //图文消息RecyclerView
-    @Bind(R.id.recyclerView_imageText_news)
+    @BindView(R.id.recyclerView_imageText_news)
     RecyclerView mRecyclerViewImageText;
     //下拉刷新控件
-    @Bind(R.id.bgaRefresh_layout_news)
+    @BindView(R.id.bgaRefresh_layout_news)
     BGARefreshLayout mRefreshLayout;
     //整个布局的根布局控件
-    @Bind(R.id.root_layout_news)
+    @BindView(R.id.root_layout_news)
     LinearLayout rootLayout;
     /**
      * 图文集合数据

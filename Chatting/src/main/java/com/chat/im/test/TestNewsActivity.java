@@ -21,7 +21,7 @@ import com.chat.im.ui.BaseActivity;
 
 import java.lang.reflect.Field;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static org.jetbrains.anko.ContextUtilsKt.getDisplayMetrics;
@@ -34,10 +34,10 @@ import static org.jetbrains.anko.ContextUtilsKt.getDisplayMetrics;
 
 public class TestNewsActivity extends BaseActivity {
 
-    @Bind(R.id.tab_layout__test_news)
+    @BindView(R.id.tab_layout__test_news)
     TabLayout mNewsTabLayout;
 
-    @Bind(R.id.viewpager_test_news)
+    @BindView(R.id.viewpager_test_news)
     ViewPager mNewsViewPager;
 
     private NewsPagerAdapter mNewsPagerAdapter;

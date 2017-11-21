@@ -31,7 +31,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 
@@ -44,16 +44,16 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 public class NewsFragmentTouTiaoSmartRefresh extends Fragment {
 
     //刷新之后顶部提示view
-    @Bind(R.id.view_refreshTip_news)
+    @BindView(R.id.view_refreshTip_news)
     TextView mRefreshTipView;
     //图文消息RecyclerView
-    @Bind(R.id.recyclerView_imageText_news)
+    @BindView(R.id.recyclerView_imageText_news)
     RecyclerView mRecyclerViewImageText;
     //下拉刷新控件
-    @Bind(R.id.smartRefresh_layout_news)
+    @BindView(R.id.smartRefresh_layout_news)
     SmartRefreshLayout mRefreshLayout;
     //整个布局的根布局控件
-    @Bind(R.id.root_layout_news)
+    @BindView(R.id.root_layout_news)
     LinearLayout rootLayout;
     /**
      * 图文集合数据
@@ -88,7 +88,6 @@ public class NewsFragmentTouTiaoSmartRefresh extends Fragment {
                     @Override
                     public void run() {
                         refreshlayout.finishRefresh();
-                        refreshlayout.setLoadmoreFinished(false);
                         if (mNewPageNumber > 10) {
                             show("没有最新数据了");
                             return;
@@ -109,6 +108,8 @@ public class NewsFragmentTouTiaoSmartRefresh extends Fragment {
                     public void run() {
                         refreshlayout.finishLoadmore();
                         if (mNewPageNumber > 10) {
+                            //完成加载并标记没有更多数据
+                            refreshlayout.finishLoadmoreWithNoMoreData();
                             UIHelper.getInstance().toast("没有最新数据了");
                             //将不会再次触发加载更多事件
                             refreshlayout.setLoadmoreFinished(true);

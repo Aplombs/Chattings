@@ -15,14 +15,14 @@ import android.widget.TextView;
 import com.chat.im.R;
 import com.chat.im.helper.LogHelper;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class TestFragment extends Fragment {
 
-    @Bind(R.id.test_button)
+    @BindView(R.id.test_button)
     Button testButton;
-    @Bind(R.id.test_listview)
+    @BindView(R.id.test_listview)
     ListView mListView;
 
     @Nullable

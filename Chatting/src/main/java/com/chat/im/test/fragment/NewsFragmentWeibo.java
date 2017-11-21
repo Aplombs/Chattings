@@ -22,7 +22,7 @@ import com.chat.im.test.jsonbean.NewsImageText;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.bingoogolapple.refreshlayout.BGANormalRefreshViewHolder;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
@@ -35,11 +35,11 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 
 public class NewsFragmentWeibo extends Fragment implements BGARefreshLayout.BGARefreshLayoutDelegate {
 
-    @Bind(R.id.view_refreshTip_news)
+    @BindView(R.id.view_refreshTip_news)
     TextView mTipView;
-    @Bind(R.id.recyclerView_imageText_news)
+    @BindView(R.id.recyclerView_imageText_news)
     RecyclerView mRecyclerView;
-    @Bind(R.id.bgaRefresh_layout_news)
+    @BindView(R.id.bgaRefresh_layout_news)
     BGARefreshLayout mRefreshLayout;
     /**
      * 图文集合数据
