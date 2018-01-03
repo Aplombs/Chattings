@@ -15,11 +15,11 @@ import com.chat.im.test.adapter.NewsPublicRecommendRecyclerViewAdapter;
  * @author kfzx-tanglitao 2017/11/20
  */
 
-public class NewsPublicRecommendRecyclerViewHolder extends BaseRecyclerViewHolder {
+public class NewsPublicRecommendRecyclerViewHolderFactory extends BaseRecyclerViewHolderFactory {
 
     RecyclerView mRecyclerViewPublicRecommend;
 
-    public NewsPublicRecommendRecyclerViewHolder(View itemView) {
+    public NewsPublicRecommendRecyclerViewHolderFactory(View itemView) {
         super(itemView);
         mRecyclerViewPublicRecommend = itemView.findViewById(R.id.recyclerView_publicAccountRecommend_item_news);
     }

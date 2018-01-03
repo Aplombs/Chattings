@@ -1,5 +1,6 @@
 package com.chat.im.test;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.design.widget.TabLayout;
@@ -7,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -24,7 +26,6 @@ import java.lang.reflect.Field;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static org.jetbrains.anko.ContextUtilsKt.getDisplayMetrics;
 
 /**
  * 资讯
@@ -203,5 +204,11 @@ public class TestNewsActivity extends BaseActivity {
             child.setLayoutParams(params);
             child.invalidate();
         }
+    }
+
+    private DisplayMetrics getDisplayMetrics(Context context) {
+        DisplayMetrics metric = new DisplayMetrics();
+        ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(metric);
+        return metric;
     }
 }

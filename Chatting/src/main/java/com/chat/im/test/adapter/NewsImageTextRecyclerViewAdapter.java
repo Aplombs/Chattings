@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
-import com.chat.im.test.holder.BaseRecyclerViewHolder;
+import com.chat.im.test.holder.BaseRecyclerViewHolderFactory;
 import com.chat.im.test.jsonbean.NewsImageText;
 
 import java.util.List;
@@ -15,7 +15,7 @@ import java.util.List;
  * @author kfzx-tanglitao on 2017/11/17.
  */
 
-public class NewsImageTextRecyclerViewAdapter extends RecyclerView.Adapter<BaseRecyclerViewHolder> {
+public class NewsImageTextRecyclerViewAdapter extends RecyclerView.Adapter<BaseRecyclerViewHolderFactory> {
 
     private Context mContext;
     private List<NewsImageText> mList;
@@ -31,12 +31,12 @@ public class NewsImageTextRecyclerViewAdapter extends RecyclerView.Adapter<BaseR
     }
 
     @Override
-    public BaseRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return BaseRecyclerViewHolder.onCreateViewHolder(mContext, parent, viewType);
+    public BaseRecyclerViewHolderFactory onCreateViewHolder(ViewGroup parent, int viewType) {
+        return BaseRecyclerViewHolderFactory.onCreateViewHolder(mContext, parent, viewType);
     }
 
     @Override
-    public void onBindViewHolder(BaseRecyclerViewHolder holder, int position) {
+    public void onBindViewHolder(BaseRecyclerViewHolderFactory holder, int position) {
         holder.onBindViewHolder();
     }
 

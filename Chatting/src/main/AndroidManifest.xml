@@ -71,6 +71,7 @@
             android:theme="@style/AppThemeForKotlinTest" />
 
         <activity android:name=".test.TestNewsActivity" />
+        <activity android:name=".test.TestPublicAccountActivity" />
 
         <!-- imlib config begin -->
         <meta-data

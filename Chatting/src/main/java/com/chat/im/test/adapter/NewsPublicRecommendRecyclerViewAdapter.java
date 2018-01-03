@@ -2,13 +2,9 @@ package com.chat.im.test.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
-import com.chat.im.R;
-
-import butterknife.ButterKnife;
+import com.chat.im.test.holder.BaseRecyclerViewHolderFactory;
 
 /**
  * 发现-资讯页签 公众号热门推荐RecyclerViewAdapter
@@ -16,7 +12,7 @@ import butterknife.ButterKnife;
  * @author kfzx-tanglitao on 2017/11/17.
  */
 
-public class NewsPublicRecommendRecyclerViewAdapter extends RecyclerView.Adapter<NewsPublicRecommendRecyclerViewAdapter.NewsPublicRecommendRecyclerViewHolder> {
+public class NewsPublicRecommendRecyclerViewAdapter extends RecyclerView.Adapter<BaseRecyclerViewHolderFactory> {
 
     private Context mContext;
 
@@ -25,26 +21,22 @@ public class NewsPublicRecommendRecyclerViewAdapter extends RecyclerView.Adapter
     }
 
     @Override
-    public NewsPublicRecommendRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.itemview_public_recommend_news, parent, false);
-        return new NewsPublicRecommendRecyclerViewHolder(view);
+    public int getItemViewType(int position) {
+        return 101;
     }
 
     @Override
-    public void onBindViewHolder(NewsPublicRecommendRecyclerViewHolder holder, int position) {
+    public BaseRecyclerViewHolderFactory onCreateViewHolder(ViewGroup parent, int viewType) {
+        return BaseRecyclerViewHolderFactory.onCreateViewHolder(mContext, parent, viewType);
+    }
+
+    @Override
+    public void onBindViewHolder(BaseRecyclerViewHolderFactory holder, int position) {
 
     }
 
     @Override
     public int getItemCount() {
         return 5;
-    }
-
-    class NewsPublicRecommendRecyclerViewHolder extends RecyclerView.ViewHolder {
-
-        public NewsPublicRecommendRecyclerViewHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-        }
     }
 }

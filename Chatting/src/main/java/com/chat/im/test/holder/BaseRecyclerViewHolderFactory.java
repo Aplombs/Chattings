@@ -14,33 +14,37 @@ import com.chat.im.R;
  * @author kfzx-tanglitao
  */
 
-public abstract class BaseRecyclerViewHolder extends RecyclerView.ViewHolder {
+public abstract class BaseRecyclerViewHolderFactory extends RecyclerView.ViewHolder {
 
     protected static Context mContext;
 
-    public BaseRecyclerViewHolder(View itemView) {
+    public BaseRecyclerViewHolderFactory(View itemView) {
         super(itemView);
     }
 
-    public static BaseRecyclerViewHolder onCreateViewHolder(Context context, ViewGroup parent, int viewType) {
+    public static BaseRecyclerViewHolderFactory onCreateViewHolder(Context context, ViewGroup parent, int viewType) {
         mContext = context;
 
-        BaseRecyclerViewHolder baseRecyclerViewHolder = null;
+        BaseRecyclerViewHolderFactory baseRecyclerViewHolderFactory = null;
         LayoutInflater inflater = LayoutInflater.from(context);
         View itemView;
         switch (viewType) {
             case 99:
                 itemView = inflater.inflate(R.layout.itemview_image_text_news, parent, false);
-                baseRecyclerViewHolder = new NewsImageTextRecyclerViewHolder(itemView);
+                baseRecyclerViewHolderFactory = new NewsImageTextRecyclerViewHolderFactory(itemView);
                 break;
             case 100:
                 itemView = inflater.inflate(R.layout.itemview_publice_recommend_news, parent, false);
-                baseRecyclerViewHolder = new NewsPublicRecommendRecyclerViewHolder(itemView);
+                baseRecyclerViewHolderFactory = new NewsPublicRecommendRecyclerViewHolderFactory(itemView);
+                break;
+            case 101:
+                itemView = inflater.inflate(R.layout.itemview_public_recommend_news, parent, false);
+                baseRecyclerViewHolderFactory = new NewsPublicRecommendRecyclerViewHolderFactory(itemView);
                 break;
             default:
                 break;
         }
-        return baseRecyclerViewHolder;
+        return baseRecyclerViewHolderFactory;
     }
 
     /**

@@ -11,11 +11,11 @@ import com.chat.im.R;
  * @author kfzx-tanglitao 2017/11/20
  */
 
-public class NewsImageTextRecyclerViewHolder extends BaseRecyclerViewHolder {
+public class NewsImageTextRecyclerViewHolderFactory extends BaseRecyclerViewHolderFactory {
 
     TextView itemImageText;
 
-    public NewsImageTextRecyclerViewHolder(View itemView) {
+    public NewsImageTextRecyclerViewHolderFactory(View itemView) {
         super(itemView);
         itemImageText = itemView.findViewById(R.id.item_imageText);
     }

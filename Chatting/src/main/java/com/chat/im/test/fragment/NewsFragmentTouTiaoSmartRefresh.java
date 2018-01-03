@@ -63,7 +63,7 @@ public class NewsFragmentTouTiaoSmartRefresh extends Fragment {
     private int mNewPageNumber;
     private Handler mHandler = new Handler();
     private boolean mRefreshTipViewIsShowing = false;
-    private final String TAG = "[NewsFragmentTouTiao] ";
+    private final String TAG = "[NewsFragmentTouTiaoSmartRefresh] ";
 
 
     @Nullable
